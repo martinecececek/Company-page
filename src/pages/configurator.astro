@@ -1,0 +1,1631 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Web Configurator | NexusDigital">
+  <Header />
+  <main class="relative overflow-hidden pt-28 pb-20 min-h-screen bg-background-light dark:bg-background-dark px-4 md:px-6">
+    <div class="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute top-40 -right-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto relative z-10">
+      <div class="mb-8 flex items-center justify-between gap-4 flex-wrap">
+        <a href="/" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-base">arrow_back</span>
+          Zpět na hlavní stránku
+        </a>
+        <h1 class="text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white">Web konfigurátor</h1>
+      </div>
+
+      <div class="mb-10 text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-4">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+          </span>
+          <span class="text-xs font-bold uppercase tracking-wider text-primary">Project brief</span>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 text-lg">
+          Vyplňte základní informace o projektu a pošlete nám strukturovaný brief ve stejném stylu jako zbytek vašeho webu.
+        </p>
+      </div>
+
+      <form class="space-y-4" id="configuratorWizard">
+        <div class="config-card wizard-progress-card">
+          <div class="flex items-center justify-between gap-4 flex-wrap mb-3">
+            <p id="wizardStepText" class="text-sm font-bold uppercase tracking-wider text-primary">Krok 1/6</p>
+            <p id="wizardStepTitle" class="text-sm font-semibold text-slate-500 dark:text-slate-400">Základní informace</p>
+          </div>
+          <div class="wizard-progress-track">
+            <div id="wizardProgressBar" class="wizard-progress-fill" style="--wizard-progress: 16.66%"></div>
+          </div>
+        </div>
+
+        <section class="config-card step-card active" data-step="1" data-step-title="Základní informace">
+          <button type="button" class="step-trigger">
+            <div>
+              <p class="step-index">Krok 1</p>
+              <h2 class="step-title">Základní informace</h2>
+              <p class="step-subtitle">Kontakty + základní typ webu</p>
+            </div>
+            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          </button>
+          <div class="step-content">
+            <div class="space-y-6">
+              <div>
+                <h3 class="sub-heading">Kontaktní údaje</h3>
+                <div class="space-y-3">
+                  <label class="field-row">
+                    <span class="material-symbols-outlined text-primary">apartment</span>
+                    <input class="field-input" type="text" placeholder="Název společnosti/předmět činnosti." />
+                  </label>
+                  <label class="field-row">
+                    <span class="material-symbols-outlined text-primary">person</span>
+                    <input class="field-input" type="text" placeholder="Jméno a příjmení" />
+                  </label>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <label class="field-row">
+                      <span class="material-symbols-outlined text-primary">call</span>
+                      <input class="field-input" type="text" placeholder="Telefon" />
+                    </label>
+                    <label class="field-row">
+                      <span class="material-symbols-outlined text-primary">mail</span>
+                      <input class="field-input" type="email" placeholder="Email" />
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="sub-heading">Kontakty pro web</h3>
+                <label class="field-row mb-3">
+                  <span class="material-symbols-outlined text-primary">phone_in_talk</span>
+                  <input class="field-input" type="text" placeholder="Telefony, e-mail, adresa, otevírací doba, sociální sítě" />
+                </label>
+                <div class="flex flex-wrap gap-2 chip-group" data-select="multi">
+                  <button type="button" class="chip-btn">Viber</button>
+                  <button type="button" class="chip-btn">WhatsApp</button>
+                  <button type="button" class="chip-btn">Telegram</button>
+                  <button type="button" class="chip-btn">Messenger</button>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="sub-heading">Druh webu</h3>
+                <div class="flex flex-wrap gap-2 chip-group" data-select="single" id="webTypeGroup">
+                  <button type="button" class="chip-btn chip-btn-active" aria-pressed="true">Jednoduchá prezentace firmy</button>
+                  <button type="button" class="chip-btn" aria-pressed="false">Web na získávání zákazníků</button>
+                  <button type="button" class="chip-btn" aria-pressed="false">E-shop</button>
+                  <button type="button" class="chip-btn" aria-pressed="false">Členský portál nebo online systém</button>
+                </div>
+              </div>
+
+              <div class="wizard-nav wizard-nav-end">
+                <button type="button" class="wizard-btn wizard-next">Další krok</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="config-card step-card" data-step="3" data-step-title="Branding">
+          <button type="button" class="step-trigger">
+            <div>
+              <p class="step-index">Krok 3</p>
+              <h2 class="step-title">Branding</h2>
+              <p class="step-subtitle">Barvy a vizuální směr</p>
+            </div>
+            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          </button>
+          <div class="step-content">
+            <h3 class="sub-heading">Barvy</h3>
+            <div class="flex items-center gap-4 mb-3">
+              <div class="text-center">
+                <input id="brandColorPrimary" type="color" value="#135bec" class="color-picker" aria-label="Primární barva" />
+                <p class="mt-1 text-slate-500 text-xs font-bold">#1</p>
+              </div>
+              <div class="text-center">
+                <input id="brandColorSecondary" type="color" value="#0f172a" class="color-picker" aria-label="Sekundární barva" />
+                <p class="mt-1 text-slate-500 text-xs font-bold">#2</p>
+              </div>
+              <div class="text-center">
+                <input id="brandColorTertiary" type="color" value="#e2e8f0" class="color-picker" aria-label="Doplňková barva" />
+                <p class="mt-1 text-slate-500 text-xs font-bold">#3</p>
+              </div>
+              <div class="text-center">
+                <input id="brandColorBackground" type="color" value="#ffffff" class="color-picker" aria-label="Barva pozadí" />
+                <p class="mt-1 text-slate-500 text-xs font-bold">BG</p>
+              </div>
+            </div>
+            <label class="field-row">
+              <span class="material-symbols-outlined text-primary">palette</span>
+              <input class="field-input" type="text" placeholder="Požadavky na styl/značku/fonty" />
+            </label>
+
+            <div class="mt-6">
+              <h3 class="sub-heading">Téma webu</h3>
+              <div class="flex flex-wrap gap-2 chip-group" data-select="single" id="themeSelectorGroup">
+                <button type="button" class="chip-btn chip-btn-active" aria-pressed="true" data-theme="modern">Modern</button>
+                <button type="button" class="chip-btn" aria-pressed="false" data-theme="minimal">Minimal</button>
+                <button type="button" class="chip-btn" aria-pressed="false" data-theme="bold">Bold</button>
+                <button type="button" class="chip-btn" aria-pressed="false" data-theme="elegant">Elegant</button>
+                <button type="button" class="chip-btn" aria-pressed="false" data-theme="custom">Vlastní téma</button>
+              </div>
+
+              <div class="mt-4">
+                <h3 class="sub-heading">Font</h3>
+                <div class="flex flex-wrap gap-2 chip-group" data-select="single" id="fontSelectorGroup">
+                  <button type="button" class="chip-btn chip-btn-active" aria-pressed="true" data-font="sans">Sans</button>
+                  <button type="button" class="chip-btn" aria-pressed="false" data-font="serif">Serif</button>
+                  <button type="button" class="chip-btn" aria-pressed="false" data-font="mono">Mono</button>
+                  <button type="button" class="chip-btn" aria-pressed="false" data-font="custom">Custom</button>
+                </div>
+                <div class="mt-3 hidden" id="customFontWrap">
+                  <label class="field-row">
+                    <span class="material-symbols-outlined text-primary">format_size</span>
+                    <input id="customFontInput" class="field-input" type="text" placeholder="Např. Inter, Poppins, &quot;Playfair Display&quot;" />
+                  </label>
+                </div>
+              </div>
+
+              <div class="theme-preview mt-4" id="themePreview">
+                <div class="theme-preview-head">
+                  <p class="theme-preview-title" id="themePreviewTitle">Modern</p>
+                  <p class="theme-preview-text" id="themePreviewText">Čistý, moderní layout s výraznou CTA a přehlednými kartami.</p>
+                  <p class="theme-preview-hint">Malý náhled toho, jak může vypadat vaše homepage.</p>
+                </div>
+                <div class="theme-preview-canvas" id="themePreviewCanvas" data-theme="modern">
+                  <div class="theme-preview-browser" id="themePreviewBrowser">
+                    <div class="theme-preview-dots">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div class="theme-preview-url"></div>
+                  </div>
+
+                  <div class="theme-preview-nav" id="themePreviewNav">
+                    <div class="theme-preview-logo" id="themePreviewLogo"></div>
+                    <div class="theme-preview-nav-links">
+                      <span class="theme-preview-pill" id="themePreviewNav1">Služby</span>
+                      <span class="theme-preview-pill" id="themePreviewNav2">Reference</span>
+                      <span class="theme-preview-pill" id="themePreviewNav3">Kontakt</span>
+                    </div>
+                  </div>
+
+                  <div class="theme-preview-hero" id="themePreviewHero">
+                    <div class="theme-preview-hero-copy">
+                      <p class="theme-preview-kicker" id="themePreviewKicker">Digitální studio</p>
+                      <p class="theme-preview-headline" id="themePreviewHeadline">Tvoříme weby, které prodávají.</p>
+                      <p class="theme-preview-paragraph" id="themePreviewParagraph">Rychlý, moderní a přehledný web pro vaši značku.</p>
+                      <div class="theme-preview-cta" id="themePreviewCta">Nezávazná konzultace</div>
+                    </div>
+                    <div class="theme-preview-media" id="themePreviewMedia">
+                      <span class="theme-preview-media-badge" id="themePreviewMediaBadge">Case Study</span>
+                    </div>
+                  </div>
+
+                  <div class="theme-preview-content" id="themePreviewContent">
+                    <div class="theme-preview-main" id="themePreviewMain">
+                      <div class="theme-preview-card" id="themePreviewCard1">
+                        <span class="theme-preview-card-title" id="themePreviewCardTitle1">Design</span>
+                      </div>
+                      <div class="theme-preview-card" id="themePreviewCard2">
+                        <span class="theme-preview-card-title" id="themePreviewCardTitle2">Vývoj</span>
+                      </div>
+                      <div class="theme-preview-card" id="themePreviewCard3">
+                        <span class="theme-preview-card-title" id="themePreviewCardTitle3">SEO</span>
+                      </div>
+                    </div>
+                    <div class="theme-preview-side" id="themePreviewSide">
+                      <span class="theme-preview-side-title" id="themePreviewSideTitle">Kontaktujte nás</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-nav">
+              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
+              <button type="button" class="wizard-btn wizard-next">Další krok</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="config-card step-card" data-step="2" data-step-title="Struktura webu">
+          <button type="button" class="step-trigger">
+            <div>
+              <p class="step-index">Krok 2</p>
+              <h2 class="step-title">Struktura webu</h2>
+              <p class="step-subtitle">Jazyky a jednotlivé sekce</p>
+            </div>
+            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          </button>
+          <div class="step-content space-y-6">
+            <div>
+              <h3 class="sub-heading">Jazyk webu</h3>
+              <div class="flex flex-wrap gap-2 mb-3 chip-group" data-select="multi">
+                <button type="button" class="chip-btn">Čeština</button>
+                <button type="button" class="chip-btn">Angličtina</button>
+                <button type="button" class="chip-btn">Ukrajinština</button>
+                <button type="button" class="chip-btn">Polština</button>
+                <button type="button" class="chip-btn">Němčina</button>
+              </div>
+              <label class="field-row">
+                <span class="material-symbols-outlined text-primary">add</span>
+                <input class="field-input" type="text" placeholder="Přidejte svůj jazyk a stiskněte Enter" />
+              </label>
+            </div>
+
+            <div>
+              <h3 class="sub-heading">Sekce webu</h3>
+              <div class="flex flex-wrap gap-2 mb-3 chip-group" data-select="multi">
+                <button type="button" class="chip-btn">Hlavní stránka</button>
+                <button type="button" class="chip-btn">O nás</button>
+                <button type="button" class="chip-btn">Naše služby</button>
+                <button type="button" class="chip-btn">Reference</button>
+                <button type="button" class="chip-btn">Recenze</button>
+                <button type="button" class="chip-btn">Ceny</button>
+                <button type="button" class="chip-btn">Blog</button>
+                <button type="button" class="chip-btn">Kontakty</button>
+                <button type="button" class="chip-btn">FAQ</button>
+                <button type="button" class="chip-btn">Objednávkový formulář</button>
+              </div>
+              <label class="field-row">
+                <span class="material-symbols-outlined text-primary">add</span>
+                <input class="field-input" type="text" placeholder="Přidejte svou sekci a stiskněte Enter" />
+              </label>
+            </div>
+
+            <div class="wizard-nav">
+              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
+              <button type="button" class="wizard-btn wizard-next">Další krok</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="config-card step-card" data-step="4" data-step-title="Funkce">
+          <button type="button" class="step-trigger">
+            <div>
+              <p class="step-index">Krok 4</p>
+              <h2 class="step-title">Funkce</h2>
+              <p class="step-subtitle">Technické rozšíření webu</p>
+            </div>
+            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          </button>
+          <div class="step-content space-y-6">
+            <div>
+              <h3 class="sub-heading">Vyberte funkce</h3>
+
+              <div class="space-y-4">
+                <div>
+                  <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-slate-500 mb-2">Komunikace a marketing</p>
+                  <div class="flex flex-wrap gap-2 chip-group" data-select="multi">
+                    <button type="button" class="chip-btn">Online chat</button>
+                    <button type="button" class="chip-btn">Zpětné volání</button>
+                    <button type="button" class="chip-btn">Newsletter</button>
+                    <button type="button" class="chip-btn">Napojení na sociální sítě</button>
+                    <button type="button" class="chip-btn">Blog + články</button>
+                    <button type="button" class="chip-btn">Analytika</button>
+                  </div>
+                </div>
+
+                <div>
+                  <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-slate-500 mb-2">Prodej a konverze</p>
+                  <div class="flex flex-wrap gap-2 chip-group" data-select="multi">
+                    <button type="button" class="chip-btn">Online platba</button>
+                    <button type="button" class="chip-btn">Košík/Objednávka</button>
+                    <button type="button" class="chip-btn">Poptávkový formulář</button>
+                    <button type="button" class="chip-btn">Rezervační systém</button>
+                    <button type="button" class="chip-btn">Katalogové filtry</button>
+                  </div>
+                </div>
+
+                <div>
+                  <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-slate-500 mb-2">Obsah a lokalizace</p>
+                  <div class="flex flex-wrap gap-2 chip-group" data-select="multi">
+                    <button type="button" class="chip-btn">Multijazyčný web</button>
+                    <button type="button" class="chip-btn">Google Maps</button>
+                    <button type="button" class="chip-btn">Členská sekce</button>
+                    <button type="button" class="chip-btn">Správa uživatelů</button>
+                  </div>
+                </div>
+
+                <div>
+                  <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-slate-500 mb-2">Integrace a compliance</p>
+                  <div class="flex flex-wrap gap-2 chip-group" data-select="multi" id="featureSelectorGroup">
+                    <button type="button" class="chip-btn">CRM integrace</button>
+                    <button type="button" class="chip-btn">Cookie lišta</button>
+                    <button type="button" class="chip-btn">GDPR souhlas</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="sub-heading">Vlastní funkce</h3>
+              <label class="field-row">
+                <span class="material-symbols-outlined text-primary">add</span>
+                <input id="featureCustomInput" class="field-input" type="text" placeholder="Napište funkci a stiskněte Enter" />
+              </label>
+            </div>
+
+            <div class="wizard-nav">
+              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
+              <button type="button" class="wizard-btn wizard-next">Další krok</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="config-card step-card" data-step="5" data-step-title="Obsah webu">
+          <button type="button" class="step-trigger">
+            <div>
+              <p class="step-index">Krok 5</p>
+              <h2 class="step-title">Obsah webu</h2>
+              <p class="step-subtitle">Služby, texty a podklady</p>
+            </div>
+            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          </button>
+          <div class="step-content">
+            <div class="space-y-3">
+              <label class="field-area">
+                <span class="material-symbols-outlined text-primary">checklist</span>
+                <textarea class="field-input resize-y" rows="3" placeholder="Uveďte všechny služby, které nabízíte."></textarea>
+              </label>
+              <label class="field-area">
+                <span class="material-symbols-outlined text-primary">description</span>
+                <textarea class="field-input resize-y" rows="3" placeholder="Pokud máte texty pro jednotlivé sekce — vložte je sem nebo přiložte soubor níže."></textarea>
+              </label>
+              <label class="field-row">
+                <span class="material-symbols-outlined text-primary">attach_file</span>
+                <input class="w-full bg-transparent outline-none text-slate-700 dark:text-slate-300 file:mr-4 file:px-3 file:py-1.5 file:rounded-lg file:border file:border-slate-300 dark:file:border-slate-600 file:bg-white dark:file:bg-slate-800 file:text-slate-700 dark:file:text-slate-200" type="file" />
+              </label>
+            </div>
+
+            <div class="wizard-nav">
+              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
+              <button type="button" class="wizard-btn wizard-next">Další krok</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="config-card step-card" data-step="6" data-step-title="Dodání a priority">
+          <button type="button" class="step-trigger">
+            <div>
+              <p class="step-index">Krok 6</p>
+              <h2 class="step-title">Dodání a priority</h2>
+              <p class="step-subtitle">Rozpočet, termín a závěrečné poznámky</p>
+            </div>
+            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          </button>
+          <div class="step-content space-y-6">
+            <div>
+              <h3 class="sub-heading">Rozpočet a termíny</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <label class="field-row">
+                  <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+                  <select class="field-input">
+                    <option selected>Rozpočet</option>
+                    <option>Do 25 000 Kč</option>
+                    <option>25 000–50 000 Kč</option>
+                    <option>50 000–100 000 Kč</option>
+                    <option>100 000+ Kč</option>
+                  </select>
+                </label>
+                <label class="field-row">
+                  <span class="material-symbols-outlined text-primary">event</span>
+                  <select class="field-input">
+                    <option selected>Požadovaný termín</option>
+                    <option>Do 2 týdnů</option>
+                    <option>Do 1 měsíce</option>
+                    <option>2–3 měsíce</option>
+                    <option>Flexibilní</option>
+                  </select>
+                </label>
+                <label class="field-row">
+                  <span class="material-symbols-outlined text-primary">language</span>
+                  <select class="field-input">
+                    <option selected>Doména</option>
+                    <option>Mám vlastní doménu</option>
+                    <option>Potřebuji pomoci vybrat</option>
+                  </select>
+                </label>
+                <label class="field-row">
+                  <span class="material-symbols-outlined text-primary">dns</span>
+                  <select class="field-input">
+                    <option selected>Hosting</option>
+                    <option>Mám hosting</option>
+                    <option>Potřebuji zajistit hosting</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="sub-heading">Reference a přání</h3>
+              <label class="field-row mb-3">
+                <span class="material-symbols-outlined text-primary">favorite</span>
+                <input class="field-input" type="text" placeholder="Odkaz na oblíbený web" />
+              </label>
+              <label class="field-area">
+                <span class="material-symbols-outlined text-primary">chat_bubble</span>
+                <textarea class="field-input resize-y" rows="4" placeholder="Další přání"></textarea>
+              </label>
+            </div>
+
+            <div class="wizard-nav">
+              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
+              <button type="submit" class="wizard-btn">Odeslat konfiguraci</button>
+            </div>
+          </div>
+        </section>
+      </form>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // @ts-nocheck
+  document.addEventListener('DOMContentLoaded', () => {
+    const wizard = document.getElementById('configuratorWizard');
+    if (!(wizard instanceof HTMLFormElement)) return;
+
+    const cards = Array.from(wizard.querySelectorAll('.step-card'));
+    const stepText = document.getElementById('wizardStepText');
+    const stepTitle = document.getElementById('wizardStepTitle');
+    const progressBar = document.getElementById('wizardProgressBar');
+    const themeGroup = document.getElementById('themeSelectorGroup');
+    const fontGroup = document.getElementById('fontSelectorGroup');
+    const featureSelectorGroup = document.getElementById('featureSelectorGroup');
+    const featureCustomInput = document.getElementById('featureCustomInput');
+    const customFontWrap = document.getElementById('customFontWrap');
+    const customFontInput = document.getElementById('customFontInput');
+    const brandColorPrimary = document.getElementById('brandColorPrimary');
+    const brandColorSecondary = document.getElementById('brandColorSecondary');
+    const brandColorTertiary = document.getElementById('brandColorTertiary');
+    const brandColorBackground = document.getElementById('brandColorBackground');
+    const themePreviewTitle = document.getElementById('themePreviewTitle');
+    const themePreviewText = document.getElementById('themePreviewText');
+    const themePreviewCanvas = document.getElementById('themePreviewCanvas');
+    const themePreviewBrowser = document.getElementById('themePreviewBrowser');
+    const themePreviewLogo = document.getElementById('themePreviewLogo');
+    const themePreviewNav1 = document.getElementById('themePreviewNav1');
+    const themePreviewNav2 = document.getElementById('themePreviewNav2');
+    const themePreviewNav3 = document.getElementById('themePreviewNav3');
+    const themePreviewKicker = document.getElementById('themePreviewKicker');
+    const themePreviewHeadline = document.getElementById('themePreviewHeadline');
+    const themePreviewParagraph = document.getElementById('themePreviewParagraph');
+    const themePreviewCta = document.getElementById('themePreviewCta');
+    const themePreviewMedia = document.getElementById('themePreviewMedia');
+    const themePreviewMediaBadge = document.getElementById('themePreviewMediaBadge');
+    const themePreviewCard1 = document.getElementById('themePreviewCard1');
+    const themePreviewCard2 = document.getElementById('themePreviewCard2');
+    const themePreviewCard3 = document.getElementById('themePreviewCard3');
+    const themePreviewCardTitle1 = document.getElementById('themePreviewCardTitle1');
+    const themePreviewCardTitle2 = document.getElementById('themePreviewCardTitle2');
+    const themePreviewCardTitle3 = document.getElementById('themePreviewCardTitle3');
+    const themePreviewSide = document.getElementById('themePreviewSide');
+    const themePreviewSideTitle = document.getElementById('themePreviewSideTitle');
+
+    let currentStep = 1;
+    const totalSteps = cards.length;
+    let isTransitioning = false;
+
+    const getCardForStep = (stepNumber) => {
+      return cards.find((card) => Number(card.getAttribute('data-step')) === stepNumber);
+    };
+
+    const allChipButtons = Array.from(wizard.querySelectorAll('.chip-btn'));
+    allChipButtons.forEach((btn) => {
+      if (btn instanceof HTMLButtonElement) {
+        btn.setAttribute('aria-pressed', btn.classList.contains('chip-btn-active') ? 'true' : 'false');
+      }
+    });
+
+    const themePresets = {
+      modern: {
+        name: 'Modern',
+        text: 'Čistý, moderní layout s výraznou CTA a přehlednými kartami.',
+        nav: ['Služby', 'Reference', 'Kontakt'],
+        kicker: 'Digitální studio',
+        headline: 'Tvoříme weby, které prodávají.',
+        paragraph: 'Rychlý, moderní a přehledný web pro vaši značku.',
+        cta: 'Nezávazná konzultace',
+        media: 'Case Study',
+        cards: ['Design', 'Vývoj', 'SEO'],
+        side: 'Kontaktujte nás',
+        accent: '#2563eb',
+        soft: '#dbeafe',
+        muted: '#e2e8f0',
+        deep: '#0f172a'
+      },
+      minimal: {
+        name: 'Minimal',
+        text: 'Minimalistický styl s jemnými kontrasty a maximální čitelností.',
+        nav: ['O nás', 'Práce', 'Kontakt'],
+        kicker: 'Minimal koncept',
+        headline: 'Jednoduchost, která působí profesionálně.',
+        paragraph: 'Vzdušný layout bez rušivých prvků, důraz na obsah.',
+        cta: 'Zjistit více',
+        media: 'Preview',
+        cards: ['Web', 'Brand', 'Obsah'],
+        side: 'Rychlá poptávka',
+        accent: '#334155',
+        soft: '#f1f5f9',
+        muted: '#e2e8f0',
+        deep: '#0f172a'
+      },
+      bold: {
+        name: 'Bold',
+        text: 'Silný vizuál, výrazné barvy a energická prezentace značky.',
+        nav: ['Nabídka', 'Projekty', 'Start'],
+        kicker: 'Bold koncept',
+        headline: 'Výrazný web, který nezapadne.',
+        paragraph: 'Dynamická kompozice, kontrastní prvky a silná identita.',
+        cta: 'Chci výrazný web',
+        media: 'Hot trend',
+        cards: ['Strategie', 'Kampaň', 'Růst'],
+        side: 'Naplánovat call',
+        accent: '#7c3aed',
+        soft: '#ede9fe',
+        muted: '#ddd6fe',
+        deep: '#581c87'
+      },
+      elegant: {
+        name: 'Elegant',
+        text: 'Elegantní styl s prémiovým dojmem a vyváženou typografií.',
+        nav: ['Studio', 'Služby', 'Kontakt'],
+        kicker: 'Elegant koncept',
+        headline: 'Prémiová prezentace vaší značky.',
+        paragraph: 'Sofistikované rozvržení a klidná vizuální hierarchie.',
+        cta: 'Rezervovat konzultaci',
+        media: 'Premium',
+        cards: ['Identita', 'UX', 'Obsah'],
+        side: 'Osobní schůzka',
+        accent: '#0f172a',
+        soft: '#e2e8f0',
+        muted: '#cbd5e1',
+        deep: '#020617'
+      },
+      custom: {
+        name: 'Vlastní téma',
+        text: 'Vytvoříme design na míru přesně podle vaší značky a inspirace.',
+        nav: ['Brand', 'Styl', 'Demo'],
+        kicker: 'Custom koncept',
+        headline: 'Návrh postavený na vašem stylu.',
+        paragraph: 'Kombinujeme vaše barvy, fonty a inspirace do unikátního řešení.',
+        cta: 'Vytvořit moje téma',
+        media: 'Custom moodboard',
+        cards: ['Barvy', 'Fonty', 'UI'],
+        side: 'Sdílet inspiraci',
+        accent: '#0f766e',
+        soft: '#ccfbf1',
+        muted: '#99f6e4',
+        deep: '#134e4a'
+      }
+    };
+
+    const getActiveThemeKey = () => {
+      if (!(themeGroup instanceof HTMLElement)) return 'modern';
+      const selectedTheme = themeGroup.querySelector('.chip-btn-active');
+      return selectedTheme instanceof HTMLButtonElement ? selectedTheme.dataset.theme : 'modern';
+    };
+
+    const getActiveFontKey = () => {
+      if (!(fontGroup instanceof HTMLElement)) return 'sans';
+      const selectedFont = fontGroup.querySelector('.chip-btn-active');
+      return selectedFont instanceof HTMLButtonElement ? selectedFont.dataset.font : 'sans';
+    };
+
+    const updateCustomFontVisibility = (fontKey) => {
+      if (!(customFontWrap instanceof HTMLElement)) return;
+      const isCustom = fontKey === 'custom';
+      customFontWrap.classList.toggle('hidden', !isCustom);
+    };
+
+    const getColorOverrides = () => {
+      const accent = brandColorPrimary instanceof HTMLInputElement ? brandColorPrimary.value : '';
+      const deep = brandColorSecondary instanceof HTMLInputElement ? brandColorSecondary.value : '';
+      const soft = brandColorTertiary instanceof HTMLInputElement ? brandColorTertiary.value : '';
+      const bg = brandColorBackground instanceof HTMLInputElement ? brandColorBackground.value : '';
+      const muted = soft && soft.length === 7 ? `${soft}cc` : soft;
+
+      return {
+        accent: accent,
+        deep: deep,
+        soft: soft,
+        muted: muted,
+        bg: bg
+      };
+    };
+
+    const updateThemePreview = (themeKey) => {
+      const theme = themePresets[themeKey] || themePresets.modern;
+      const colorOverrides = getColorOverrides();
+      const accentColor = colorOverrides.accent || theme.accent;
+      const deepColor = colorOverrides.deep || theme.deep;
+      const softColor = colorOverrides.soft || theme.soft;
+      const mutedColor = colorOverrides.muted || theme.muted;
+      const backgroundColor = colorOverrides.bg || '';
+
+      if (themePreviewTitle) themePreviewTitle.textContent = theme.name;
+      if (themePreviewText) themePreviewText.textContent = theme.text;
+
+      if (themePreviewCanvas instanceof HTMLElement) {
+        themePreviewCanvas.dataset.theme = themeKey;
+        themePreviewCanvas.style.setProperty('--tp-accent', accentColor);
+        themePreviewCanvas.style.setProperty('--tp-soft', softColor);
+        themePreviewCanvas.style.setProperty('--tp-muted', mutedColor);
+        themePreviewCanvas.style.setProperty('--tp-deep', deepColor);
+        themePreviewCanvas.style.background = backgroundColor;
+      }
+
+      if (themePreviewBrowser instanceof HTMLElement) {
+        themePreviewBrowser.style.background = softColor;
+      }
+
+      if (themePreviewLogo instanceof HTMLElement) themePreviewLogo.style.background = deepColor;
+      if (themePreviewNav1 instanceof HTMLElement) {
+        themePreviewNav1.style.background = mutedColor;
+        themePreviewNav1.textContent = theme.nav[0];
+      }
+      if (themePreviewNav2 instanceof HTMLElement) {
+        themePreviewNav2.style.background = softColor;
+        themePreviewNav2.textContent = theme.nav[1];
+      }
+      if (themePreviewNav3 instanceof HTMLElement) {
+        themePreviewNav3.style.background = mutedColor;
+        themePreviewNav3.textContent = theme.nav[2];
+      }
+      if (themePreviewKicker instanceof HTMLElement) themePreviewKicker.textContent = theme.kicker;
+      if (themePreviewHeadline instanceof HTMLElement) themePreviewHeadline.textContent = theme.headline;
+      if (themePreviewParagraph instanceof HTMLElement) themePreviewParagraph.textContent = theme.paragraph;
+      if (themePreviewCta instanceof HTMLElement) themePreviewCta.style.background = accentColor;
+      if (themePreviewCta instanceof HTMLElement) themePreviewCta.textContent = theme.cta;
+      if (themePreviewMedia instanceof HTMLElement) themePreviewMedia.style.background = `linear-gradient(145deg, ${softColor}, ${mutedColor})`;
+      if (themePreviewMediaBadge instanceof HTMLElement) themePreviewMediaBadge.textContent = theme.media;
+      if (themePreviewCard1 instanceof HTMLElement) themePreviewCard1.style.background = softColor;
+      if (themePreviewCard2 instanceof HTMLElement) themePreviewCard2.style.background = mutedColor;
+      if (themePreviewCard3 instanceof HTMLElement) themePreviewCard3.style.background = softColor;
+      if (themePreviewCardTitle1 instanceof HTMLElement) themePreviewCardTitle1.textContent = theme.cards[0];
+      if (themePreviewCardTitle2 instanceof HTMLElement) themePreviewCardTitle2.textContent = theme.cards[1];
+      if (themePreviewCardTitle3 instanceof HTMLElement) themePreviewCardTitle3.textContent = theme.cards[2];
+      if (themePreviewSide instanceof HTMLElement) themePreviewSide.style.background = `linear-gradient(180deg, ${mutedColor}, ${softColor})`;
+      if (themePreviewSideTitle instanceof HTMLElement) themePreviewSideTitle.textContent = theme.side;
+    };
+
+    const updateFontPreview = (fontKey) => {
+      if (!(themePreviewCanvas instanceof HTMLElement)) return;
+      themePreviewCanvas.dataset.font = fontKey;
+
+      updateCustomFontVisibility(fontKey);
+
+      if (fontKey === 'custom') {
+        const customFontFamily = customFontInput instanceof HTMLInputElement ? customFontInput.value.trim() : '';
+        if (customFontFamily.length > 0) {
+          themePreviewCanvas.style.setProperty('--tp-custom-font', customFontFamily);
+        } else {
+          themePreviewCanvas.style.setProperty('--tp-custom-font', 'sans-serif');
+        }
+      } else {
+        themePreviewCanvas.style.removeProperty('--tp-custom-font');
+      }
+    };
+
+    /** @type {(card: Element | undefined) => void} */
+    const scrollToCard = (card) => {
+      if (!(card instanceof HTMLElement)) return;
+
+      const headerOffset = 110;
+      const rect = card.getBoundingClientRect();
+      const topTarget = rect.top + window.scrollY - headerOffset;
+      const visibleTopLimit = headerOffset + 12;
+      const visibleBottomLimit = window.innerHeight - 24;
+
+      const isTooHigh = rect.top < visibleTopLimit;
+      const isTooLow = rect.top > visibleBottomLimit;
+
+      if (isTooHigh || isTooLow) {
+        window.scrollTo({ top: Math.max(0, topTarget), behavior: 'smooth' });
+      }
+    };
+
+    /** @type {(stepNumber: number, shouldScroll?: boolean, forceScroll?: boolean, direction?: 'auto' | 'next' | 'prev' | 'none') => void} */
+    const activateStep = (stepNumber, shouldScroll = true, forceScroll = false, direction = 'auto') => {
+      if (isTransitioning) return;
+
+      const previousStep = currentStep;
+      const nextStep = Math.min(totalSteps, Math.max(1, stepNumber));
+      currentStep = nextStep;
+
+      const resolvedDirection = direction === 'auto'
+        ? (currentStep >= previousStep ? 'next' : 'prev')
+        : direction;
+
+      const activeCard = getCardForStep(currentStep);
+
+      cards.forEach((card) => {
+        card.classList.remove('active', 'step-rotate-next', 'step-rotate-prev');
+      });
+
+      if (activeCard instanceof HTMLElement) {
+        activeCard.classList.add('active');
+
+        if (previousStep !== currentStep && resolvedDirection !== 'none') {
+          isTransitioning = true;
+          activeCard.classList.add(resolvedDirection === 'next' ? 'step-rotate-next' : 'step-rotate-prev');
+
+          window.setTimeout(() => {
+            activeCard.classList.remove('step-rotate-next', 'step-rotate-prev');
+            isTransitioning = false;
+          }, 1450);
+        }
+      }
+
+      const title = activeCard?.getAttribute('data-step-title') ?? '';
+      if (stepText) stepText.textContent = `Krok ${currentStep}/${totalSteps}`;
+      if (stepTitle) stepTitle.textContent = title;
+      if (progressBar instanceof HTMLElement) {
+        progressBar.style.setProperty('--wizard-progress', `${(currentStep / totalSteps) * 100}%`);
+      }
+
+      if (shouldScroll && activeCard instanceof HTMLElement) {
+        if (forceScroll) {
+          const headerOffset = 110;
+          const rect = activeCard.getBoundingClientRect();
+          const topTarget = rect.top + window.scrollY - headerOffset;
+          window.scrollTo({ top: Math.max(0, topTarget), behavior: 'smooth' });
+        } else {
+          scrollToCard(activeCard);
+        }
+      }
+    };
+
+    wizard.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+
+      const trigger = target.closest('.step-trigger');
+      if (trigger instanceof HTMLElement) {
+        const card = trigger.closest('.step-card');
+        if (card instanceof HTMLElement) {
+          const step = Number(card.getAttribute('data-step'));
+          if (!Number.isNaN(step)) {
+            const direction = step > currentStep ? 'next' : step < currentStep ? 'prev' : 'none';
+            activateStep(step, true, false, direction);
+          }
+        }
+      }
+
+      if (target.closest('.wizard-next')) {
+        activateStep(currentStep + 1, true, true, 'next');
+      }
+
+      if (target.closest('.wizard-prev')) {
+        activateStep(currentStep - 1, true, true, 'prev');
+      }
+
+      const chip = target.closest('.chip-btn');
+      if (chip instanceof HTMLButtonElement) {
+        const group = chip.closest('.chip-group');
+        const selectMode = group instanceof HTMLElement ? group.getAttribute('data-select') : 'multi';
+
+        if (group instanceof HTMLElement && selectMode === 'single') {
+          const groupButtons = Array.from(group.querySelectorAll('.chip-btn'));
+          groupButtons.forEach((btn) => {
+            btn.classList.remove('chip-btn-active');
+            btn.setAttribute('aria-pressed', 'false');
+          });
+          chip.classList.add('chip-btn-active');
+          chip.setAttribute('aria-pressed', 'true');
+        } else {
+          chip.classList.toggle('chip-btn-active');
+          chip.setAttribute('aria-pressed', chip.classList.contains('chip-btn-active') ? 'true' : 'false');
+        }
+
+        if (group instanceof HTMLElement && group.id === 'themeSelectorGroup') {
+          const selectedTheme = group.querySelector('.chip-btn-active');
+          const themeKey = selectedTheme instanceof HTMLButtonElement ? selectedTheme.dataset.theme : 'modern';
+          updateThemePreview(themeKey);
+        }
+
+        if (group instanceof HTMLElement && group.id === 'fontSelectorGroup') {
+          const selectedFont = group.querySelector('.chip-btn-active');
+          const fontKey = selectedFont instanceof HTMLButtonElement ? selectedFont.dataset.font : 'sans';
+          updateFontPreview(fontKey);
+        }
+      }
+    });
+
+    if (themeGroup instanceof HTMLElement) {
+      updateThemePreview(getActiveThemeKey());
+    }
+
+    if (fontGroup instanceof HTMLElement) {
+      updateFontPreview(getActiveFontKey());
+    }
+
+    if (customFontInput instanceof HTMLInputElement) {
+      customFontInput.addEventListener('input', () => {
+        if (getActiveFontKey() === 'custom') {
+          updateFontPreview('custom');
+        }
+      });
+    }
+
+    [brandColorPrimary, brandColorSecondary, brandColorTertiary, brandColorBackground].forEach((inputElement) => {
+      if (inputElement instanceof HTMLInputElement) {
+        inputElement.addEventListener('input', () => {
+          updateThemePreview(getActiveThemeKey());
+        });
+      }
+    });
+
+    if (featureCustomInput instanceof HTMLInputElement && featureSelectorGroup instanceof HTMLElement) {
+      featureCustomInput.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter') return;
+
+        event.preventDefault();
+        const value = featureCustomInput.value.trim();
+        if (!value) return;
+
+        const existing = Array.from(featureSelectorGroup.querySelectorAll('.chip-btn'))
+          .some((chip) => chip.textContent?.trim().toLowerCase() === value.toLowerCase());
+        if (existing) {
+          featureCustomInput.value = '';
+          return;
+        }
+
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'chip-btn chip-btn-active';
+        chip.setAttribute('aria-pressed', 'true');
+        chip.textContent = value;
+        featureSelectorGroup.appendChild(chip);
+        featureCustomInput.value = '';
+      });
+    }
+
+    activateStep(1, false, false, 'none');
+  });
+</script>
+
+<style>
+  .step-card {
+    display: none;
+    padding-top: 0.5rem;
+    transform-origin: top center;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+  }
+
+  #configuratorWizard {
+    display: block;
+  }
+
+  .step-card.active {
+    display: block;
+  }
+
+  .step-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-align: left;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    cursor: pointer;
+  }
+
+  .step-index {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 800;
+    color: #135bec;
+    margin-bottom: 0.25rem;
+  }
+
+  .step-title {
+    font-size: 1.5rem;
+    line-height: 1.9rem;
+    font-weight: 900;
+    color: #0f172a;
+  }
+
+  .step-subtitle {
+    margin-top: 0.15rem;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .step-chevron {
+    color: #64748b;
+    transition: transform 0.2s ease;
+  }
+
+  .step-content {
+    display: block;
+    padding-top: 1rem;
+  }
+
+  .step-card.step-rotate-next {
+    animation: stepRotateNext 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .step-card.step-rotate-prev {
+    animation: stepRotatePrev 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes stepRotateNext {
+    from {
+      opacity: 0.25;
+      transform: perspective(1400px) rotateY(130deg) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: perspective(1400px) rotateY(0deg) scale(1);
+    }
+  }
+
+  @keyframes stepRotatePrev {
+    from {
+      opacity: 0.25;
+      transform: perspective(1400px) rotateY(-130deg) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: perspective(1400px) rotateY(0deg) scale(1);
+    }
+  }
+
+  .step-card.active .step-chevron {
+    transform: rotate(180deg);
+  }
+
+  .sub-heading {
+    font-size: 1.05rem;
+    line-height: 1.4rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.75rem;
+  }
+
+  .wizard-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .wizard-nav-end {
+    justify-content: flex-end;
+  }
+
+  .wizard-btn {
+    background: #135bec;
+    color: #ffffff;
+    border: 1px solid #135bec;
+    border-radius: 0.75rem;
+    font-weight: 800;
+    padding: 0.65rem 1.1rem;
+    transition: all 0.2s ease;
+  }
+
+  .wizard-btn:hover {
+    filter: brightness(0.95);
+    box-shadow: 0 12px 24px rgba(19, 91, 236, 0.25);
+  }
+
+  .wizard-btn-muted {
+    background: #ffffff;
+    color: #334155;
+    border-color: #cbd5e1;
+  }
+
+  .wizard-btn-muted:hover {
+    box-shadow: none;
+    border-color: #94a3b8;
+  }
+
+  .config-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 20px 40px rgba(148, 163, 184, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .config-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 24px 50px rgba(148, 163, 184, 0.24);
+  }
+
+  .wizard-progress-card {
+    position: sticky;
+    top: 6.25rem;
+    width: 100%;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+  }
+
+  .wizard-progress-track {
+    height: 0.5rem;
+    width: 100%;
+    border-radius: 9999px;
+    background: #e2e8f0;
+    overflow: hidden;
+  }
+
+  .wizard-progress-fill {
+    --wizard-progress: 0%;
+    height: 100%;
+    width: var(--wizard-progress);
+    background: #135bec;
+    transition: width 0.3s ease;
+  }
+
+  .wizard-progress-card:hover {
+    transform: none;
+  }
+
+  .field-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    background: #f1f5f9;
+    min-height: 60px;
+    padding: 0 1rem;
+  }
+
+  .field-area {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    background: #f1f5f9;
+    min-height: 60px;
+    padding: 0.75rem 1rem;
+  }
+
+  .field-input {
+    width: 100%;
+    background: transparent;
+    outline: none;
+    border: none;
+    color: #334155;
+  }
+
+  .field-input::placeholder {
+    color: #64748b;
+  }
+
+  .chip-btn {
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    background: #ffffff;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .chip-btn:hover {
+    border-color: #135bec;
+    color: #135bec;
+  }
+
+  .chip-btn-active {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35), 0 0 14px rgba(37, 99, 235, 0.26);
+  }
+
+  .chip-btn-active:hover {
+    background: #1d4ed8;
+    color: #ffffff;
+    border-color: #1d4ed8;
+  }
+
+  .color-picker {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #cbd5e1;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    overflow: hidden;
+  }
+
+  .color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  .color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 0.45rem;
+  }
+
+  .color-picker::-moz-color-swatch {
+    border: none;
+    border-radius: 0.45rem;
+  }
+
+  .theme-preview {
+    border: 1px solid #dbeafe;
+    border-radius: 0.85rem;
+    padding: 0.85rem;
+    background: #f8fbff;
+  }
+
+  .theme-preview-head {
+    margin-bottom: 0.65rem;
+  }
+
+  .theme-preview-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0f172a;
+  }
+
+  .theme-preview-text {
+    margin-top: 0.2rem;
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.35;
+  }
+
+  .theme-preview-hint {
+    margin-top: 0.2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+
+  .theme-preview-canvas {
+    --tp-accent: #2563eb;
+    --tp-soft: #dbeafe;
+    --tp-muted: #e2e8f0;
+    --tp-deep: #0f172a;
+    border: 1px solid #dbeafe;
+    border-radius: 0.7rem;
+    overflow: hidden;
+    background: #ffffff;
+    min-height: 300px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), 0 14px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .theme-preview-canvas[data-font='sans'] {
+    font-family: sans-serif;
+  }
+
+  .theme-preview-canvas[data-font='serif'] {
+    font-family: serif;
+  }
+
+  .theme-preview-canvas[data-font='mono'] {
+    font-family: monospace;
+  }
+
+  .theme-preview-canvas[data-font='custom'] {
+    font-family: var(--tp-custom-font, sans-serif);
+  }
+
+  .theme-preview-browser {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 1.45rem;
+    padding: 0 0.55rem;
+    border-bottom: 1px solid #dbeafe;
+  }
+
+  .theme-preview-dots {
+    display: inline-flex;
+    gap: 0.2rem;
+  }
+
+  .theme-preview-dots span {
+    width: 0.32rem;
+    height: 0.32rem;
+    border-radius: 9999px;
+    background: #94a3b8;
+    opacity: 0.9;
+  }
+
+  .theme-preview-url {
+    flex: 1;
+    height: 0.38rem;
+    border-radius: 9999px;
+    background: #cbd5e1;
+  }
+
+  .theme-preview-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.65rem 0.75rem 0.5rem;
+  }
+
+  .theme-preview-logo {
+    width: 3.1rem;
+    height: 0.62rem;
+    border-radius: 9999px;
+  }
+
+  .theme-preview-nav-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .theme-preview-pill {
+    min-width: 2.6rem;
+    height: 1rem;
+    padding: 0 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: #334155;
+    white-space: nowrap;
+  }
+
+  .theme-preview-hero {
+    padding: 0 0.75rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+
+  .theme-preview-hero-copy {
+    background: #f8fafc;
+    border-radius: 0.6rem;
+    padding: 0.6rem;
+  }
+
+  .theme-preview-kicker {
+    font-size: 0.52rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #475569;
+  }
+
+  .theme-preview-headline {
+    margin-top: 0.35rem;
+    font-size: 0.72rem;
+    line-height: 1.05rem;
+    font-weight: 800;
+    color: #0f172a;
+  }
+
+  .theme-preview-paragraph {
+    margin-top: 0.25rem;
+    font-size: 0.58rem;
+    line-height: 0.9rem;
+    color: #64748b;
+  }
+
+  .theme-preview-cta {
+    margin-top: 0.4rem;
+    width: max-content;
+    min-width: 44%;
+    height: 1rem;
+    padding: 0 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    font-size: 0.52rem;
+    font-weight: 800;
+    color: #ffffff;
+    box-shadow: 0 8px 14px rgba(37, 99, 235, 0.25);
+  }
+
+  .theme-preview-media {
+    position: relative;
+    border-radius: 0.6rem;
+    border: 1px solid #dbeafe;
+    min-height: 4.1rem;
+  }
+
+  .theme-preview-media-badge {
+    position: absolute;
+    right: 0.35rem;
+    bottom: 0.35rem;
+    font-size: 0.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    border-radius: 9999px;
+    padding: 0.1rem 0.35rem;
+  }
+
+  .theme-preview-content {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 0.6rem;
+    padding: 0.65rem 0.75rem 0.75rem;
+  }
+
+  .theme-preview-main {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .theme-preview-card {
+    display: flex;
+    align-items: flex-end;
+    padding: 0.35rem;
+    border-radius: 0.5rem;
+    min-height: 2.1rem;
+  }
+
+  .theme-preview-card-title {
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .theme-preview-side {
+    display: flex;
+    align-items: flex-end;
+    padding: 0.35rem;
+    border-radius: 0.5rem;
+    min-height: 2.1rem;
+    border: 1px solid #dbeafe;
+  }
+
+  .theme-preview-side-title {
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-media {
+    display: none;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-content {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-side {
+    display: none;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] {
+    background: #faf5ff;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-hero {
+    grid-template-columns: 1fr 1.2fr;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-card:first-child {
+    grid-column: span 2;
+    min-height: 1.6rem;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-nav {
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 0.65rem;
+    margin: 0 0.75rem 0.4rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero-copy {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+  }
+
+  .theme-preview-canvas[data-theme='custom'] {
+    background: linear-gradient(160deg, #f0fdfa, #ecfeff);
+  }
+
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-card,
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-side,
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-media {
+    border: 1px dashed #2dd4bf;
+  }
+
+  @media (min-width: 768px) {
+    .config-card {
+      padding: 1.25rem;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+        .wizard-progress-track {
+          background: #334155;
+        }
+
+        .wizard-progress-fill {
+          background: #2563eb;
+        }
+
+    .step-trigger {
+      border-bottom-color: #334155;
+    }
+
+    .step-title {
+      color: #f8fafc;
+    }
+
+    .step-subtitle,
+    .step-chevron {
+      color: #94a3b8;
+    }
+
+    .sub-heading {
+      color: #e2e8f0;
+    }
+
+    .wizard-btn-muted {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-color: #334155;
+    }
+
+    .wizard-btn-muted:hover {
+      border-color: #60a5fa;
+    }
+
+    .config-card {
+      background: #1e293b;
+      border-color: #334155;
+      box-shadow: none;
+    }
+
+    .config-card:hover {
+      box-shadow: none;
+    }
+
+    .field-row,
+    .field-area {
+      border-color: #334155;
+      background: #0f172a;
+    }
+
+    .field-input {
+      color: #cbd5e1;
+    }
+
+    .field-input::placeholder {
+      color: #64748b;
+    }
+
+    .chip-btn {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-color: #334155;
+    }
+
+    .chip-btn:hover {
+      color: #60a5fa;
+      border-color: #60a5fa;
+    }
+
+    .chip-btn-active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35), 0 0 14px rgba(59, 130, 246, 0.28);
+    }
+
+    .chip-btn-active:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+
+    .color-picker {
+      border-color: #475569;
+    }
+
+    .theme-preview {
+      border-color: #334155;
+      background: #172033;
+    }
+
+    .theme-preview-title {
+      color: #f8fafc;
+    }
+
+    .theme-preview-text {
+      color: #94a3b8;
+    }
+
+    .theme-preview-hint {
+      color: #64748b;
+    }
+
+    .theme-preview-canvas {
+      border-color: #334155;
+      background: #0f172a;
+    }
+
+    .theme-preview-browser,
+    .theme-preview-canvas[data-theme='elegant'] .theme-preview-nav {
+      border-color: #334155;
+    }
+
+    .theme-preview-url {
+      background: #475569;
+    }
+
+    .theme-preview-pill,
+    .theme-preview-media-badge {
+      color: #cbd5e1;
+      border-color: #475569;
+      background: rgba(15, 23, 42, 0.75);
+    }
+
+    .theme-preview-dots span {
+      background: #64748b;
+    }
+
+    .theme-preview-hero-copy {
+      background: #111827;
+    }
+
+    .theme-preview-kicker {
+      color: #94a3b8;
+    }
+
+    .theme-preview-headline {
+      color: #f8fafc;
+    }
+
+    .theme-preview-paragraph,
+    .theme-preview-card-title,
+    .theme-preview-side-title {
+      color: #cbd5e1;
+    }
+
+    .theme-preview-media,
+    .theme-preview-side,
+    .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero-copy {
+      border-color: #334155;
+    }
+
+    .theme-preview-canvas[data-theme='bold'] {
+      background: #2e1065;
+    }
+
+    .theme-preview-canvas[data-theme='custom'] {
+      background: linear-gradient(160deg, #052e2b, #0f172a);
+    }
+  }
+</style>

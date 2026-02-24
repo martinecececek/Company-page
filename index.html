@@ -1,0 +1,1553 @@
+<!doctype html>
+<html class="light" lang="cs">
+   <head>
+      <meta charset="utf-8" />
+      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+      <title>Digital Agency | Transforming Ideas into Reality</title>
+      <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+      <link
+         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+         rel="stylesheet"
+      />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+         rel="stylesheet"
+      />
+      <script id="tailwind-config">
+         tailwind.config = {
+            darkMode: "class",
+            theme: {
+               extend: {
+                  colors: {
+                     primary: "#135bec",
+                     "background-light": "#f6f6f8",
+                     "background-dark": "#0a0f1d",
+                  },
+                  fontFamily: {
+                     display: ["Inter", "sans-serif"],
+                  },
+                  borderRadius: {
+                     DEFAULT: "0.25rem",
+                     lg: "0.5rem",
+                     xl: "0.75rem",
+                     "2xl": "1rem",
+                     "3xl": "1.5rem",
+                     full: "9999px",
+                  },
+               },
+            },
+         };
+      </script>
+      <style type="text/tailwindcss">
+         body {
+            font-family: "Inter", sans-serif;
+         }
+         .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+         }
+         .pricing-card-modern {
+            @apply bg-white dark:bg-slate-800 p-8 rounded-[2rem] relative flex flex-col items-center text-center transition-all border border-slate-100 dark:border-slate-700 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-1;
+         }
+         .process-card-neo {
+            background: #0d1425;
+            border: 4px solid #135bec;
+            box-shadow: 8px 8px 0px 0px #135bec;
+            transition: all 0.3s ease;
+         }
+         .process-card-neo:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px 0px #135bec;
+         }
+         .roadmap-path-container {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: rgba(19, 91, 236, 0.1);
+            transform: translateX(-50%);
+            z-index: 1;
+         }
+         .roadmap-path-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #135bec;
+            box-shadow:
+               0 0 15px rgba(19, 91, 236, 0.8),
+               0 0 30px rgba(19, 91, 236, 0.4);
+            height: 0%;
+            transition: height 0.5s ease-out;
+         }
+         .roadmap-path-fill::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(
+               to bottom,
+               transparent,
+               #60a5fa,
+               transparent
+            );
+            background-size: 100% 200px;
+            animation: flowLine 3s linear infinite;
+         }
+         @keyframes flowLine {
+            0% {
+               background-position: 0 -200px;
+            }
+            100% {
+               background-position: 0 100%;
+            }
+         }
+         .pulse-marker {
+            animation: markerPulse 2s infinite;
+         }
+         @keyframes markerPulse {
+            0% {
+               box-shadow: 0 0 0 0 rgba(19, 91, 236, 0.7);
+            }
+            70% {
+               box-shadow: 0 0 0 20px rgba(19, 91, 236, 0);
+            }
+            100% {
+               box-shadow: 0 0 0 0 rgba(19, 91, 236, 0);
+            }
+         }
+         .reveal-step {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+         }
+         .reveal-step.active {
+            opacity: 1;
+            transform: translateY(0);
+         }
+         .material-symbols-outlined {
+            font-variation-settings:
+               "FILL" 0,
+               "wght" 400,
+               "GRAD" 0,
+               "opsz" 24;
+         }
+      </style>
+   </head>
+   <body
+      class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/30"
+   >
+      <header
+         class="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-slate-200 dark:border-slate-800"
+      >
+         <nav
+            class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between"
+         >
+            <div class="flex items-center gap-2 group cursor-pointer">
+               <div class="bg-primary p-2 rounded-lg">
+                  <span class="material-symbols-outlined text-white"
+                     >rocket_launch</span
+                  >
+               </div>
+               <span class="text-xl font-bold tracking-tight"
+                  >Nexus<span class="text-primary">Digital</span></span
+               >
+            </div>
+            <div class="hidden md:flex items-center gap-10">
+               <a
+                  class="text-sm font-semibold hover:text-primary transition-colors"
+                  href="#choices"
+                  >Web Choices</a
+               >
+               <a
+                  class="text-sm font-semibold hover:text-primary transition-colors"
+                  href="#process"
+                  >Roadmap</a
+               >
+               <a
+                  class="text-sm font-semibold hover:text-primary transition-colors"
+                  href="#services"
+                  >Services</a
+               >
+               <a
+                  class="text-sm font-semibold hover:text-primary transition-colors"
+                  href="#why-us"
+                  >Why Us</a
+               >
+            </div>
+            <div class="flex items-center gap-4">
+               <button
+                  class="hidden sm:block text-sm font-semibold px-4 py-2 hover:text-primary transition-colors"
+               >
+                  Log In
+               </button>
+               <button
+                  class="bg-primary text-white text-sm font-bold px-6 py-2.5 rounded-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
+               >
+                  Get Started
+               </button>
+            </div>
+         </nav>
+      </header>
+      <main class="pt-20">
+         <section
+            class="relative min-h-[85vh] flex items-center overflow-hidden"
+         >
+            <div
+               class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20"
+            >
+               <div class="z-10">
+                  <div
+                     class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6"
+                  >
+                     <span class="relative flex h-2 w-2">
+                        <span
+                           class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"
+                        ></span>
+                        <span
+                           class="relative inline-flex rounded-full h-2 w-2 bg-primary"
+                        ></span>
+                     </span>
+                     <span
+                        class="text-xs font-bold uppercase tracking-wider text-primary"
+                        >Now accepting new projects</span
+                     >
+                  </div>
+                  <h1
+                     class="text-5xl md:text-7xl font-black leading-[1.1] mb-6 tracking-tight"
+                  >
+                     Transforming
+                     <span class="text-primary">Digital Ideas</span> into
+                     Scalable Realities
+                  </h1>
+                  <p
+                     class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed max-w-xl"
+                  >
+                     We build high-performance web applications and
+                     growth-oriented marketing strategies for forward-thinking
+                     brands globally.
+                  </p>
+                  <div class="flex flex-col sm:flex-row gap-4">
+                     <button
+                        class="bg-primary text-white text-lg font-bold px-8 py-4 rounded-xl hover:shadow-xl hover:shadow-primary/30 transition-all"
+                     >
+                        Start Your Project
+                     </button>
+                     <button
+                        class="flex items-center justify-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-lg font-bold px-8 py-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
+                     >
+                        <span class="material-symbols-outlined"
+                           >play_circle</span
+                        >
+                        View Our Work
+                     </button>
+                  </div>
+                  <div class="mt-12 flex items-center gap-6">
+                     <div class="flex -space-x-3">
+                        <img
+                           class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 object-cover"
+                           src="https://lh3.googleusercontent.com/aida-public/AB6AXuApY9F3mLhgNstXiMYyj76gBljeeZEjSbOnSMV0iKHxtTfYzCa-7GgzDW3adx9zHZy1qt57iZPVelKGWhbNYsIbL58IGi-llnBVNQM83VzD4T2sy222_GxQc1lo62-6dK5F2rkzbJzMsNkYtIDkELGWLwMtI6enPrllIarlStez7PDUaBAs2vb8U9WMgepOyw-PINmp6n1mfcwSjUkrChUdEeRyYsMj5TEcJUA9lV4No-h1dQb09E2S1Fg_XZdc0wrcU3UFwgio7sD5"
+                        />
+                        <img
+                           class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 object-cover"
+                           src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZpWO4EWiNSiMswwQGDyIGUX6vQaSJB30sfLe8KCoAXcA6hUvXaV7G1KEp_QirCReKCUlxDAHDYl6atZSRUp_MIOlef58RnTUZ92YWDIdhm2U4tKDscZ3146-uSBqWR8WCDJoMShZshULmSmoVnNUJz9ffl-tkwXbaHPVALafk3aSP4OMrseJe62fpQOG0J7pXcYx8_McY9F7JNzK91fA02wIVd1HRRQYFKHIykyYC7SjPMOf6RR_JQSKEriBozGlcI9-th9238y0q"
+                        />
+                        <img
+                           class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 object-cover"
+                           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf_ufc976qN4NeMDR05WZo4Z0YUjtHjDE3YLyGHhK30FonKnQtdhOmp-4nUNw1_9Wl6UnrrqRTx7DUOz3tijGykz2TEMQ3zvJR6ZzYdGwOYGKcWZsjGhz6j2oc-blYgR2anpOn8juLWwGJ8LX2tlztoPsO5VIHGFRAKYHFxBtmDg0XP0R04Bm_qxSGauux5SigC3q1_DWY1sJvYg3nGupoplMBGEecu3LRjZQVkdl1_cznBazU2zZBFT-6sXH_TlSUSx6u1gnfZHm6"
+                        />
+                     </div>
+                     <div class="text-sm font-medium text-slate-500">
+                        <span class="font-bold text-slate-900 dark:text-white"
+                           >500+</span
+                        >
+                        companies trust us
+                     </div>
+                  </div>
+               </div>
+               <div class="relative group">
+                  <div
+                     class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-95 opacity-50 group-hover:opacity-70 transition-opacity"
+                  ></div>
+                  <div
+                     class="relative bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700"
+                  >
+                     <img
+                        alt="Dashboard Preview"
+                        class="rounded-xl w-full"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYSLsaHd3svCQ3Sz0lqjt1ar4r8hs72BxPiKinJsLkVAXZMO1aYcbTb0EteKcOC4_yFUARuJvq-JCW1RXeIE9piORcZopz3PACWC03BAUB4Zyl7B7OcY3pHWpuWXKCz5Tuij9kPXvQdW5kg9IQt1_gFj_xuzuuf9PLHYOWANUoAtnH8Li6JhXlPvq5Y9pijVrLIDFWY9gOmQWaH0g8KLiI5qRyKESZnWaQXpBZ20_HyZ1TD7Acv6T6G-asgAWL0_HXmDkmTghhS0jm"
+                     />
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section class="py-32 bg-slate-50 dark:bg-slate-900/40" id="choices">
+            <div class="max-w-7xl mx-auto px-6">
+               <div class="text-center mb-20">
+                  <span
+                     class="bg-primary/10 text-primary border border-primary/20 px-6 py-2 rounded-full text-sm font-black uppercase tracking-widest mb-6 inline-block"
+                     >Flexible Solutions</span
+                  >
+                  <h2
+                     class="text-5xl md:text-6xl font-black tracking-tight mb-8"
+                  >
+                     Choose Your Web Strategy
+                  </h2>
+                  <p
+                     class="text-slate-600 dark:text-slate-400 text-xl max-w-2xl mx-auto font-medium"
+                  >
+                     Tailored packages designed to meet your business needs and
+                     accelerate your digital growth.
+                  </p>
+               </div>
+               <div
+                  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+               >
+                  <div class="pricing-card-modern">
+                     <div class="flex justify-between items-start w-full mb-8">
+                        <div
+                           class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1"
+                        >
+                           <span class="material-symbols-outlined text-[14px]"
+                              >schedule</span
+                           >
+                           DO 5 DNŮ
+                        </div>
+                        <div
+                           class="bg-slate-900 text-white px-4 py-2 rounded-xl text-right"
+                        >
+                           <div class="text-lg font-black leading-none">
+                              15 000 Kč
+                           </div>
+                           <span
+                              class="text-[8px] uppercase opacity-60 tracking-widest font-bold"
+                              >CENA</span
+                           >
+                        </div>
+                     </div>
+                     <span
+                        class="material-symbols-outlined text-primary text-5xl mb-6"
+                        >web_asset</span
+                     >
+                     <h4 class="text-xl font-extrabold mb-6 tracking-tight">
+                        Jednoduchý web
+                     </h4>
+                     <ul class="w-full space-y-3 mb-10 text-left">
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Responzivní design
+                        </li>
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Rychlost načítání
+                        </li>
+                     </ul>
+                     <button
+                        class="w-full mt-auto bg-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 dark:shadow-none"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >mail</span
+                        >
+                        Nezávazná konzultace
+                     </button>
+                  </div>
+                  <div class="pricing-card-modern">
+                     <div class="flex justify-between items-start w-full mb-8">
+                        <div
+                           class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1"
+                        >
+                           <span class="material-symbols-outlined text-[14px]"
+                              >schedule</span
+                           >
+                           DO 12 DNŮ
+                        </div>
+                        <div
+                           class="bg-slate-900 text-white px-4 py-2 rounded-xl text-right"
+                        >
+                           <div class="text-lg font-black leading-none">
+                              35 000 Kč
+                           </div>
+                           <span
+                              class="text-[8px] uppercase opacity-60 tracking-widest font-bold"
+                              >CENA</span
+                           >
+                        </div>
+                     </div>
+                     <span
+                        class="material-symbols-outlined text-primary text-5xl mb-6"
+                        >person</span
+                     >
+                     <h4 class="text-xl font-extrabold mb-6 tracking-tight">
+                        Web pro podnikatele
+                     </h4>
+                     <ul class="w-full space-y-3 mb-10 text-left">
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Portfolio &amp; Reference
+                        </li>
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           SEO optimalizace
+                        </li>
+                     </ul>
+                     <button
+                        class="w-full mt-auto bg-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 dark:shadow-none"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >mail</span
+                        >
+                        Nezávazná konzultace
+                     </button>
+                  </div>
+                  <div
+                     class="pricing-card-modern border-primary/20 ring-1 ring-primary/5"
+                  >
+                     <div
+                        class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest shadow-lg"
+                     >
+                        Nejoblíbenější
+                     </div>
+                     <div class="flex justify-between items-start w-full mb-8">
+                        <div
+                           class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1"
+                        >
+                           <span class="material-symbols-outlined text-[14px]"
+                              >schedule</span
+                           >
+                           DO 25 DNŮ
+                        </div>
+                        <div
+                           class="bg-slate-900 text-white px-4 py-2 rounded-xl text-right"
+                        >
+                           <div class="text-lg font-black leading-none">
+                              50 000 Kč
+                           </div>
+                           <span
+                              class="text-[8px] uppercase opacity-60 tracking-widest font-bold"
+                              >CENA</span
+                           >
+                        </div>
+                     </div>
+                     <span
+                        class="material-symbols-outlined text-primary text-5xl mb-6"
+                        >corporate_fare</span
+                     >
+                     <h4 class="text-xl font-extrabold mb-6 tracking-tight">
+                        Firemní web
+                     </h4>
+                     <ul class="w-full space-y-3 mb-10 text-left">
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Vícejazyčnost (CZ/EN)
+                        </li>
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Komplexní CMS řešení
+                        </li>
+                     </ul>
+                     <button
+                        class="w-full mt-auto bg-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 dark:shadow-none"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >mail</span
+                        >
+                        Nezávazná konzultace
+                     </button>
+                  </div>
+                  <div class="pricing-card-modern">
+                     <div class="flex justify-between items-start w-full mb-8">
+                        <div
+                           class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1"
+                        >
+                           <span class="material-symbols-outlined text-[14px]"
+                              >schedule</span
+                           >
+                           DO 30 DNŮ
+                        </div>
+                        <div
+                           class="bg-slate-900 text-white px-4 py-2 rounded-xl text-right"
+                        >
+                           <div class="text-lg font-black leading-none">
+                              75 000 Kč
+                           </div>
+                           <span
+                              class="text-[8px] uppercase opacity-60 tracking-widest font-bold"
+                              >CENA</span
+                           >
+                        </div>
+                     </div>
+                     <span
+                        class="material-symbols-outlined text-primary text-5xl mb-6"
+                        >shopping_bag</span
+                     >
+                     <h4 class="text-xl font-extrabold mb-6 tracking-tight">
+                        E-shop Lite
+                     </h4>
+                     <ul class="w-full space-y-3 mb-10 text-left">
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Správa produktů &amp; objednávek
+                        </li>
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Platební brána
+                        </li>
+                     </ul>
+                     <button
+                        class="w-full mt-auto bg-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 dark:shadow-none"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >mail</span
+                        >
+                        Nezávazná konzultace
+                     </button>
+                  </div>
+                  <div class="pricing-card-modern">
+                     <div class="flex justify-between items-start w-full mb-8">
+                        <div
+                           class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1"
+                        >
+                           <span class="material-symbols-outlined text-[14px]"
+                              >schedule</span
+                           >
+                           INDIVIDUÁLNĚ
+                        </div>
+                        <div
+                           class="bg-slate-900 text-white px-4 py-2 rounded-xl text-right"
+                        >
+                           <div class="text-lg font-black leading-none">
+                              od 120k Kč
+                           </div>
+                           <span
+                              class="text-[8px] uppercase opacity-60 tracking-widest font-bold"
+                              >CENA</span
+                           >
+                        </div>
+                     </div>
+                     <span
+                        class="material-symbols-outlined text-primary text-5xl mb-6"
+                        >terminal</span
+                     >
+                     <h4 class="text-xl font-extrabold mb-6 tracking-tight">
+                        Custom App
+                     </h4>
+                     <ul class="w-full space-y-3 mb-10 text-left">
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Vývoj na míru (SaaS)
+                        </li>
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Integrace externích API
+                        </li>
+                     </ul>
+                     <button
+                        class="w-full mt-auto bg-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 dark:shadow-none"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >mail</span
+                        >
+                        Nezávazná konzultace
+                     </button>
+                  </div>
+                  <div class="pricing-card-modern">
+                     <div class="flex justify-between items-start w-full mb-8">
+                        <div
+                           class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1"
+                        >
+                           <span class="material-symbols-outlined text-[14px]"
+                              >schedule</span
+                           >
+                           DLOUHODOBĚ
+                        </div>
+                        <div
+                           class="bg-slate-900 text-white px-4 py-2 rounded-xl text-right"
+                        >
+                           <div class="text-lg font-black leading-none">
+                              Custom
+                           </div>
+                           <span
+                              class="text-[8px] uppercase opacity-60 tracking-widest font-bold"
+                              >CENA</span
+                           >
+                        </div>
+                     </div>
+                     <span
+                        class="material-symbols-outlined text-primary text-5xl mb-6"
+                        >hub</span
+                     >
+                     <h4 class="text-xl font-extrabold mb-6 tracking-tight">
+                        Enterprise Solutions
+                     </h4>
+                     <ul class="w-full space-y-3 mb-10 text-left">
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           Dedikovaný tým vývojářů
+                        </li>
+                        <li
+                           class="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm font-medium"
+                        >
+                           <span
+                              class="material-symbols-outlined text-primary text-lg font-bold"
+                              >check</span
+                           >
+                           SLA podpora 24/7
+                        </li>
+                     </ul>
+                     <button
+                        class="w-full mt-auto bg-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 dark:shadow-none"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >mail</span
+                        >
+                        Nezávazná konzultace
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section
+            class="py-32 bg-background-dark text-white overflow-hidden relative"
+            id="process"
+         >
+            <div class="max-w-7xl mx-auto px-6">
+               <div class="mb-32 text-center">
+                  <span
+                     class="bg-primary/20 text-primary border border-primary/30 px-6 py-2 rounded-full text-sm font-black uppercase tracking-widest mb-6 inline-block"
+                     >The Journey</span
+                  >
+                  <h2
+                     class="text-5xl md:text-7xl font-black tracking-tighter mb-8 italic uppercase"
+                  >
+                     Roadmap to Success
+                  </h2>
+                  <p
+                     class="text-slate-300 text-xl max-w-2xl mx-auto font-medium"
+                  >
+                     A transparent, results-driven process designed to take your
+                     digital presence from concept to industry leader.
+                  </p>
+               </div>
+               <div class="relative max-w-6xl mx-auto">
+                  <div class="roadmap-path-container hidden lg:block">
+                     <div class="roadmap-path-fill" id="roadmapLine"></div>
+                  </div>
+                  <div class="space-y-24 lg:space-y-40 relative">
+                     <div
+                        class="reveal-step flex flex-col lg:flex-row items-center gap-12 lg:gap-0"
+                     >
+                        <div
+                           class="lg:w-1/2 lg:pr-24 text-center lg:text-right order-2 lg:order-1"
+                        >
+                           <div
+                              class="process-card-neo p-10 rounded-sm inline-block w-full text-left lg:text-right"
+                           >
+                              <div
+                                 class="flex flex-col items-center lg:items-end"
+                              >
+                                 <span
+                                    class="material-symbols-outlined text-primary text-5xl mb-6"
+                                    >chat_bubble</span
+                                 >
+                                 <h4
+                                    class="text-3xl md:text-5xl font-black mb-4 uppercase leading-none text-white"
+                                 >
+                                    1. Dotaz / Brief
+                                 </h4>
+                                 <p
+                                    class="text-white text-lg font-medium opacity-80 leading-relaxed max-w-md lg:ml-auto"
+                                 >
+                                    Discovery phase. We dive deep into your
+                                    goals, audience, and project vision to build
+                                    a solid strategic foundation.
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="relative z-20 order-1 lg:order-2">
+                           <div
+                              class="size-20 rounded-full bg-primary border-[6px] border-background-dark flex items-center justify-center pulse-marker shadow-[0_0_30px_rgba(19,91,236,0.8)]"
+                           >
+                              <span class="text-white font-black text-2xl"
+                                 >01</span
+                              >
+                           </div>
+                        </div>
+                        <div class="lg:w-1/2 hidden lg:block order-3"></div>
+                     </div>
+                     <div
+                        class="reveal-step flex flex-col lg:flex-row items-center gap-12 lg:gap-0"
+                     >
+                        <div class="lg:w-1/2 hidden lg:block"></div>
+                        <div class="relative z-20">
+                           <div
+                              class="size-20 rounded-full bg-primary border-[6px] border-background-dark flex items-center justify-center pulse-marker shadow-[0_0_30px_rgba(19,91,236,0.8)]"
+                           >
+                              <span class="text-white font-black text-2xl"
+                                 >02</span
+                              >
+                           </div>
+                        </div>
+                        <div class="lg:w-1/2 lg:pl-24 text-center lg:text-left">
+                           <div
+                              class="process-card-neo p-10 rounded-sm inline-block w-full text-left"
+                           >
+                              <div
+                                 class="flex flex-col items-center lg:items-start"
+                              >
+                                 <span
+                                    class="material-symbols-outlined text-primary text-5xl mb-6"
+                                    >biotech</span
+                                 >
+                                 <h4
+                                    class="text-3xl md:text-5xl font-black mb-4 uppercase leading-none text-white"
+                                 >
+                                    2. Analýza &amp; Zadání
+                                 </h4>
+                                 <p
+                                    class="text-white text-lg font-medium opacity-80 leading-relaxed max-w-md"
+                                 >
+                                    Technical blueprint. We outline the
+                                    architecture, features, and specifications
+                                    required for a high-performance solution.
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div
+                        class="reveal-step flex flex-col lg:flex-row items-center gap-12 lg:gap-0"
+                     >
+                        <div
+                           class="lg:w-1/2 lg:pr-24 text-center lg:text-right order-2 lg:order-1"
+                        >
+                           <div
+                              class="process-card-neo p-10 rounded-sm inline-block w-full text-left lg:text-right"
+                           >
+                              <div
+                                 class="flex flex-col items-center lg:items-end"
+                              >
+                                 <span
+                                    class="material-symbols-outlined text-primary text-5xl mb-6"
+                                    >palette</span
+                                 >
+                                 <h4
+                                    class="text-3xl md:text-5xl font-black mb-4 uppercase leading-none text-white"
+                                 >
+                                    3. Design Phase
+                                 </h4>
+                                 <p
+                                    class="text-white text-lg font-medium opacity-80 leading-relaxed max-w-md lg:ml-auto"
+                                 >
+                                    Visual storytelling. Crafting stunning UI/UX
+                                    designs that balance aesthetics with
+                                    conversion-focused functionality.
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="relative z-20 order-1 lg:order-2">
+                           <div
+                              class="size-20 rounded-full bg-primary border-[6px] border-background-dark flex items-center justify-center pulse-marker shadow-[0_0_30px_rgba(19,91,236,0.8)]"
+                           >
+                              <span class="text-white font-black text-2xl"
+                                 >03</span
+                              >
+                           </div>
+                        </div>
+                        <div class="lg:w-1/2 hidden lg:block order-3"></div>
+                     </div>
+                     <div
+                        class="reveal-step flex flex-col lg:flex-row items-center gap-12 lg:gap-0"
+                     >
+                        <div class="lg:w-1/2 hidden lg:block"></div>
+                        <div class="relative z-20">
+                           <div
+                              class="size-20 rounded-full bg-primary border-[6px] border-background-dark flex items-center justify-center pulse-marker shadow-[0_0_30px_rgba(19,91,236,0.8)]"
+                           >
+                              <span class="text-white font-black text-2xl"
+                                 >04</span
+                              >
+                           </div>
+                        </div>
+                        <div class="lg:w-1/2 lg:pl-24 text-center lg:text-left">
+                           <div
+                              class="process-card-neo p-10 rounded-sm inline-block w-full text-left"
+                           >
+                              <div
+                                 class="flex flex-col items-center lg:items-start"
+                              >
+                                 <span
+                                    class="material-symbols-outlined text-primary text-5xl mb-6"
+                                    >terminal</span
+                                 >
+                                 <h4
+                                    class="text-3xl md:text-5xl font-black mb-4 uppercase leading-none text-white"
+                                 >
+                                    4. Vývoj (Dev)
+                                 </h4>
+                                 <p
+                                    class="text-white text-lg font-medium opacity-80 leading-relaxed max-w-md"
+                                 >
+                                    Code execution. Our developers build robust,
+                                    scalable systems using cutting-edge tech
+                                    stacks and agile methodologies.
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div
+                        class="reveal-step flex flex-col lg:flex-row items-center gap-12 lg:gap-0"
+                     >
+                        <div
+                           class="lg:w-1/2 lg:pr-24 text-center lg:text-right order-2 lg:order-1"
+                        >
+                           <div
+                              class="process-card-neo p-10 rounded-sm inline-block w-full text-left lg:text-right"
+                           >
+                              <div
+                                 class="flex flex-col items-center lg:items-end"
+                              >
+                                 <span
+                                    class="material-symbols-outlined text-primary text-5xl mb-6"
+                                    >rocket_launch</span
+                                 >
+                                 <h4
+                                    class="text-3xl md:text-5xl font-black mb-4 uppercase leading-none text-white"
+                                 >
+                                    5. Spuštění
+                                 </h4>
+                                 <p
+                                    class="text-white text-lg font-medium opacity-80 leading-relaxed max-w-md lg:ml-auto"
+                                 >
+                                    Blast off! Final testing, deployment, and
+                                    team training to ensure you are fully
+                                    equipped for your new digital era.
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="relative z-20 order-1 lg:order-2">
+                           <div
+                              class="size-20 rounded-full bg-primary border-[6px] border-background-dark flex items-center justify-center pulse-marker shadow-[0_0_30px_rgba(19,91,236,0.8)]"
+                           >
+                              <span class="text-white font-black text-2xl"
+                                 >05</span
+                              >
+                           </div>
+                        </div>
+                        <div class="lg:w-1/2 hidden lg:block order-3"></div>
+                     </div>
+                     <div
+                        class="reveal-step flex flex-col lg:flex-row items-center gap-12 lg:gap-0"
+                     >
+                        <div class="lg:w-1/2 hidden lg:block"></div>
+                        <div class="relative z-20">
+                           <div
+                              class="size-20 rounded-full bg-primary border-[6px] border-background-dark flex items-center justify-center pulse-marker shadow-[0_0_30px_rgba(19,91,236,0.8)]"
+                           >
+                              <span class="text-white font-black text-2xl"
+                                 >06</span
+                              >
+                           </div>
+                        </div>
+                        <div class="lg:w-1/2 lg:pl-24 text-center lg:text-left">
+                           <div
+                              class="process-card-neo p-10 rounded-sm inline-block w-full text-left"
+                           >
+                              <div
+                                 class="flex flex-col items-center lg:items-start"
+                              >
+                                 <span
+                                    class="material-symbols-outlined text-primary text-5xl mb-6"
+                                    >support_agent</span
+                                 >
+                                 <h4
+                                    class="text-3xl md:text-5xl font-black mb-4 uppercase leading-none text-white"
+                                 >
+                                    6. Podpora
+                                 </h4>
+                                 <p
+                                    class="text-white text-lg font-medium opacity-80 leading-relaxed max-w-md"
+                                 >
+                                    Constant growth. Long-term technical support
+                                    and iterative improvements to keep you ahead
+                                    of the competition.
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section
+            class="py-12 bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800"
+         >
+            <div class="max-w-7xl mx-auto px-6">
+               <p
+                  class="text-center text-sm font-bold uppercase tracking-[0.2em] text-slate-400 mb-8"
+               >
+                  Trusted by industry leaders
+               </p>
+               <div
+                  class="flex flex-wrap justify-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-500"
+               >
+                  <span class="text-2xl font-black text-slate-500"
+                     >TECHFLOW</span
+                  >
+                  <span class="text-2xl font-black text-slate-500">GLOBAX</span>
+                  <span class="text-2xl font-black text-slate-500"
+                     >QUANTUM</span
+                  >
+                  <span class="text-2xl font-black text-slate-500">NEXUS</span>
+                  <span class="text-2xl font-black text-slate-500">VERTEX</span>
+               </div>
+            </div>
+         </section>
+         <section class="py-32" id="services">
+            <div class="max-w-7xl mx-auto px-6">
+               <div class="max-w-3xl mb-20">
+                  <h2
+                     class="text-primary font-bold tracking-widest uppercase text-sm mb-4"
+                  >
+                     Our Expertise
+                  </h2>
+                  <h3
+                     class="text-4xl md:text-5xl font-black tracking-tight mb-6"
+                  >
+                     Comprehensive digital solutions tailored to your business
+                     goals.
+                  </h3>
+               </div>
+               <div
+                  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+               >
+                  <div
+                     class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary transition-all hover:shadow-xl"
+                  >
+                     <div
+                        class="size-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all"
+                     >
+                        <span class="material-symbols-outlined text-3xl"
+                           >code</span
+                        >
+                     </div>
+                     <h4 class="text-xl font-bold mb-3">Web Development</h4>
+                     <p
+                        class="text-slate-500 dark:text-slate-400 leading-relaxed mb-6"
+                     >
+                        Scalable, secure, and lightning-fast web applications
+                        built with modern frameworks.
+                     </p>
+                     <a
+                        class="text-primary font-bold flex items-center gap-1 group/link"
+                        href="#"
+                     >
+                        Learn more
+                        <span
+                           class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform"
+                           >arrow_forward</span
+                        >
+                     </a>
+                  </div>
+                  <div
+                     class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary transition-all hover:shadow-xl"
+                  >
+                     <div
+                        class="size-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all"
+                     >
+                        <span class="material-symbols-outlined text-3xl"
+                           >draw</span
+                        >
+                     </div>
+                     <h4 class="text-xl font-bold mb-3">UI/UX Design</h4>
+                     <p
+                        class="text-slate-500 dark:text-slate-400 leading-relaxed mb-6"
+                     >
+                        User-centric interfaces that drive engagement and
+                        simplify complex workflows.
+                     </p>
+                     <a
+                        class="text-primary font-bold flex items-center gap-1 group/link"
+                        href="#"
+                     >
+                        Learn more
+                        <span
+                           class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform"
+                           >arrow_forward</span
+                        >
+                     </a>
+                  </div>
+                  <div
+                     class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary transition-all hover:shadow-xl"
+                  >
+                     <div
+                        class="size-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all"
+                     >
+                        <span class="material-symbols-outlined text-3xl"
+                           >trending_up</span
+                        >
+                     </div>
+                     <h4 class="text-xl font-bold mb-3">Growth Marketing</h4>
+                     <p
+                        class="text-slate-500 dark:text-slate-400 leading-relaxed mb-6"
+                     >
+                        Data-driven strategies to scale your reach and maximize
+                        conversion rates.
+                     </p>
+                     <a
+                        class="text-primary font-bold flex items-center gap-1 group/link"
+                        href="#"
+                     >
+                        Learn more
+                        <span
+                           class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform"
+                           >arrow_forward</span
+                        >
+                     </a>
+                  </div>
+                  <div
+                     class="group bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-primary transition-all hover:shadow-xl"
+                  >
+                     <div
+                        class="size-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-all"
+                     >
+                        <span class="material-symbols-outlined text-3xl"
+                           >cloud</span
+                        >
+                     </div>
+                     <h4 class="text-xl font-bold mb-3">
+                        Cloud Infrastructure
+                     </h4>
+                     <p
+                        class="text-slate-500 dark:text-slate-400 leading-relaxed mb-6"
+                     >
+                        Reliable cloud architecture ensuring 99.9% uptime and
+                        seamless scaling.
+                     </p>
+                     <a
+                        class="text-primary font-bold flex items-center gap-1 group/link"
+                        href="#"
+                     >
+                        Learn more
+                        <span
+                           class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform"
+                           >arrow_forward</span
+                        >
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section class="py-32 bg-slate-900 text-white" id="success">
+            <div class="max-w-7xl mx-auto px-6">
+               <div
+                  class="flex flex-col md:flex-row justify-between items-end gap-6 mb-20"
+               >
+                  <div class="max-w-2xl">
+                     <h2
+                        class="text-primary font-bold tracking-widest uppercase text-sm mb-4"
+                     >
+                        Client Success Stories
+                     </h2>
+                     <h3 class="text-4xl md:text-5xl font-black tracking-tight">
+                        Real-world results for ambitious global companies.
+                     </h3>
+                  </div>
+                  <button
+                     class="flex items-center gap-2 font-bold px-6 py-3 border border-slate-700 rounded-lg hover:bg-slate-800 transition-all"
+                  >
+                     View All Case Studies
+                     <span class="material-symbols-outlined">north_east</span>
+                  </button>
+               </div>
+               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div
+                     class="bg-slate-800/50 rounded-3xl overflow-hidden border border-slate-700 group cursor-pointer hover:border-primary/50 transition-all"
+                  >
+                     <div class="aspect-video relative overflow-hidden">
+                        <img
+                           alt="Tech project"
+                           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEIMtVzNCjt2pkey98klI2jh_aDkS0WkyK_cCFTX8CSPHIOaGtpdlyHhLPQQ7ATXU4TYeqBbiuzplQtOh2r5Tslu0yyO_F3aNAiwQ6NvI7BA1SoznjDe_dLpVtxKdLcC6fMcZT_HiR4dOmGwGhmXV6e6bmq5uqhpFt34xWbmrfqzfH8uCE3kU8N-Gqdoh5FiBh75oJCUynNa3Y9widhsiuQEO-9z7tzdfspYkY7_1DN03oFgb9NVcFn29nEp9hC26g1rK-Zxmoujta"
+                        />
+                        <div
+                           class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"
+                        ></div>
+                        <div class="absolute bottom-6 left-6">
+                           <span
+                              class="bg-primary px-3 py-1 rounded text-xs font-bold uppercase tracking-widest"
+                              >E-Commerce</span
+                           >
+                        </div>
+                     </div>
+                     <div class="p-8">
+                        <p class="text-xl italic mb-6 text-slate-300">
+                           "NexusDigital helped us rebuild our legacy platform
+                           in under 4 months. Our conversion rate increased by
+                           45% immediately after launch."
+                        </p>
+                        <div class="flex items-center gap-4">
+                           <div
+                              class="size-12 rounded-full bg-slate-700 overflow-hidden"
+                           >
+                              <img
+                                 alt="Sarah Chen"
+                                 class="w-full h-full object-cover"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEDSRqpXUDVuPq4MQ9BTlWl8LRru3DqmbT97SOTkuswO7qcaTUjIuASM1foHiSlsr5Y6BODVMZgCO3md1HOBxw2Gje1AXLMbGEtFoLhjQr_B68NrVQfTE8rJjP8tpITy2TrK_heElrVAfkP2jPA_L9Dfh2Hf430eBHjk8el-oguhEkWMAyEuP0Gl2EJCngLcmC9PCnoAfdW_EWpY3vnGDdhsFWSS2mkFoFXP4fcn00tssgYy5JXmbFvR0SHdMxZ-VDNfYWx-tVXrNY"
+                              />
+                           </div>
+                           <div>
+                              <h5 class="font-bold">Sarah Chen</h5>
+                              <p class="text-sm text-slate-500">
+                                 Director of Marketing, TechFlow
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div
+                     class="bg-slate-800/50 rounded-3xl overflow-hidden border border-slate-700 group cursor-pointer hover:border-primary/50 transition-all"
+                  >
+                     <div class="aspect-video relative overflow-hidden">
+                        <img
+                           alt="SaaS platform"
+                           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                           src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4loldbXfTaS7UTPXCZSsQ-N07_ORkUF4zSIxbJO6VkSBReJ1sKj9bB9ZyUYc4prijPFWknX07JF6T-VtTTCZq4nyrDZnnscBIq5WFGhbwSwaHxdxWzrOFF1Wxm9YgORHThkGlfiAA7Y-DSyDxJCEwMbHlKqLU3b56Lw70defuz7PNv-GtC0ra594LpLDZW1RJ_hMCus3hJ_cnAfcatucoPMYOMMzqccAuM2sdcKTEf-bLeBaVZ9DXRTJ-0VyF1ggIFPQCxRZzoaHl"
+                        />
+                        <div
+                           class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"
+                        ></div>
+                        <div class="absolute bottom-6 left-6">
+                           <span
+                              class="bg-primary px-3 py-1 rounded text-xs font-bold uppercase tracking-widest"
+                              >SaaS Architecture</span
+                           >
+                        </div>
+                     </div>
+                     <div class="p-8">
+                        <p class="text-xl italic mb-6 text-slate-300">
+                           "The level of technical expertise is unmatched. They
+                           didn't just write code; they optimized our entire
+                           architecture for future scaling."
+                        </p>
+                        <div class="flex items-center gap-4">
+                           <div
+                              class="size-12 rounded-full bg-slate-700 overflow-hidden"
+                           >
+                              <img
+                                 alt="Marcus Thompson"
+                                 class="w-full h-full object-cover"
+                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPQ1F10HSpQwdFDoNtMSp7pIJWwgQtNG7s1CI3YhQJXuYnYmc3Y0ccePjt9QVKajzu8OyXyllAl9z3wldUzf9-hKwlOglIC2f7lzBiQQQk0zL2uP7l6u07bXr_6BQ2fN7yJgHkLycmok63Mzbbt3QI2GFQvcYicSPYAq-e-AoiZUio5H8ZegrkVS17_qOkaUDITLdD3J4REPsz_-RzBFvBjgiqVF_QNcHtjx6AipId-XuuS5sYD5wLDiowHgms8Z6LfBncG3fcdayf"
+                              />
+                           </div>
+                           <div>
+                              <h5 class="font-bold">Marcus Thompson</h5>
+                              <p class="text-sm text-slate-500">
+                                 CEO, GlobalX Solutions
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section class="py-32" id="why-us">
+            <div class="max-w-7xl mx-auto px-6">
+               <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                  <div class="order-2 lg:order-1 relative">
+                     <div
+                        class="relative rounded-3xl overflow-hidden shadow-2xl"
+                     >
+                        <img
+                           alt="Team meeting"
+                           class="w-full h-full object-cover"
+                           src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8P8AxCZgLBQRIdkvIk0HAYlvEu2lNTCgRNCBDjxICkFBOh3U-AUlQK0LOCoHl67_uk0aDiqm3P-HraDiRowde8QkeUjrH3ZNYZNsWDCdIW5BCov7GkK9pypELiK8iEWoXGJMzwY-Tx6yBP292l_gmQ9RJqG1t5VP9gjLTRa7dNqHjwn1VXm2bzpbNvr0J7gk_F7Dbt5hFh6HpPuJEk2uIb-sMXJYDHvaCWC6G1XcfsHp4y5SM0huLweCIbP8U7QPRdXkoArGp4PZ_"
+                        />
+                     </div>
+                     <div
+                        class="absolute -bottom-10 -right-10 bg-primary text-white p-10 rounded-3xl hidden md:block"
+                     >
+                        <div class="text-4xl font-black mb-1">99.9%</div>
+                        <div
+                           class="text-sm font-bold opacity-80 uppercase tracking-widest"
+                        >
+                           System Uptime
+                        </div>
+                     </div>
+                  </div>
+                  <div class="order-1 lg:order-2">
+                     <h2
+                        class="text-primary font-bold tracking-widest uppercase text-sm mb-4"
+                     >
+                        Why Choose Us
+                     </h2>
+                     <h3
+                        class="text-4xl md:text-5xl font-black tracking-tight mb-8"
+                     >
+                        Speed, quality, and innovation at the core of
+                        everything.
+                     </h3>
+                     <div class="space-y-8">
+                        <div class="flex gap-6">
+                           <div
+                              class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary"
+                           >
+                              <span class="material-symbols-outlined"
+                                 >bolt</span
+                              >
+                           </div>
+                           <div>
+                              <h5 class="text-xl font-bold mb-2">
+                                 2x Faster Deployment
+                              </h5>
+                              <p class="text-slate-500 dark:text-slate-400">
+                                 Our agile methodologies allow us to ship
+                                 production-ready code twice as fast as industry
+                                 averages.
+                              </p>
+                           </div>
+                        </div>
+                        <div class="flex gap-6">
+                           <div
+                              class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary"
+                           >
+                              <span class="material-symbols-outlined"
+                                 >shield</span
+                              >
+                           </div>
+                           <div>
+                              <h5 class="text-xl font-bold mb-2">
+                                 Enterprise-Grade Quality
+                              </h5>
+                              <p class="text-slate-500 dark:text-slate-400">
+                                 Rigorous testing and code reviews ensure that
+                                 your product is secure, robust, and
+                                 future-proof.
+                              </p>
+                           </div>
+                        </div>
+                        <div class="flex gap-6">
+                           <div
+                              class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary"
+                           >
+                              <span class="material-symbols-outlined"
+                                 >groups</span
+                              >
+                           </div>
+                           <div>
+                              <h5 class="text-xl font-bold mb-2">
+                                 User-Centric Methodology
+                              </h5>
+                              <p class="text-slate-500 dark:text-slate-400">
+                                 We put your users first, conducting thorough
+                                 research to design interfaces that people love
+                                 to use.
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section class="py-32">
+            <div class="max-w-7xl mx-auto px-6">
+               <div
+                  class="relative bg-primary rounded-[3rem] p-12 md:p-24 overflow-hidden"
+               >
+                  <div
+                     class="absolute top-0 right-0 size-96 bg-white/10 rounded-full translate-x-1/2 -translate-y-1/2 blur-3xl"
+                  ></div>
+                  <div
+                     class="absolute bottom-0 left-0 size-64 bg-slate-900/10 rounded-full -translate-x-1/2 translate-y-1/2 blur-3xl"
+                  ></div>
+                  <div class="relative z-10 text-center max-w-3xl mx-auto">
+                     <h2
+                        class="text-4xl md:text-6xl font-black text-white tracking-tight mb-8"
+                     >
+                        Ready to start your next big digital project?
+                     </h2>
+                     <p
+                        class="text-primary-foreground/80 text-white/80 text-xl mb-12"
+                     >
+                        Join hundreds of successful companies and transform your
+                        digital presence today.
+                     </p>
+                     <div
+                        class="flex flex-col sm:flex-row justify-center gap-4"
+                     >
+                        <button
+                           class="bg-white text-primary text-lg font-bold px-10 py-5 rounded-2xl hover:bg-slate-50 transition-all shadow-2xl"
+                        >
+                           Get Started Now
+                        </button>
+                        <button
+                           class="bg-transparent text-white border-2 border-white/30 text-lg font-bold px-10 py-5 rounded-2xl hover:bg-white/10 transition-all"
+                        >
+                           Contact Sales
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </main>
+      <footer
+         class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 pt-24 pb-12"
+      >
+         <div class="max-w-7xl mx-auto px-6">
+            <div
+               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20"
+            >
+               <div>
+                  <div class="flex items-center gap-2 mb-8">
+                     <div class="bg-primary p-2 rounded-lg">
+                        <span
+                           class="material-symbols-outlined text-white text-sm"
+                           >rocket_launch</span
+                        >
+                     </div>
+                     <span class="text-xl font-bold tracking-tight"
+                        >NexusDigital</span
+                     >
+                  </div>
+                  <p
+                     class="text-slate-500 dark:text-slate-400 leading-relaxed mb-8"
+                  >
+                     Award-winning digital agency building the future of the
+                     web, one pixel at a time.
+                  </p>
+                  <div class="flex gap-4">
+                     <a
+                        class="size-10 rounded-full bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all"
+                        href="#"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >share</span
+                        >
+                     </a>
+                     <a
+                        class="size-10 rounded-full bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all"
+                        href="#"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >public</span
+                        >
+                     </a>
+                     <a
+                        class="size-10 rounded-full bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all"
+                        href="#"
+                     >
+                        <span class="material-symbols-outlined text-xl"
+                           >mail</span
+                        >
+                     </a>
+                  </div>
+               </div>
+               <div>
+                  <h6
+                     class="font-bold mb-8 uppercase tracking-widest text-xs text-slate-400"
+                  >
+                     Services
+                  </h6>
+                  <ul class="space-y-4">
+                     <li>
+                        <a
+                           class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+                           href="#"
+                           >Web Development</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+                           href="#"
+                           >UI/UX Design</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+                           href="#"
+                           >Digital Marketing</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+                           href="#"
+                           >Cloud Strategy</a
+                        >
+                     </li>
+                  </ul>
+               </div>
+               <div>
+                  <h6
+                     class="font-bold mb-8 uppercase tracking-widest text-xs text-slate-400"
+                  >
+                     Company
+                  </h6>
+                  <ul class="space-y-4">
+                     <li>
+                        <a
+                           class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+                           href="#"
+                           >About Us</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+                           href="#"
+                           >Success Stories</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+                           href="#"
+                           >Careers</a
+                        >
+                     </li>
+                     <li>
+                        <a
+                           class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors"
+                           href="#"
+                           >Privacy Policy</a
+                        >
+                     </li>
+                  </ul>
+               </div>
+               <div>
+                  <h6
+                     class="font-bold mb-8 uppercase tracking-widest text-xs text-slate-400"
+                  >
+                     Newsletter
+                  </h6>
+                  <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">
+                     Get the latest digital trends delivered to your inbox.
+                  </p>
+                  <form class="flex flex-col gap-3">
+                     <input
+                        class="bg-slate-100 dark:bg-slate-900 border-transparent rounded-lg px-4 py-3 text-sm focus:ring-primary focus:border-primary"
+                        placeholder="Your email address"
+                        type="email"
+                     />
+                     <button
+                        class="bg-primary text-white font-bold py-3 rounded-lg hover:bg-primary/90 transition-all"
+                        type="submit"
+                     >
+                        Subscribe
+                     </button>
+                  </form>
+               </div>
+            </div>
+            <div
+               class="border-t border-slate-200 dark:border-slate-800 pt-12 flex flex-col md:flex-row justify-between items-center gap-6"
+            >
+               <p class="text-sm text-slate-500">
+                  © 2024 NexusDigital Agency. All rights reserved.
+               </p>
+               <div class="flex gap-8 text-sm text-slate-500">
+                  <a class="hover:text-primary" href="#">Terms of Service</a>
+                  <a class="hover:text-primary" href="#">Cookie Policy</a>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <script>
+         document.addEventListener("DOMContentLoaded", () => {
+            const steps = document.querySelectorAll(".reveal-step");
+            const roadmapLine = document.getElementById("roadmapLine");
+            const observerOptions = {
+               threshold: 0.2,
+            };
+            const observer = new IntersectionObserver((entries) => {
+               entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                     entry.target.classList.add("active");
+                  }
+               });
+            }, observerOptions);
+            steps.forEach((step) => observer.observe(step));
+            window.addEventListener("scroll", () => {
+               const processSection = document.getElementById("process");
+               if (!processSection) return;
+               const sectionTop = processSection.offsetTop;
+               const sectionHeight = processSection.offsetHeight;
+               const scrollPos = window.scrollY + window.innerHeight / 1.5;
+               if (scrollPos > sectionTop) {
+                  let progress =
+                     ((scrollPos - sectionTop) / (sectionHeight - 300)) * 100;
+                  progress = Math.min(100, Math.max(0, progress));
+                  roadmapLine.style.height = progress + "%";
+               }
+            });
+         });
+      </script>
+   </body>
+</html>

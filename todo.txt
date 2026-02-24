@@ -1,0 +1,8 @@
+add car loading all the ides from web configurator and drives woth tehm off screen. 
+the "ideas" will be small boxes fropiing with them from the last part of the form
+----
+make section animation for the as flipping the pages¨
+---
+use 8pt metod (spaces needs to be divided by 4 || 8)
+---
+be careful of AA standards 

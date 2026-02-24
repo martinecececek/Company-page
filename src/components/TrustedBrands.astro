@@ -1,0 +1,62 @@
+---
+const technologies = [
+  { label: 'ASTRO', icon: 'rocket_launch' },
+  { label: 'TAILWIND', icon: 'air' },
+  { label: 'TYPESCRIPT', icon: 'data_object' },
+  { label: 'NODE.JS', icon: 'terminal' },
+  { label: 'SUPABASE', icon: 'storage' },
+  { label: 'JAVASCRIPT', icon: 'code' },
+  { label: 'POSTGRES', icon: 'database' },
+  { label: 'VERCEL', icon: 'cloud' }
+];
+---
+
+<section class="py-12 bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-center text-sm font-bold uppercase tracking-[0.2em] text-slate-400 mb-8">
+      What technology we use
+    </p>
+  </div>
+
+  <div class="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden">
+    <div class="tech-track flex w-max items-center gap-12 md:gap-24 whitespace-nowrap opacity-60 grayscale px-6">
+      {technologies.map((tech) => (
+        <span class="inline-flex items-center gap-3 text-2xl font-black text-slate-500">
+          <span class="material-symbols-outlined text-xl">{tech.icon}</span>
+          <span>{tech.label}</span>
+        </span>
+      ))}
+      {technologies.map((tech) => (
+        <span class="inline-flex items-center gap-3 text-2xl font-black text-slate-500" aria-hidden="true">
+          <span class="material-symbols-outlined text-xl">{tech.icon}</span>
+          <span>{tech.label}</span>
+        </span>
+      ))}
+      {technologies.map((tech) => (
+        <span class="inline-flex items-center gap-3 text-2xl font-black text-slate-500" aria-hidden="true">
+          <span class="material-symbols-outlined text-xl">{tech.icon}</span>
+          <span>{tech.label}</span>
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .tech-track {
+    animation: techSpin 18s linear infinite;
+  }
+
+  .tech-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes techSpin {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-33.333%);
+    }
+  }
+</style>
