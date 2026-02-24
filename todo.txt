@@ -6,3 +6,5 @@ make section animation for the as flipping the pages¨
 use 8pt metod (spaces needs to be divided by 4 || 8)
 ---
 be careful of AA standards 
+---
+vymyslet jak bude fungovat hosting abych ho mohl nabízet pořád a stálo mě to co nejmíň

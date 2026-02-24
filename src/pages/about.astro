@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const values = [
+  {
+    icon: 'handshake',
+    title: 'Partnerství',
+    text: 'Nejsme jen dodavatel. Přemýšlíme nad vaším webem jako nad součástí vašeho podnikání.'
+  },
+  {
+    icon: 'bolt',
+    title: 'Rychlost',
+    text: 'Držíme tempo, komunikujeme jasně a posouváme projekt bez zbytečných prodlev.'
+  },
+  {
+    icon: 'verified',
+    title: 'Kvalita',
+    text: 'Dbáme na detail, výkon, bezpečnost a dlouhodobou udržitelnost každého řešení.'
+  },
+  {
+    icon: 'query_stats',
+    title: 'Výsledky',
+    text: 'Sledujeme data a optimalizujeme web tak, aby přinášel reálné obchodní výsledky.'
+  }
+];
+
+const team = [
+  {
+    role: 'Strategie & projekt',
+    text: 'Definujeme cíle, rozsah a roadmapu projektu tak, aby vše dávalo obchodní smysl.'
+  },
+  {
+    role: 'Design & UX',
+    text: 'Navrhujeme přehledné rozhraní, které je vizuálně silné a zároveň jednoduché na používání.'
+  },
+  {
+    role: 'Vývoj & technika',
+    text: 'Stavíme rychlé, stabilní a škálovatelné weby připravené na další růst.'
+  }
+];
+
+const milestones = [
+  { label: 'Dokončených projektů', value: '120+' },
+  { label: 'Průměrné hodnocení klientů', value: '4.9/5' },
+  { label: 'Dlouhodobých spoluprací', value: '70%' }
+];
+---
+
+<Layout title="O nás | NexusDigital">
+  <Header />
+
+  <main class="relative overflow-hidden pt-28 pb-20 min-h-screen bg-background-light dark:bg-background-dark px-4 md:px-6">
+    <div class="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute top-40 -right-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+
+    <section class="max-w-7xl mx-auto relative z-10">
+      <div class="max-w-4xl mb-12 md:mb-16">
+        <p class="text-primary text-xs font-black tracking-[0.14em] uppercase mb-3">NexusDigital</p>
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight mb-5">
+          Tvoříme weby, které dobře vypadají, fungují a vydělávají.
+        </h1>
+        <p class="text-slate-600 dark:text-slate-400 text-lg max-w-3xl">
+          Pomáháme firmám proměnit jejich nápady do moderního webu — od strategie a designu až po vývoj a dlouhodobý rozvoj.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5 mb-16 md:mb-20">
+        {milestones.map((item) => (
+          <article class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+            <p class="text-3xl md:text-4xl font-black text-primary mb-2">{item.value}</p>
+            <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold">{item.label}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-16 md:mb-20">
+        <article class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 md:p-7">
+          <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4">Co je pro nás důležité</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {values.map((value) => (
+              <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/40 p-4">
+                <div class="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                  <span class="material-symbols-outlined text-[20px]">{value.icon}</span>
+                </div>
+                <h3 class="text-base font-extrabold text-slate-900 dark:text-white mb-1.5">{value.title}</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{value.text}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 md:p-7">
+          <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4">Jak pracujeme</h2>
+          <ul class="space-y-3">
+            {team.map((item) => (
+              <li class="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/40 p-4">
+                <p class="text-sm font-black text-primary uppercase tracking-wider mb-1">{item.role}</p>
+                <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{item.text}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+
+      <div class="bg-gradient-to-r from-primary to-blue-500 text-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div>
+          <h2 class="text-2xl font-black mb-2">Chcete s námi probrat váš web?</h2>
+          <p class="text-white/90 text-sm md:text-base">Vyplňte konfigurátor a dostanete jasný návrh rozsahu i dalšího postupu.</p>
+        </div>
+        <a href="/configurator" class="inline-flex items-center justify-center bg-white text-primary font-extrabold px-6 py-3 rounded-xl hover:bg-slate-100 transition-colors">
+          Otevřít web konfigurátor
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

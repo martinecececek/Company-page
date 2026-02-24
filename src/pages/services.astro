@@ -7,85 +7,71 @@ const coreServices = [
   {
     icon: 'search',
     title: 'Discovery a strategie',
-    text: 'Analýza cílové skupiny, konkurence, cílů a business modelu. Definujeme jasný plán před začátkem výroby.'
-  },
-  {
-    icon: 'account_tree',
-    title: 'Informační architektura',
-    text: 'Návrh struktury webu, navigace a priorit obsahu tak, aby uživatel rychle našel to, co hledá.'
+    text: 'Ujasníme cíle, cílovou skupinu a plán, aby projekt dával smysl od začátku.'
   },
   {
     icon: 'draw',
     title: 'UI/UX design',
-    text: 'Wireframy, vizuální návrh a interakce postavené na čitelnosti, důvěryhodnosti a konverzi.'
+    text: 'Navrhneme moderní a přehledný vzhled, který vede uživatele ke konverzi.'
   },
   {
     icon: 'code',
     title: 'Vývoj a implementace',
-    text: 'Frontend i backend vývoj s důrazem na čistý kód, rychlost, škálovatelnost a snadnou správu.'
-  },
-  {
-    icon: 'speed',
-    title: 'Performance optimalizace',
-    text: 'Optimalizace načítání, obrázků, skriptů a Core Web Vitals pro lepší UX i SEO výsledky.'
+    text: 'Postavíme rychlý a stabilní web, který je připravený na růst.'
   },
   {
     icon: 'manage_search',
-    title: 'SEO základy i pokročilé',
-    text: 'Technické SEO, metadata, strukturovaná data, obsahová struktura a měření organického výkonu.'
-  },
-  {
-    icon: 'security',
-    title: 'Bezpečnost a compliance',
-    text: 'HTTPS, zabezpečení formulářů, ochrana dat, cookie/GDPR řešení a průběžné bezpečnostní aktualizace.'
-  },
-  {
-    icon: 'rule',
-    title: 'QA testování',
-    text: 'Testy napříč zařízeními a prohlížeči, validace formulářů, uživatelské scénáře a kontrola funkčnosti.'
-  },
-  {
-    icon: 'integration_instructions',
-    title: 'Integrace nástrojů',
-    text: 'Napojení CRM, analytiky, plateb, newsletterů, rezervačních systémů a dalších externích služeb.'
+    title: 'SEO a výkon',
+    text: 'Optimalizujeme dohledatelnost i rychlost, aby web fungoval lépe pro lidi i vyhledávače.'
   },
   {
     icon: 'analytics',
     title: 'Měření a reporting',
-    text: 'Nastavení GA4, konverzí, eventů a dashboardů pro rozhodování na základě reálných dat.'
-  },
-  {
-    icon: 'edit_note',
-    title: 'Obsah a copywriting',
-    text: 'Struktura textů, CTA, landing page messaging a konzistentní tón komunikace pro vaši značku.'
+    text: 'Nastavíme měření a jasné reporty, abyste viděli reálné výsledky.'
   },
   {
     icon: 'support_agent',
     title: 'Správa a dlouhodobý rozvoj',
-    text: 'Technická podpora, aktualizace, rozšiřování funkcí a průběžné zlepšování výkonu webu.'
+    text: 'Po spuštění pokračujeme podporou, aktualizacemi a dalším rozvojem.'
   }
 ];
 
 const process = [
   'Kickoff a sběr podkladů',
-  'Analýza trhu a definice cílů',
-  'Návrh struktury a wireframů',
-  'Grafický design a prototyp',
-  'Vývoj a technická implementace',
-  'Testování, SEO a bezpečnost',
+  'Návrh struktury a designu',
+  'Vývoj a testování',
   'Nasazení a měření výsledků',
   'Podpora a další růst'
 ];
 
 const standards = [
-  'Responzivní design pro mobil, tablet i desktop',
-  'Rychlé načítání a optimalizované Core Web Vitals',
-  'Technické SEO a správná indexace stránek',
-  'Bezpečné formuláře a ochrana citlivých dat',
-  'Měřitelné cíle, event tracking a reporting',
-  'Snadná editace obsahu pro klientský tým',
-  'Přístupnost a čitelnost klíčových částí webu',
-  'Pravidelné aktualizace a dlouhodobá udržitelnost'
+  'Responzivní web pro mobil, tablet i desktop',
+  'Rychlé načítání a technické SEO základy',
+  'Bezpečnost formulářů a ochrana dat',
+  'Měřitelné cíle a pravidelný reporting'
+];
+
+const offerHighlights = [
+  {
+    icon: 'task_alt',
+    title: 'Jasný plán a rozpočet',
+    text: 'Na začátku víte, co přesně dodáme, v jakém termínu a za jakou cenu.'
+  },
+  {
+    icon: 'palette',
+    title: 'Design, který prodává',
+    text: 'Web navrhujeme tak, aby byl moderní, přehledný a vedl návštěvníka k akci.'
+  },
+  {
+    icon: 'rocket_launch',
+    title: 'Spuštění bez stresu',
+    text: 'Postaráme se o technické nasazení, SEO základ i měření od prvního dne.'
+  },
+  {
+    icon: 'handshake',
+    title: 'Podpora i po spuštění',
+    text: 'Nezůstáváte na to sami. Pokračujeme správou, rozvojem a optimalizací.'
+  }
 ];
 ---
 
@@ -100,12 +86,26 @@ const standards = [
       <div class="max-w-4xl mb-10 md:mb-14">
         <p class="text-primary text-xs font-black tracking-[0.14em] uppercase mb-3">Kompletní služby</p>
         <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight mb-5">
-          Vše, co má profesionální webová agentura dodat od strategie až po dlouhodobý růst.
+          Služby, které potřebujete pro moderní a funkční web.
         </h1>
         <p class="text-slate-600 dark:text-slate-400 text-lg max-w-3xl">
-          Tohle je full-scope checklist služeb, které by měla zvládnout každá kvalitní webová společnost.
-          Díky tomu víte přesně, co dostáváte a na co se při výběru dodavatele ptát.
+          Jasně, stručně a bez zbytečné omáčky — od strategie přes realizaci až po podporu po spuštění.
         </p>
+      </div>
+
+      <div class="mb-10 md:mb-12 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 md:p-6">
+        <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-5">Co od nás dostanete</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {offerHighlights.map((item) => (
+            <article class="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/40 p-4">
+              <div class="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3">
+                <span class="material-symbols-outlined text-[20px]">{item.icon}</span>
+              </div>
+              <h3 class="text-base font-extrabold text-slate-900 dark:text-white mb-1.5">{item.title}</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{item.text}</p>
+            </article>
+          ))}
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
