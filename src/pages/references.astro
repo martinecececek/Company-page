@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import rlcDragonsPageView from '../assets/image/rlcdragons-page-view.png';
+
+const references = [
+  {
+    title: 'RLC Dragons Krupka',
+    category: 'Sport Club Website',
+    result: 'Recruitment-focused homepage for youth and adults',
+    description: 'Web presentation for rugby club categories, recruitment, and contact flow.',
+    image: rlcDragonsPageView.src,
+    url: 'http://www.rlcdragonskrupka.cz/'
+  },
+  {
+    title: 'TechFlow e-commerce redesign',
+    category: 'E-commerce',
+    result: '+45% conversion rate after launch',
+    description: 'Complete UX redesign and performance optimization for a fast-growing online store.',
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuDEIMtVzNCjt2pkey98klI2jh_aDkS0WkyK_cCFTX8CSPHIOaGtpdlyHhLPQQ7ATXU4TYeqBbiuzplQtOh2r5Tslu0yyO_F3aNAiwQ6NvI7BA1SoznjDe_dLpVtxKdLcC6fMcZT_HiR4dOmGwGhmXV6e6bmq5uqhpFt34xWbmrfqzfH8uCE3kU8N-Gqdoh5FiBh75oJCUynNa3Y9widhsiuQEO-9z7tzdfspYkY7_1DN03oFgb9NVcFn29nEp9hC26g1rK-Zxmoujta',
+    url: '/references'
+  },
+  {
+    title: 'GlobalX SaaS platform',
+    category: 'SaaS',
+    result: 'Scalable architecture ready for global expansion',
+    description: 'Migration from legacy stack to modern cloud-ready architecture with improved reliability.',
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuA4loldbXfTaS7UTPXCZSsQ-N07_ORkUF4zSIxbJO6VkSBReJ1sKj9bB9ZyUYc4prijPFWknX07JF6T-VtTTCZq4nyrDZnnscBIq5WFGhbwSwaHxdxWzrOFF1Wxm9YgORHThkGlfiAA7Y-DSyDxJCEwMbHlKqLU3b56Lw70defuz7PNv-GtC0ra594LpLDZW1RJ_hMCus3hJ_cnAfcatucoPMYOMMzqccAuM2sdcKTEf-bLeBaVZ9DXRTJ-0VyF1ggIFPQCxRZzoaHl',
+    url: '/references'
+  },
+  {
+    title: 'Studio brand website launch',
+    category: 'Corporate',
+    result: 'Lead quality increase in first 60 days',
+    description: 'Brand-first website with conversion-focused structure and integrated analytics.',
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuCYSLsaHd3svCQ3Sz0lqjt1ar4r8hs72BxPiKinJsLkVAXZMO1aYcbTb0EteKcOC4_yFUARuJvq-JCW1RXeIE9piORcZopz3PACWC03BAUB4Zyl7B7OcY3pHWpuWXKCz5Tuij9kPXvQdW5kg9IQt1_gFj_xuzuuf9PLHYOWANUoAtnH8Li6JhXlPvq5Y9pijVrLIDFWY9gOmQWaH0g8KLiI5qRyKESZnWaQXpBZ20_HyZ1TD7Acv6T6G-asgAWL0_HXmDkmTghhS0jm',
+    url: '/references'
+  }
+];
+---
+
+<Layout title="Reference | NexusDigital">
+  <Header />
+  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <section class="max-w-7xl mx-auto px-6">
+      <div class="max-w-3xl mb-12">
+        <span class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6 text-xs font-bold uppercase tracking-wider text-primary">
+          Reference
+        </span>
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6">Ukázky našich realizací</h1>
+        <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+          Reálné projekty, měřitelné výsledky a konkrétní dopad na růst klientů.
+        </p>
+      </div>
+
+      <div class="space-y-8">
+        {references.map((item, index) => (
+          <a
+            href={item.url}
+            target={item.url.startsWith('http') ? '_blank' : '_self'}
+            rel={item.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+            class="block rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md p-4 md:p-6"
+          >
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+              <div class={index % 2 === 0 ? 'order-2 lg:order-1' : 'order-2 lg:order-2'}>
+                <span class="inline-flex items-center bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-4">
+                  {item.category}
+                </span>
+                <h2 class="text-2xl md:text-4xl font-black tracking-tight mb-4">{item.title}</h2>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{item.description}</p>
+                <p class="text-primary font-bold">{item.result}</p>
+              </div>
+
+              <div class={index % 2 === 0 ? 'order-1 lg:order-2' : 'order-1 lg:order-1'}>
+                <div class="rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 bg-white">
+                  <img
+                    src={item.image}
+                    alt={`${item.title} page view`}
+                    loading="lazy"
+                    class="w-full h-[220px] md:h-[320px] object-cover object-top"
+                  />
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-14 text-center">
+        <a href="/contact" class="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-xl hover:bg-primary/90 transition-all">
+          Chci podobný výsledek
+          <span class="material-symbols-outlined">north_east</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

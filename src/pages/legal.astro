@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Právní informace | NexusDigital">
+  <Header />
+  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <section class="max-w-5xl mx-auto px-6">
+      <div class="mb-10">
+        <span class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6 text-xs font-bold uppercase tracking-wider text-primary">
+          Legal
+        </span>
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Právní informace</h1>
+        <p class="text-slate-600 dark:text-slate-400 text-lg">
+          Na této stránce najdete základní podmínky používání webu, zásady ochrany osobních údajů a informace o cookies.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-7">
+          <h2 class="text-2xl font-black mb-3">1. Podmínky používání</h2>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            Obsah webu je určen pro informační účely. Bez písemného souhlasu není možné obsah dále šířit, upravovat ani komerčně využívat.
+          </p>
+        </article>
+
+        <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-7">
+          <h2 class="text-2xl font-black mb-3">2. Ochrana osobních údajů</h2>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            Osobní údaje z kontaktních formulářů zpracováváme pouze za účelem komunikace ohledně poptávky a neposkytujeme je třetím stranám.
+            Máte právo požádat o přístup, opravu nebo výmaz svých údajů.
+          </p>
+        </article>
+
+        <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-7">
+          <h2 class="text-2xl font-black mb-3">3. Cookies</h2>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            Web může používat technické a analytické cookies pro správné fungování a zlepšování služeb. Nastavení cookies můžete kdykoliv upravit ve svém prohlížeči.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

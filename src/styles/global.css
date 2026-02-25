@@ -125,3 +125,32 @@ body {
       "GRAD" 0,
       "opsz" 24;
 }
+
+@media (prefers-color-scheme: light) {
+   .home-60-30-10 {
+      background: var(--color-background-light);
+   }
+
+   .home-60-30-10 > section:nth-of-type(1),
+   .home-60-30-10 > section:nth-of-type(2),
+   .home-60-30-10 > section:nth-of-type(4),
+   .home-60-30-10 > section:nth-of-type(5),
+   .home-60-30-10 > section:nth-of-type(7) {
+      background-color: var(--color-background-light) !important;
+      color: #0f172a;
+   }
+
+   .home-60-30-10 > section:nth-of-type(3),
+   .home-60-30-10 > section:nth-of-type(6) {
+      background-color: var(--color-background-dark) !important;
+      color: #ffffff;
+   }
+
+   .home-60-30-10 > section:nth-of-type(8) {
+      background-color: var(--color-background-light) !important;
+   }
+
+   .home-60-30-10 > section:nth-of-type(8) > div > div {
+      background-color: var(--color-primary) !important;
+   }
+}

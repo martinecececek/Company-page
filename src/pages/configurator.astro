@@ -174,6 +174,11 @@ import Footer from '../components/Footer.astro';
                   <p class="theme-preview-title" id="themePreviewTitle">Modern</p>
                   <p class="theme-preview-text" id="themePreviewText">Čistý, moderní layout s výraznou CTA a přehlednými kartami.</p>
                   <p class="theme-preview-hint">Malý náhled toho, jak může vypadat vaše homepage.</p>
+                  <div class="theme-preview-example-tags">
+                    <span class="theme-preview-example-tag" id="themePreviewExample1">Hero</span>
+                    <span class="theme-preview-example-tag" id="themePreviewExample2">Služby</span>
+                    <span class="theme-preview-example-tag" id="themePreviewExample3">CTA</span>
+                  </div>
                 </div>
                 <div class="theme-preview-canvas" id="themePreviewCanvas" data-theme="modern">
                   <div class="theme-preview-browser" id="themePreviewBrowser">
@@ -508,6 +513,9 @@ import Footer from '../components/Footer.astro';
     const themePreviewCardTitle3 = document.getElementById('themePreviewCardTitle3');
     const themePreviewSide = document.getElementById('themePreviewSide');
     const themePreviewSideTitle = document.getElementById('themePreviewSideTitle');
+    const themePreviewExample1 = document.getElementById('themePreviewExample1');
+    const themePreviewExample2 = document.getElementById('themePreviewExample2');
+    const themePreviewExample3 = document.getElementById('themePreviewExample3');
 
     let currentStep = 1;
     const totalSteps = cards.length;
@@ -536,6 +544,7 @@ import Footer from '../components/Footer.astro';
         media: 'Case Study',
         cards: ['Design', 'Vývoj', 'SEO'],
         side: 'Kontaktujte nás',
+        examples: ['Hero', 'Služby', 'CTA'],
         accent: '#2563eb',
         soft: '#dbeafe',
         muted: '#e2e8f0',
@@ -552,6 +561,7 @@ import Footer from '../components/Footer.astro';
         media: 'Preview',
         cards: ['Web', 'Brand', 'Obsah'],
         side: 'Rychlá poptávka',
+        examples: ['Typografie', 'Obsah', 'Whitespace'],
         accent: '#334155',
         soft: '#f1f5f9',
         muted: '#e2e8f0',
@@ -568,6 +578,7 @@ import Footer from '../components/Footer.astro';
         media: 'Hot trend',
         cards: ['Strategie', 'Kampaň', 'Růst'],
         side: 'Naplánovat call',
+        examples: ['Kontrast', 'Impact', 'Akce'],
         accent: '#7c3aed',
         soft: '#ede9fe',
         muted: '#ddd6fe',
@@ -575,15 +586,16 @@ import Footer from '../components/Footer.astro';
       },
       elegant: {
         name: 'Elegant',
-        text: 'Elegantní styl s prémiovým dojmem a vyváženou typografií.',
-        nav: ['Studio', 'Služby', 'Kontakt'],
-        kicker: 'Elegant koncept',
-        headline: 'Prémiová prezentace vaší značky.',
-        paragraph: 'Sofistikované rozvržení a klidná vizuální hierarchie.',
-        cta: 'Rezervovat konzultaci',
-        media: 'Premium',
-        cards: ['Identita', 'UX', 'Obsah'],
-        side: 'Osobní schůzka',
+        text: 'Luxusní editorial styl s jemnou typografií a vysokou důvěryhodností.',
+        nav: ['Ateliér', 'Portfolio', 'Kontakt'],
+        kicker: 'Signature Edition',
+        headline: 'Nadčasová prezentace pro prémiové značky.',
+        paragraph: 'Klidná kompozice, pečlivé detaily a elegantní vizuální rytmus.',
+        cta: 'Domluvit strategii',
+        media: 'Editorial',
+        cards: ['Kurátorství', 'Detail', 'Status'],
+        side: 'Privátní konzultace',
+        examples: ['Editorial', 'Luxury', 'Trust'],
         accent: '#0f172a',
         soft: '#e2e8f0',
         muted: '#cbd5e1',
@@ -600,6 +612,7 @@ import Footer from '../components/Footer.astro';
         media: 'Custom moodboard',
         cards: ['Barvy', 'Fonty', 'UI'],
         side: 'Sdílet inspiraci',
+        examples: ['Moodboard', 'Brand', 'Experiment'],
         accent: '#0f766e',
         soft: '#ccfbf1',
         muted: '#99f6e4',
@@ -625,30 +638,37 @@ import Footer from '../components/Footer.astro';
       customFontWrap.classList.toggle('hidden', !isCustom);
     };
 
+    const withAlpha = (hexColor, alphaHex = 'cc') => {
+      if (typeof hexColor !== 'string') return hexColor;
+      const normalized = hexColor.trim();
+      if (/^#[0-9a-fA-F]{6}$/.test(normalized)) return `${normalized}${alphaHex}`;
+      return hexColor;
+    };
+
     const getColorOverrides = () => {
-      const accent = brandColorPrimary instanceof HTMLInputElement ? brandColorPrimary.value : '';
-      const deep = brandColorSecondary instanceof HTMLInputElement ? brandColorSecondary.value : '';
-      const soft = brandColorTertiary instanceof HTMLInputElement ? brandColorTertiary.value : '';
-      const bg = brandColorBackground instanceof HTMLInputElement ? brandColorBackground.value : '';
-      const muted = soft && soft.length === 7 ? `${soft}cc` : soft;
+      const primary = brandColorPrimary instanceof HTMLInputElement ? brandColorPrimary.value : '';
+      const secondary = brandColorSecondary instanceof HTMLInputElement ? brandColorSecondary.value : '';
+      const tertiary = brandColorTertiary instanceof HTMLInputElement ? brandColorTertiary.value : '';
+      const background = brandColorBackground instanceof HTMLInputElement ? brandColorBackground.value : '';
 
       return {
-        accent: accent,
-        deep: deep,
-        soft: soft,
-        muted: muted,
-        bg: bg
+        primary,
+        secondary,
+        tertiary,
+        background
       };
     };
 
     const updateThemePreview = (themeKey) => {
       const theme = themePresets[themeKey] || themePresets.modern;
       const colorOverrides = getColorOverrides();
-      const accentColor = colorOverrides.accent || theme.accent;
-      const deepColor = colorOverrides.deep || theme.deep;
-      const softColor = colorOverrides.soft || theme.soft;
-      const mutedColor = colorOverrides.muted || theme.muted;
-      const backgroundColor = colorOverrides.bg || '';
+      const accentColor = colorOverrides.primary || theme.accent;
+      const deepColor = colorOverrides.secondary || theme.deep;
+      const softColor = colorOverrides.tertiary || theme.soft;
+      const mutedColor = withAlpha(softColor, 'cc') || theme.muted;
+      const backgroundColor = colorOverrides.background || '#ffffff';
+      const textPrimaryColor = colorOverrides.secondary || theme.deep;
+      const textSecondaryColor = withAlpha(textPrimaryColor, '99');
 
       if (themePreviewTitle) themePreviewTitle.textContent = theme.name;
       if (themePreviewText) themePreviewText.textContent = theme.text;
@@ -659,41 +679,71 @@ import Footer from '../components/Footer.astro';
         themePreviewCanvas.style.setProperty('--tp-soft', softColor);
         themePreviewCanvas.style.setProperty('--tp-muted', mutedColor);
         themePreviewCanvas.style.setProperty('--tp-deep', deepColor);
+        themePreviewCanvas.style.setProperty('--tp-text-primary', textPrimaryColor);
+        themePreviewCanvas.style.setProperty('--tp-text-secondary', textSecondaryColor);
         themePreviewCanvas.style.background = backgroundColor;
-      }
-
-      if (themePreviewBrowser instanceof HTMLElement) {
-        themePreviewBrowser.style.background = softColor;
       }
 
       if (themePreviewLogo instanceof HTMLElement) themePreviewLogo.style.background = deepColor;
       if (themePreviewNav1 instanceof HTMLElement) {
         themePreviewNav1.style.background = mutedColor;
+        themePreviewNav1.style.color = textPrimaryColor;
         themePreviewNav1.textContent = theme.nav[0];
       }
       if (themePreviewNav2 instanceof HTMLElement) {
         themePreviewNav2.style.background = softColor;
+        themePreviewNav2.style.color = textPrimaryColor;
         themePreviewNav2.textContent = theme.nav[1];
       }
       if (themePreviewNav3 instanceof HTMLElement) {
         themePreviewNav3.style.background = mutedColor;
+        themePreviewNav3.style.color = textPrimaryColor;
         themePreviewNav3.textContent = theme.nav[2];
       }
-      if (themePreviewKicker instanceof HTMLElement) themePreviewKicker.textContent = theme.kicker;
-      if (themePreviewHeadline instanceof HTMLElement) themePreviewHeadline.textContent = theme.headline;
-      if (themePreviewParagraph instanceof HTMLElement) themePreviewParagraph.textContent = theme.paragraph;
+      if (themePreviewKicker instanceof HTMLElement) {
+        themePreviewKicker.textContent = theme.kicker;
+        themePreviewKicker.style.color = textSecondaryColor;
+      }
+      if (themePreviewHeadline instanceof HTMLElement) {
+        themePreviewHeadline.textContent = theme.headline;
+        themePreviewHeadline.style.color = textPrimaryColor;
+      }
+      if (themePreviewParagraph instanceof HTMLElement) {
+        themePreviewParagraph.textContent = theme.paragraph;
+        themePreviewParagraph.style.color = textSecondaryColor;
+      }
       if (themePreviewCta instanceof HTMLElement) themePreviewCta.style.background = accentColor;
       if (themePreviewCta instanceof HTMLElement) themePreviewCta.textContent = theme.cta;
-      if (themePreviewMedia instanceof HTMLElement) themePreviewMedia.style.background = `linear-gradient(145deg, ${softColor}, ${mutedColor})`;
-      if (themePreviewMediaBadge instanceof HTMLElement) themePreviewMediaBadge.textContent = theme.media;
+      if (themePreviewMedia instanceof HTMLElement) themePreviewMedia.style.background = `linear-gradient(145deg, ${deepColor}, ${accentColor})`;
+      if (themePreviewMediaBadge instanceof HTMLElement) {
+        themePreviewMediaBadge.textContent = theme.media;
+        themePreviewMediaBadge.style.color = textPrimaryColor;
+        themePreviewMediaBadge.style.borderColor = withAlpha(deepColor, '66');
+      }
       if (themePreviewCard1 instanceof HTMLElement) themePreviewCard1.style.background = softColor;
-      if (themePreviewCard2 instanceof HTMLElement) themePreviewCard2.style.background = mutedColor;
-      if (themePreviewCard3 instanceof HTMLElement) themePreviewCard3.style.background = softColor;
-      if (themePreviewCardTitle1 instanceof HTMLElement) themePreviewCardTitle1.textContent = theme.cards[0];
-      if (themePreviewCardTitle2 instanceof HTMLElement) themePreviewCardTitle2.textContent = theme.cards[1];
-      if (themePreviewCardTitle3 instanceof HTMLElement) themePreviewCardTitle3.textContent = theme.cards[2];
+      if (themePreviewCard2 instanceof HTMLElement) themePreviewCard2.style.background = deepColor;
+      if (themePreviewCard3 instanceof HTMLElement) themePreviewCard3.style.background = accentColor;
+      if (themePreviewCardTitle1 instanceof HTMLElement) {
+        themePreviewCardTitle1.textContent = theme.cards[0];
+        themePreviewCardTitle1.style.color = textPrimaryColor;
+      }
+      if (themePreviewCardTitle2 instanceof HTMLElement) {
+        themePreviewCardTitle2.textContent = theme.cards[1];
+        themePreviewCardTitle2.style.color = textPrimaryColor;
+      }
+      if (themePreviewCardTitle3 instanceof HTMLElement) {
+        themePreviewCardTitle3.textContent = theme.cards[2];
+        themePreviewCardTitle3.style.color = textPrimaryColor;
+      }
       if (themePreviewSide instanceof HTMLElement) themePreviewSide.style.background = `linear-gradient(180deg, ${mutedColor}, ${softColor})`;
-      if (themePreviewSideTitle instanceof HTMLElement) themePreviewSideTitle.textContent = theme.side;
+      if (themePreviewSideTitle instanceof HTMLElement) {
+        themePreviewSideTitle.textContent = theme.side;
+        themePreviewSideTitle.style.color = textPrimaryColor;
+      }
+      if (themePreviewExample1 instanceof HTMLElement) themePreviewExample1.textContent = theme.examples[0];
+      if (themePreviewExample2 instanceof HTMLElement) themePreviewExample2.textContent = theme.examples[1];
+      if (themePreviewExample3 instanceof HTMLElement) themePreviewExample3.textContent = theme.examples[2];
+
     };
 
     const updateFontPreview = (fontKey) => {
@@ -1139,6 +1189,114 @@ import Footer from '../components/Footer.astro';
     border-color: #1d4ed8;
   }
 
+  #themeSelectorGroup {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.55rem;
+  }
+
+  #themeSelectorGroup .chip-btn {
+    position: relative;
+    min-height: 4.2rem;
+    border-radius: 0.8rem;
+    border-width: 2px;
+    padding: 0.65rem 0.7rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    text-align: left;
+    isolation: isolate;
+    overflow: hidden;
+    font-size: 0.78rem;
+    letter-spacing: 0.01em;
+  }
+
+  #themeSelectorGroup .chip-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  #themeSelectorGroup .chip-btn::after {
+    content: attr(data-theme);
+    position: absolute;
+    top: 0.35rem;
+    right: 0.45rem;
+    border-radius: 9999px;
+    padding: 0.08rem 0.38rem;
+    font-size: 0.56rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.7);
+    color: #0f172a;
+  }
+
+  #themeSelectorGroup .chip-btn:hover::before {
+    transform: scale(1.02);
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='modern'] {
+    color: #0f172a;
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='modern']::before {
+    background:
+      linear-gradient(140deg, #dbeafe, #bfdbfe),
+      repeating-linear-gradient(90deg, rgba(37, 99, 235, 0.08) 0 8px, transparent 8px 16px);
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='minimal'] {
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='minimal']::before {
+    background:
+      linear-gradient(180deg, #ffffff, #f8fafc),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.25), rgba(148, 163, 184, 0.25));
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='bold'] {
+    color: #ffffff;
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='bold']::before {
+    background:
+      linear-gradient(140deg, #7c3aed, #db2777),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent);
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='elegant'] {
+    color: #f8fafc;
+    font-family: 'Times New Roman', serif;
+    letter-spacing: 0.04em;
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='elegant']::before {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(203, 213, 225, 0.3), transparent 45%),
+      linear-gradient(160deg, #0f172a, #020617);
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='custom'] {
+    color: #0f172a;
+    border-style: dashed;
+  }
+
+  #themeSelectorGroup .chip-btn[data-theme='custom']::before {
+    background:
+      linear-gradient(140deg, #ccfbf1, #99f6e4),
+      repeating-linear-gradient(-45deg, rgba(13, 148, 136, 0.18) 0 10px, transparent 10px 20px);
+  }
+
+  #themeSelectorGroup .chip-btn.chip-btn-active {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.5), 0 10px 22px rgba(37, 99, 235, 0.28);
+  }
+
   .color-picker {
     width: 2.75rem;
     height: 2.75rem;
@@ -1197,16 +1355,41 @@ import Footer from '../components/Footer.astro';
     color: #94a3b8;
   }
 
+  .theme-preview-example-tags {
+    margin-top: 0.45rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .theme-preview-example-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 1.3rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 0.63rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
   .theme-preview-canvas {
     --tp-accent: #2563eb;
     --tp-soft: #dbeafe;
     --tp-muted: #e2e8f0;
     --tp-deep: #0f172a;
+    --tp-text-primary: #0f172a;
+    --tp-text-secondary: #475569;
     border: 1px solid #dbeafe;
     border-radius: 0.7rem;
     overflow: hidden;
     background: #ffffff;
-    min-height: 300px;
+    min-height: 345px;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), 0 14px 24px rgba(15, 23, 42, 0.08);
   }
 
@@ -1226,6 +1409,11 @@ import Footer from '../components/Footer.astro';
     font-family: var(--tp-custom-font, sans-serif);
   }
 
+  .theme-preview-canvas,
+  .theme-preview-canvas * {
+    font-family: inherit;
+  }
+
   .theme-preview-browser {
     display: flex;
     align-items: center;
@@ -1233,6 +1421,7 @@ import Footer from '../components/Footer.astro';
     height: 1.45rem;
     padding: 0 0.55rem;
     border-bottom: 1px solid #dbeafe;
+    background: #dbeafe;
   }
 
   .theme-preview-dots {
@@ -1285,7 +1474,7 @@ import Footer from '../components/Footer.astro';
     border-radius: 9999px;
     font-size: 0.5rem;
     font-weight: 700;
-    color: #334155;
+    color: var(--tp-text-primary);
     white-space: nowrap;
   }
 
@@ -1308,22 +1497,22 @@ import Footer from '../components/Footer.astro';
     letter-spacing: 0.05em;
     text-transform: uppercase;
     font-weight: 800;
-    color: #475569;
+    color: var(--tp-text-secondary);
   }
 
   .theme-preview-headline {
     margin-top: 0.35rem;
-    font-size: 0.72rem;
+    font-size: 0.8rem;
     line-height: 1.05rem;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--tp-text-primary);
   }
 
   .theme-preview-paragraph {
     margin-top: 0.25rem;
-    font-size: 0.58rem;
+    font-size: 0.62rem;
     line-height: 0.9rem;
-    color: #64748b;
+    color: var(--tp-text-secondary);
   }
 
   .theme-preview-cta {
@@ -1355,7 +1544,7 @@ import Footer from '../components/Footer.astro';
     bottom: 0.35rem;
     font-size: 0.5rem;
     font-weight: 800;
-    color: #0f172a;
+    color: var(--tp-text-primary);
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(148, 163, 184, 0.5);
     border-radius: 9999px;
@@ -1380,13 +1569,13 @@ import Footer from '../components/Footer.astro';
     align-items: flex-end;
     padding: 0.35rem;
     border-radius: 0.5rem;
-    min-height: 2.1rem;
+    min-height: 2.35rem;
   }
 
   .theme-preview-card-title {
     font-size: 0.5rem;
     font-weight: 700;
-    color: #334155;
+    color: var(--tp-text-primary);
   }
 
   .theme-preview-side {
@@ -1401,11 +1590,85 @@ import Footer from '../components/Footer.astro';
   .theme-preview-side-title {
     font-size: 0.5rem;
     font-weight: 700;
-    color: #334155;
+    color: var(--tp-text-primary);
+  }
+
+  .theme-preview-canvas[data-theme='modern'] .theme-preview-browser {
+    display: flex;
+  }
+
+  .theme-preview-canvas[data-theme='modern'] .theme-preview-nav {
+    justify-content: space-between;
+  }
+
+  .theme-preview-canvas[data-theme='modern'] .theme-preview-hero {
+    grid-template-columns: 1.3fr 1fr;
+    gap: 0.55rem;
+  }
+
+  .theme-preview-canvas[data-theme='modern'] .theme-preview-content {
+    grid-template-columns: 1.45fr 0.85fr;
+  }
+
+  .theme-preview-canvas[data-theme='modern'] .theme-preview-main {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .theme-preview-canvas[data-theme='modern'] .theme-preview-card {
+    min-height: 2.25rem;
+    border-radius: 0.5rem;
+  }
+
+  .theme-preview-canvas[data-theme='modern'] .theme-preview-side {
+    display: flex;
+    min-height: 2.25rem;
   }
 
   .theme-preview-canvas[data-theme='minimal'] .theme-preview-hero {
     grid-template-columns: 1fr;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-nav {
+    justify-content: flex-start;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-example-tag {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    color: #334155;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-nav-links {
+    gap: 0.2rem;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-pill {
+    background: transparent !important;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.28rem;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-cta {
+    border-radius: 0.28rem;
+    box-shadow: none;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-main {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-card {
+    min-height: 1.7rem;
+    border-radius: 0.28rem;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-card:nth-child(3) {
+    display: none;
+  }
+
+  .theme-preview-canvas[data-theme='minimal'] .theme-preview-content {
+    padding-top: 0.45rem;
   }
 
   .theme-preview-canvas[data-theme='minimal'] .theme-preview-media {
@@ -1422,36 +1685,281 @@ import Footer from '../components/Footer.astro';
 
   .theme-preview-canvas[data-theme='bold'] {
     background: #faf5ff;
+    box-shadow: inset 0 0 0 2px rgba(124, 58, 237, 0.35), 0 14px 24px rgba(88, 28, 135, 0.25);
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-browser {
+    display: none;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-nav {
+    border-bottom: none;
+    background: linear-gradient(90deg, rgba(91, 33, 182, 0.22), rgba(190, 24, 93, 0.2));
+    border-radius: 0.45rem;
+    margin: 0.55rem 0.7rem 0.35rem;
+    padding: 0.4rem 0.5rem;
+    gap: 0.35rem;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-nav-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.18rem;
+    width: 100%;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-pill {
+    min-width: 0;
+    width: 100%;
+    height: 0.9rem;
+    border-radius: 0.25rem;
+    justify-content: flex-start;
+    padding: 0 0.25rem;
+    font-size: 0.44rem;
   }
 
   .theme-preview-canvas[data-theme='bold'] .theme-preview-hero {
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: 0.3rem;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-hero-copy {
+    background: linear-gradient(155deg, #3b0764, #7e22ce);
+    order: 2;
+    border-radius: 0.9rem;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-media {
+    order: 1;
+    min-height: 4.6rem;
+    border-radius: 0.95rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-kicker,
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-headline,
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-paragraph,
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-card-title,
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-side-title {
+    color: #ffffff;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-pill {
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-headline {
+    text-transform: uppercase;
+    font-size: 0.86rem;
+    line-height: 1rem;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-cta {
+    border-radius: 0.3rem;
+    min-width: 62%;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-example-tag {
+    background: rgba(124, 58, 237, 0.18);
+    border-color: rgba(124, 58, 237, 0.52);
+    color: #6d28d9;
   }
 
   .theme-preview-canvas[data-theme='bold'] .theme-preview-main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-content {
+    grid-template-columns: 1fr;
   }
 
   .theme-preview-canvas[data-theme='bold'] .theme-preview-card:first-child {
     grid-column: span 2;
-    min-height: 1.6rem;
+    min-height: 1.35rem;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-card:nth-child(2) {
+    transform: none;
+    min-height: 1.9rem;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-card:nth-child(3) {
+    transform: none;
+    min-height: 1.9rem;
+  }
+
+  .theme-preview-canvas[data-theme='bold'] .theme-preview-side {
+    display: none;
   }
 
   .theme-preview-canvas[data-theme='elegant'] .theme-preview-nav {
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 0.65rem;
-    margin: 0 0.75rem 0.4rem;
+    border-bottom: 1px solid #d5dbe5;
+    padding-bottom: 0.55rem;
+    margin: 0 0.9rem 0.65rem;
     padding-left: 0;
     padding-right: 0;
+    justify-content: center;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-logo {
+    display: none;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-nav-links {
+    gap: 0.5rem;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-pill {
+    border: 1px solid #cfd7e4;
+    border-radius: 0.22rem;
+    min-width: 3.3rem;
+    height: 1.05rem;
+    background: #f8fafc !important;
+    color: #334155;
+    letter-spacing: 0.06em;
   }
 
   .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero-copy {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: linear-gradient(180deg, #ffffff, #f8fafc);
+    border: 1px solid #e4e9f1;
+    border-radius: 0.32rem;
+    padding: 0.75rem 0.8rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-kicker {
+    color: #64748b;
+    letter-spacing: 0.1em;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-headline {
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.14rem;
+    letter-spacing: 0.015em;
+    text-align: center;
+    color: #0f172a;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-kicker,
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-paragraph {
+    text-align: center;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-paragraph {
+    color: #475569;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-cta {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-media {
+    min-height: 2.4rem;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-content {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 0.45rem;
+    padding-top: 0.75rem;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-main {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-cta {
+    border-radius: 0.16rem;
+    border: 1px solid rgba(15, 23, 42, 0.15);
+    box-shadow: none;
+    min-width: 54%;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-card {
+    min-height: 2.15rem;
+    border: 1px solid #dbe3ef;
+    border-radius: 0.2rem;
+    background: #ffffff !important;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-card-title {
+    font-family: inherit;
+    font-size: 0.54rem;
+    letter-spacing: 0.04em;
+    color: #334155;
+    text-transform: uppercase;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-side {
+    display: none;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-media {
+    border-radius: 0.25rem;
+    border: 1px solid #dbe3ef;
+    background: linear-gradient(145deg, #f1f5f9, #ffffff) !important;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-media-badge {
+    border-radius: 0.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .theme-preview-canvas[data-theme='elegant'] .theme-preview-example-tag {
+    background: #ffffff;
+    border-color: #d5dbe5;
+    color: #334155;
+    font-family: inherit;
+    border-radius: 0.2rem;
   }
 
   .theme-preview-canvas[data-theme='custom'] {
     background: linear-gradient(160deg, #f0fdfa, #ecfeff);
+  }
+
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-example-tag {
+    background: rgba(204, 251, 241, 0.85);
+    border-color: #2dd4bf;
+    color: #0f766e;
+  }
+
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-hero-copy {
+    border: 1px dashed #0d9488;
+    background: rgba(255, 255, 255, 0.75);
+  }
+
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-hero {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-media {
+    min-height: 3.2rem;
+  }
+
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+  }
+
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-main {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .theme-preview-canvas[data-theme='custom'] .theme-preview-side {
+    min-height: auto;
   }
 
   .theme-preview-canvas[data-theme='custom'] .theme-preview-card,
@@ -1550,6 +2058,41 @@ import Footer from '../components/Footer.astro';
       border-color: #3b82f6;
     }
 
+    #themeSelectorGroup .chip-btn {
+      border-color: #475569;
+      color: #e2e8f0;
+    }
+
+    #themeSelectorGroup .chip-btn::after {
+      background: rgba(15, 23, 42, 0.78);
+      color: #cbd5e1;
+      border: 1px solid rgba(71, 85, 105, 0.8);
+    }
+
+    #themeSelectorGroup .chip-btn[data-theme='minimal'] {
+      color: #0f172a;
+    }
+
+    #themeSelectorGroup .chip-btn[data-theme='modern']::before {
+      background: linear-gradient(140deg, #1d4ed8, #0ea5e9);
+    }
+
+    #themeSelectorGroup .chip-btn[data-theme='minimal']::before {
+      background: linear-gradient(180deg, #f8fafc, #e2e8f0);
+    }
+
+    #themeSelectorGroup .chip-btn[data-theme='bold']::before {
+      background: linear-gradient(140deg, #581c87, #be185d);
+    }
+
+    #themeSelectorGroup .chip-btn[data-theme='elegant']::before {
+      background: linear-gradient(160deg, #020617, #0f172a);
+    }
+
+    #themeSelectorGroup .chip-btn[data-theme='custom']::before {
+      background: linear-gradient(140deg, #0f766e, #115e59);
+    }
+
     .color-picker {
       border-color: #475569;
     }
@@ -1569,6 +2112,12 @@ import Footer from '../components/Footer.astro';
 
     .theme-preview-hint {
       color: #64748b;
+    }
+
+    .theme-preview-example-tag {
+      background: rgba(30, 64, 175, 0.2);
+      border-color: rgba(59, 130, 246, 0.35);
+      color: #93c5fd;
     }
 
     .theme-preview-canvas {
@@ -1626,6 +2175,55 @@ import Footer from '../components/Footer.astro';
 
     .theme-preview-canvas[data-theme='custom'] {
       background: linear-gradient(160deg, #052e2b, #0f172a);
+    }
+
+    .theme-preview-canvas[data-theme='minimal'] .theme-preview-example-tag {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: #475569;
+      color: #cbd5e1;
+    }
+
+    .theme-preview-canvas[data-theme='bold'] .theme-preview-example-tag {
+      background: rgba(109, 40, 217, 0.32);
+      border-color: rgba(167, 139, 250, 0.5);
+      color: #ddd6fe;
+    }
+
+    .theme-preview-canvas[data-theme='elegant'] .theme-preview-example-tag {
+      background: rgba(15, 23, 42, 0.72);
+      border-color: #64748b;
+      color: #f1f5f9;
+    }
+
+    .theme-preview-canvas[data-theme='elegant'] .theme-preview-pill {
+      background: rgba(15, 23, 42, 0.64) !important;
+      border-color: #475569;
+      color: #e2e8f0;
+    }
+
+    .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero-copy {
+      background: linear-gradient(180deg, #111827, #0f172a);
+      border-color: #334155;
+    }
+
+    .theme-preview-canvas[data-theme='elegant'] .theme-preview-card {
+      border-color: #334155;
+      background: #0f172a !important;
+    }
+
+    .theme-preview-canvas[data-theme='elegant'] .theme-preview-card-title {
+      color: #cbd5e1;
+    }
+
+    .theme-preview-canvas[data-theme='elegant'] .theme-preview-media {
+      border-color: #334155;
+      background: linear-gradient(145deg, #111827, #0b1220) !important;
+    }
+
+    .theme-preview-canvas[data-theme='custom'] .theme-preview-example-tag {
+      background: rgba(15, 118, 110, 0.3);
+      border-color: rgba(45, 212, 191, 0.55);
+      color: #99f6e4;
     }
   }
 </style>
