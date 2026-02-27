@@ -7,32 +7,38 @@ const coreServices = [
   {
     icon: 'search',
     title: 'Discovery a strategie',
-    text: 'Ujasníme cíle, cílovou skupinu a plán, aby projekt dával smysl od začátku.'
+    text: 'Ujasníme cíle, cílovou skupinu a plán, aby projekt dával smysl od začátku.',
+    preset: 'landing'
   },
   {
     icon: 'draw',
     title: 'UI/UX design',
-    text: 'Navrhneme moderní a přehledný vzhled, který vede uživatele ke konverzi.'
+    text: 'Navrhneme moderní a přehledný vzhled, který vede uživatele ke konverzi.',
+    preset: 'design'
   },
   {
     icon: 'code',
     title: 'Vývoj a implementace',
-    text: 'Postavíme rychlý a stabilní web, který je připravený na růst.'
+    text: 'Postavíme rychlý a stabilní web, který je připravený na růst.',
+    preset: 'custom-web'
   },
   {
     icon: 'manage_search',
     title: 'SEO a výkon',
-    text: 'Optimalizujeme dohledatelnost i rychlost, aby web fungoval lépe pro lidi i vyhledávače.'
+    text: 'Optimalizujeme dohledatelnost i rychlost, aby web fungoval lépe pro lidi i vyhledávače.',
+    preset: 'seo'
   },
   {
     icon: 'analytics',
     title: 'Měření a reporting',
-    text: 'Nastavíme měření a jasné reporty, abyste viděli reálné výsledky.'
+    text: 'Nastavíme měření a jasné reporty, abyste viděli reálné výsledky.',
+    preset: 'analytics'
   },
   {
     icon: 'support_agent',
     title: 'Správa a dlouhodobý rozvoj',
-    text: 'Po spuštění pokračujeme podporou, aktualizacemi a dalším rozvojem.'
+    text: 'Po spuštění pokračujeme podporou, aktualizacemi a dalším rozvojem.',
+    preset: 'support'
   }
 ];
 
@@ -116,6 +122,10 @@ const offerHighlights = [
             </div>
             <h2 class="text-lg font-extrabold text-slate-900 dark:text-white mb-2">{service.title}</h2>
             <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{service.text}</p>
+            <a href={`/configurator?preset=${service.preset}`} class="inline-flex items-center gap-1 mt-4 text-primary font-bold text-sm hover:gap-2 transition-all">
+              Start configurator
+              <span class="material-symbols-outlined text-base">arrow_forward</span>
+            </a>
           </article>
         ))}
       </div>

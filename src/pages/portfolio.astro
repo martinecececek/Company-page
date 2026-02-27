@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import rlcDragonsPageView from '../assets/image/rlcdragons-page-view.png';
+
+const cases = [
+  {
+    title: 'RLC Dragons Krupka',
+    category: 'Sport Club Website',
+    description: 'Recruitment-focused homepage for youth and adults with clear content hierarchy and contact flow.',
+    result: 'More inbound inquiries in the first weeks',
+    image: rlcDragonsPageView.src
+  },
+  {
+    title: 'Work-in-Time.cz',
+    category: 'Lead Generation Website',
+    description: 'Modern hiring platform presentation with clear services for candidates and employers.',
+    result: 'Higher lead quality and cleaner onboarding journey',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA4loldbXfTaS7UTPXCZSsQ-N07_ORkUF4zSIxbJO6VkSBReJ1sKj9bB9ZyUYc4prijPFWknX07JF6T-VtTTCZq4nyrDZnnscBIq5WFGhbwSwaHxdxWzrOFF1Wxm9YgORHThkGlfiAA7Y-DSyDxJCEwMbHlKqLU3b56Lw70defuz7PNv-GtC0ra594LpLDZW1RJ_hMCus3hJ_cnAfcatucoPMYOMMzqccAuM2sdcKTEf-bLeBaVZ9DXRTJ-0VyF1ggIFPQCxRZzoaHl'
+  },
+  {
+    title: 'Studio Brand Launch',
+    category: 'Corporate Website',
+    description: 'Brand-first website architecture focused on trust building and conversion performance.',
+    result: 'Faster sales-call booking from web traffic',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYSLsaHd3svCQ3Sz0lqjt1ar4r8hs72BxPiKinJsLkVAXZMO1aYcbTb0EteKcOC4_yFUARuJvq-JCW1RXeIE9piORcZopz3PACWC03BAUB4Zyl7B7OcY3pHWpuWXKCz5Tuij9kPXvQdW5kg9IQt1_gFj_xuzuuf9PLHYOWANUoAtnH8Li6JhXlPvq5Y9pijVrLIDFWY9gOmQWaH0g8KLiI5qRyKESZnWaQXpBZ20_HyZ1TD7Acv6T6G-asgAWL0_HXmDkmTghhS0jm'
+  }
+];
+---
+
+<Layout title="Portfolio | NexusDigital">
+  <Header />
+  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <section class="max-w-7xl mx-auto px-6">
+      <SectionHeader
+        kicker="Portfolio"
+        title="Ukázky realizovaných webů"
+        description="Každý projekt je postavený na konkrétním obchodním cíli. Pokud chcete podobný výsledek, otevřete konfigurátor."
+      />
+
+      <div class="space-y-8">
+        {cases.map((item, index) => (
+          <article class="block rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md p-4 md:p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+              <div class={index % 2 === 0 ? 'order-2 lg:order-1' : 'order-2 lg:order-2'}>
+                <span class="inline-flex items-center bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-4">
+                  {item.category}
+                </span>
+                <h2 class="text-2xl md:text-4xl font-black tracking-tight mb-4">{item.title}</h2>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{item.description}</p>
+                <p class="text-primary font-bold mb-5">{item.result}</p>
+                <a href="/configurator?preset=similar-case" class="inline-flex items-center justify-center bg-primary text-white font-bold px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-all">
+                  Build something similar
+                </a>
+              </div>
+
+              <div class={index % 2 === 0 ? 'order-1 lg:order-2' : 'order-1 lg:order-1'}>
+                <div class="rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 bg-white">
+                  <img
+                    src={item.image}
+                    alt={`${item.title} page view`}
+                    loading="lazy"
+                    class="w-full h-[220px] md:h-[320px] object-cover object-top"
+                  />
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  step: number;
+  title: string;
+  subtitle?: string;
+  active?: boolean;
+}
+
+const { step, title, subtitle, active = false } = Astro.props;
+---
+
+<section
+  data-step-panel
+  data-step={step}
+  data-title={title}
+  class:list={{
+    'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8': true,
+    hidden: !active
+  }}
+>
+  <div class="mb-5">
+    <p class="text-xs font-black uppercase tracking-[0.12em] text-primary mb-1">Krok {step}</p>
+    <h2 class="text-2xl font-black text-slate-900 dark:text-white">{title}</h2>
+    {subtitle && <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">{subtitle}</p>}
+  </div>
+  <slot />
+</section>

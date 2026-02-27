@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+---
+
+<Layout title="Privacy | NexusDigital">
+  <Header />
+  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <section class="max-w-4xl mx-auto px-6">
+      <SectionHeader
+        kicker="Legal"
+        title="Privacy Policy"
+        description="This page is a placeholder. Replace with your final legal text and company details."
+      />
+
+      <div class="space-y-6 text-slate-700 dark:text-slate-300 leading-relaxed bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8">
+        <section>
+          <h2 class="text-xl font-black mb-2 text-slate-900 dark:text-white">1. Data We Collect</h2>
+          <p>TODO: Add exact categories of personal data collected via forms, analytics and communication channels.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-black mb-2 text-slate-900 dark:text-white">2. Purpose of Processing</h2>
+          <p>TODO: Add legal bases and concrete processing purposes for lead handling and project communication.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-black mb-2 text-slate-900 dark:text-white">3. Data Retention</h2>
+          <p>TODO: Add retention periods and deletion policy.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-black mb-2 text-slate-900 dark:text-white">4. Contact</h2>
+          <p>TODO: Add controller name, address, and privacy contact email.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

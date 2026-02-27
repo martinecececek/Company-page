@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FAQAccordion from '../components/FAQAccordion.astro';
+
+const faqItems = [
+  {
+    question: 'Kolik stojí nový web?',
+    answer: 'Cena se liší podle typu webu, počtu stránek a funkcí. Přesný odhad dostanete v konfigurátoru po vyplnění požadavků.'
+  },
+  {
+    question: 'Jaké jsou možnosti hostingu?',
+    answer: 'Podle typu projektu doporučíme statický nebo full-stack hosting. Statický hosting je vhodný pro jednodušší prezentační weby, full-stack je nutný u pokročilých funkcí jako přihlášení, objednávky nebo databáze.'
+  },
+  {
+    question: 'Je hosting zahrnutý v ceně?',
+    answer: 'U statických webů umíme zajistit zvýhodněné řešení včetně prvního roku. U full-stack projektů se cena hostingu odvíjí od backendu, datové náročnosti a provozu.'
+  },
+  {
+    question: 'Jak rychle může být web hotový?',
+    answer: 'Jednodušší weby bývají hotové během několika týdnů, rozsáhlejší projekty trvají déle. V konfigurátoru zobrazujeme orientační timeline.'
+  },
+  {
+    question: 'Dostanu po spuštění přístupy a vlastnictví webu?',
+    answer: 'Ano, po předání získáte přístupy k doméně, hostingu i administraci podle rozsahu projektu. Vlastnictví řešení a podmínky předání jsou vždy součástí dohody.'
+  },
+  {
+    question: 'Kolik kol úprav je v projektu?',
+    answer: 'Standardně plánujeme několik revizních kol podle fáze projektu (struktura, design, finální kontrola). Přesný rozsah úprav nastavujeme při specifikaci zadání.'
+  },
+  {
+    question: 'Umíte převzít existující web a vylepšit ho?',
+    answer: 'Ano. Můžeme navázat na stávající obsah, design i technické řešení a navrhnout postupnou modernizaci.'
+  },
+  {
+    question: 'Řešíte i SEO a obsah?',
+    answer: 'Ano, v rámci projektu můžeme zahrnout strukturu obsahu, on-page SEO i doporučení pro další růst.'
+  },
+  {
+    question: 'Nabízíte i správu webu po spuštění?',
+    answer: 'Ano, navazujeme dlouhodobou správou: aktualizace, dohled, menší úpravy, bezpečnostní kontrolu a průběžnou optimalizaci výkonu.'
+  },
+  {
+    question: 'Můžete pomoct s texty a obsahem?',
+    answer: 'Ano, můžeme připravit obsahovou osnovu, upravit texty pro lepší srozumitelnost a konverzi, případně dodat kompletní copywriting.'
+  },
+  {
+    question: 'Je možné rozdělit projekt do etap?',
+    answer: 'Ano, často navrhujeme MVP fázi a následné rozšiřování podle výsledků a priorit.'
+  },
+  {
+    question: 'Jak probíhá komunikace během realizace?',
+    answer: 'Pracujeme v jasných milnících a pravidelných updatech. Po celou dobu máte přehled o stavu projektu, dalších krocích i termínech.'
+  }
+];
+---
+
+<Layout title="FAQ | NexusDigital">
+  <Header />
+  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <section class="max-w-5xl mx-auto px-6">
+      <SectionHeader
+        kicker="FAQ"
+        title="Časté dotazy"
+        description="Stručné odpovědi na nejčastější otázky před zahájením spolupráce."
+      />
+
+      <FAQAccordion items={faqItems} />
+
+      <div class="mt-10 bg-gradient-to-r from-primary to-blue-500 text-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div>
+          <h3 class="text-2xl font-black mb-2">Máte konkrétní zadání?</h3>
+          <p class="text-white/90 text-sm md:text-base">V konfigurátoru vyberete rozsah a hned uvidíte odhad ceny i timeline.</p>
+        </div>
+        <a href="/configurator" class="inline-flex items-center justify-center bg-white text-primary font-extrabold px-6 py-3 rounded-xl hover:bg-slate-100 transition-colors">
+          Start Configurator
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

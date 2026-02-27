@@ -1,0 +1,37 @@
+---
+interface CardItem {
+  icon?: string;
+  title: string;
+  text: string;
+  href?: string;
+  ctaLabel?: string;
+}
+
+interface Props {
+  items: CardItem[];
+  columns?: 2 | 3;
+}
+
+const { items = [], columns = 3 } = Astro.props;
+const gridColsClass = columns === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3';
+---
+
+<div class={`grid ${gridColsClass} gap-4 md:gap-5`}>
+  {items.map((item) => (
+    <article class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+      {item.icon && (
+        <div class="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined">{item.icon}</span>
+        </div>
+      )}
+      <h2 class="text-lg font-extrabold text-slate-900 dark:text-white mb-2">{item.title}</h2>
+      <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{item.text}</p>
+      {item.href && (
+        <a href={item.href} class="inline-flex items-center gap-1 mt-4 text-primary font-bold text-sm hover:gap-2 transition-all">
+          {item.ctaLabel ?? 'Start Configurator'}
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+      )}
+    </article>
+  ))}
+</div>

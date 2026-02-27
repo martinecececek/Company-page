@@ -28,9 +28,14 @@ import Footer from '../components/Footer.astro';
             </div>
             <input class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Firma / projekt" />
             <textarea class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary resize-y" rows="6" placeholder="Popište stručně, co potřebujete"></textarea>
-            <button type="submit" class="bg-primary text-white font-bold px-7 py-3 rounded-xl hover:bg-primary/90 transition-all">
-              Odeslat poptávku
-            </button>
+            <div class="flex flex-wrap gap-3">
+              <button type="submit" class="bg-primary text-white font-bold px-7 py-3 rounded-xl hover:bg-primary/90 transition-all">
+                Odeslat poptávku
+              </button>
+              <a href="/configurator" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold px-7 py-3 rounded-xl hover:border-primary transition-all">
+                Start Configurator
+              </a>
+            </div>
           </form>
         </div>
 

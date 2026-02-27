@@ -2,2228 +2,1501 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import StepPanel from '../components/configurator/StepPanel.astro';
+import ToggleButton from '../components/configurator/ToggleButton.astro';
+import FeatureCard from '../components/configurator/FeatureCard.astro';
+
+const websiteTypes = [
+  { id: 'company', label: 'Firemní web', description: 'Profesionální prezentace firmy a sběr poptávek.' },
+  { id: 'landing', label: 'Landing page', description: 'Jednostránková kampaň zaměřená na konverze.' },
+  { id: 'portfolio', label: 'Portfolio', description: 'Ukázka projektů, referencí a důvěryhodnosti.' },
+  { id: 'blog', label: 'Blog', description: 'Obsahový web pro publikování a lepší viditelnost na Googlu.' },
+  { id: 'ecommerce', label: 'E-shop', description: 'Katalog produktů, objednávky a prodejní proces.' },
+  { id: 'webapp', label: 'Webová aplikace', description: 'Interaktivní aplikace s uživatelskou logikou a pokročilými funkcemi.' }
+];
+
+const pagesCatalog = [
+  { id: 'home', label: 'Domů', description: 'Hlavní vstupní stránka' },
+  { id: 'about', label: 'O nás', description: 'Důvěra a příběh týmu' },
+  { id: 'services', label: 'Služby', description: 'Nabídka a hodnota pro klienta' },
+  { id: 'portfolio', label: 'Portfolio', description: 'Případové studie a důkazy výsledků' },
+  { id: 'pricing', label: 'Ceník', description: 'Transparentní struktura nabídky' },
+  { id: 'blog', label: 'Blog', description: 'Články a obsahový hub' },
+  { id: 'faq', label: 'FAQ', description: 'Odpovědi na klíčové otázky' },
+  { id: 'contact', label: 'Kontakt', description: 'Předání poptávky a komunikace' },
+  { id: 'shop', label: 'Obchod', description: 'Výpis produktů' },
+  { id: 'checkout', label: 'Košík a objednávka', description: 'Dokončení objednávky' },
+  { id: 'dashboard', label: 'Uživatelská zóna', description: 'Přehled uživatelského účtu' }
+];
+
+const featuresCatalog = [
+  { id: 'contact-form', title: 'Kontaktní formuláře', icon: 'mail', description: 'Sbírejte poptávky pomocí přehledných formulářů.' },
+  { id: 'analytics', title: 'Analytika', icon: 'analytics', description: 'Sledujte návštěvnost a chování uživatelů v přehledných reportech.' },
+  { id: 'seo', title: 'Nastavení viditelnosti ve vyhledávání', icon: 'travel_explore', description: 'Nastavíme strukturu webu tak, aby vás lidé našli na Googlu a dalších vyhledávačích.' },
+  { id: 'newsletter', title: 'Newsletter', icon: 'campaign', description: 'Budujte publikum a návratnost pomocí e-mailových kampaní.' },
+  { id: 'auth', title: 'Přihlášení uživatelů', icon: 'verified_user', description: 'Bezpečné přihlášení a přístup k uživatelskému účtu.' },
+  { id: 'admin-panel', title: 'Administrace', icon: 'admin_panel_settings', description: 'Interní správa uživatelů, obsahu a nastavení.' },
+  { id: 'payments', title: 'Platby', icon: 'credit_card', description: 'Online platební proces a zpracování transakcí.' },
+  { id: 'order-system', title: 'Objednávkový systém', icon: 'receipt_long', description: 'Zpracování objednávek, stavy a návazná logika.' },
+  { id: 'dynamic-cms-db', title: 'Dynamické CMS + DB', icon: 'edit_note', description: 'Správa obsahu napojená na databázi.' }
+];
+
+const fontPairs = [
+  {
+    id: 'inter-space',
+    label: 'Inter + Space Grotesk',
+    heading: "'Space Grotesk', Inter, sans-serif",
+    body: 'Inter, sans-serif',
+    preview: 'Moderní a čistý styl s jasnou hierarchií.'
+  },
+  {
+    id: 'manrope-inter',
+    label: 'Manrope + Inter',
+    heading: 'Manrope, Inter, sans-serif',
+    body: 'Inter, sans-serif',
+    preview: 'Neutrální, čitelný a konverzně orientovaný styl.'
+  },
+  {
+    id: 'playfair-inter',
+    label: 'Playfair + Inter',
+    heading: "'Playfair Display', Georgia, serif",
+    body: 'Inter, sans-serif',
+    preview: 'Prémiový redakční vzhled značky.'
+  },
+  {
+    id: 'poppins-roboto',
+    label: 'Poppins + Roboto',
+    heading: 'Poppins, Inter, sans-serif',
+    body: 'Roboto, Inter, sans-serif',
+    preview: 'Přátelský a velmi čitelný vizuální styl.'
+  },
+  {
+    id: 'montserrat-source',
+    label: 'Montserrat + Source Sans',
+    heading: 'Montserrat, Inter, sans-serif',
+    body: "'Source Sans 3', Inter, sans-serif",
+    preview: 'Strukturovaný firemní vzhled s důrazem na přehlednost.'
+  }
+];
+
+const presets = {
+  company: {
+    hosting: 'static',
+    pages: {
+      required: ['home', 'contact'],
+      recommended: ['about', 'services', 'faq', 'pricing', 'portfolio'],
+      default: []
+    },
+    features: {
+      required: [],
+      recommended: ['contact-form', 'analytics', 'seo'],
+      default: []
+    }
+  },
+  landing: {
+    hosting: 'static',
+    pages: {
+      required: ['home'],
+      recommended: ['contact'],
+      default: []
+    },
+    features: {
+      required: [],
+      recommended: ['contact-form', 'analytics', 'seo'],
+      default: []
+    }
+  },
+  portfolio: {
+    hosting: 'static',
+    pages: {
+      required: ['home', 'portfolio', 'contact'],
+      recommended: ['about'],
+      default: []
+    },
+    features: {
+      required: [],
+      recommended: ['contact-form', 'analytics', 'seo'],
+      default: []
+    }
+  },
+  blog: {
+    hosting: 'static',
+    pages: {
+      required: ['home', 'blog'],
+      recommended: ['about', 'contact'],
+      default: []
+    },
+    features: {
+      required: ['dynamic-cms-db'],
+      recommended: ['newsletter', 'analytics', 'seo'],
+      default: []
+    }
+  },
+  ecommerce: {
+    hosting: 'fullstack',
+    pages: {
+      required: ['shop', 'checkout'],
+      recommended: ['home', 'faq', 'dashboard'],
+      default: []
+    },
+    features: {
+      required: ['order-system', 'payments', 'admin-panel', 'dynamic-cms-db'],
+      recommended: ['auth', 'contact-form', 'analytics', 'seo', 'newsletter'],
+      default: []
+    }
+  },
+  webapp: {
+    hosting: 'fullstack',
+    pages: {
+      required: ['dashboard', 'home'],
+      recommended: ['contact', 'faq'],
+      default: []
+    },
+    features: {
+      required: ['admin-panel', 'auth', 'dynamic-cms-db'],
+      recommended: ['contact-form', 'analytics', 'seo', 'newsletter'],
+      default: []
+    }
+  }
+};
+
+const hostingTriggerFeatures = ['auth', 'admin-panel', 'payments', 'order-system', 'dynamic-cms-db'];
+
+const initialType = 'company';
+const initialPreset = presets[initialType];
+const initialPages = [...initialPreset.pages.required, ...initialPreset.pages.recommended, ...initialPreset.pages.default];
+const nonPreselectedRecommendedFeatureKeys = new Set(['analytics']);
+const initialRecommendedFeatures = [...initialPreset.features.recommended].filter((featureId) => !nonPreselectedRecommendedFeatureKeys.has(featureId));
+const initialFeatures = [...initialPreset.features.required, ...initialRecommendedFeatures, ...initialPreset.features.default];
 ---
 
-<Layout title="Web Configurator | NexusDigital">
+<Layout title="Webový konfigurátor | NexusDigital">
   <Header />
+
   <main class="relative overflow-hidden pt-28 pb-20 min-h-screen bg-background-light dark:bg-background-dark px-4 md:px-6">
     <div class="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
     <div class="absolute top-40 -right-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
 
-    <div class="max-w-5xl mx-auto relative z-10">
-      <div class="mb-8 flex items-center justify-between gap-4 flex-wrap">
-        <a href="/" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
-          <span class="material-symbols-outlined text-base">arrow_back</span>
-          Zpět na hlavní stránku
-        </a>
-        <h1 class="text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white">Web konfigurátor</h1>
+    <section class="max-w-6xl mx-auto relative z-10">
+      <div class="max-w-3xl mb-8">
+        <p class="text-primary text-xs font-black tracking-[0.14em] uppercase mb-3">Webový konfigurátor</p>
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight mb-4">Naplánujte projekt pomocí chytrého 6krokového konfigurátoru</h1>
+        <p class="text-slate-600 dark:text-slate-400 text-lg">Chytré presety, interaktivní ovládání, živý náhled designu a finální souhrn v jednom toku.</p>
       </div>
 
-      <div class="mb-10 text-center max-w-3xl mx-auto">
-        <div class="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-4">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-          </span>
-          <span class="text-xs font-bold uppercase tracking-wider text-primary">Project brief</span>
-        </div>
-        <p class="text-slate-600 dark:text-slate-400 text-lg">
-          Vyplňte základní informace o projektu a pošlete nám strukturovaný brief ve stejném stylu jako zbytek vašeho webu.
-        </p>
-      </div>
-
-      <form class="space-y-4" id="configuratorWizard">
-        <div class="config-card wizard-progress-card">
+      <form id="configuratorForm" action="/thank-you" method="get" class="space-y-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 md:p-6">
           <div class="flex items-center justify-between gap-4 flex-wrap mb-3">
-            <p id="wizardStepText" class="text-sm font-bold uppercase tracking-wider text-primary">Krok 1/6</p>
-            <p id="wizardStepTitle" class="text-sm font-semibold text-slate-500 dark:text-slate-400">Základní informace</p>
+            <p id="stepCounter" class="text-sm font-bold uppercase tracking-wider text-primary">Krok 1 / 6</p>
+            <p id="stepTitle" class="text-sm font-semibold text-slate-500 dark:text-slate-400">Typ webu</p>
           </div>
-          <div class="wizard-progress-track">
-            <div id="wizardProgressBar" class="wizard-progress-fill" style="--wizard-progress: 16.66%"></div>
+          <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+            <div id="stepProgress" class="h-full bg-primary transition-all duration-300" style="width: 16.66%"></div>
           </div>
         </div>
 
-        <section class="config-card step-card active" data-step="1" data-step-title="Základní informace">
-          <button type="button" class="step-trigger">
-            <div>
-              <p class="step-index">Krok 1</p>
-              <h2 class="step-title">Základní informace</h2>
-              <p class="step-subtitle">Kontakty + základní typ webu</p>
-            </div>
-            <span class="material-symbols-outlined step-chevron">expand_more</span>
-          </button>
-          <div class="step-content">
-            <div class="space-y-6">
+        <StepPanel step={1} title="Typ webu" subtitle="Vyberte typ projektu a nechte presety automaticky nastavit stránky, funkce i hosting." active={true}>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {websiteTypes.map((item, index) => (
+              <button
+                type="button"
+                data-website-type
+                data-id={item.id}
+                class:list={{ 'cfg-type-btn': true, 'is-active': index === 0 }}
+                aria-pressed={index === 0 ? 'true' : 'false'}
+              >
+                <p class="font-extrabold text-slate-900 dark:text-white text-base mb-1">{item.label}</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400">{item.description}</p>
+              </button>
+            ))}
+          </div>
+
+          <div class="mt-5 inline-flex items-center gap-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2">
+            <span class="material-symbols-outlined text-primary text-base">deployed_code</span>
+            <p id="hostingIndicator" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Hosting: Statický</p>
+          </div>
+        </StepPanel>
+
+        <StepPanel step={2} title="Obsah webu" subtitle="Přepínače obsahu webu s doporučenými presety.">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {pagesCatalog.map((page) => (
+              <ToggleButton kind="page" id={page.id} label={page.label} description={page.description} />
+            ))}
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-4">Legenda: Doporučené ⭐</p>
+        </StepPanel>
+
+        <StepPanel step={3} title="Funkce" subtitle="Karty funkcí se stavovými štítky a kontextovým vysvětlením.">
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+            {featuresCatalog.map((feature) => (
+              <FeatureCard id={feature.id} title={feature.title} icon={feature.icon} description={feature.description} />
+            ))}
+          </div>
+        </StepPanel>
+
+        <StepPanel step={4} title="Design studio" subtitle="Šablona + párování fontů + barevné téma se živým náhledem.">
+          <div class="grid grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-5 items-start">
+            <div class="space-y-5">
               <div>
-                <h3 class="sub-heading">Kontaktní údaje</h3>
-                <div class="space-y-3">
-                  <label class="field-row">
-                    <span class="material-symbols-outlined text-primary">apartment</span>
-                    <input class="field-input" type="text" placeholder="Název společnosti/předmět činnosti." />
-                  </label>
-                  <label class="field-row">
-                    <span class="material-symbols-outlined text-primary">person</span>
-                    <input class="field-input" type="text" placeholder="Jméno a příjmení" />
-                  </label>
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <label class="field-row">
-                      <span class="material-symbols-outlined text-primary">call</span>
-                      <input class="field-input" type="text" placeholder="Telefon" />
-                    </label>
-                    <label class="field-row">
-                      <span class="material-symbols-outlined text-primary">mail</span>
-                      <input class="field-input" type="email" placeholder="Email" />
-                    </label>
-                  </div>
+                <p class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Preset šablony</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    { id: 'modern', label: 'Moderní' },
+                    { id: 'minimal', label: 'Minimalistický' },
+                    { id: 'bold', label: 'Výrazný' },
+                    { id: 'elegant', label: 'Elegantní' },
+                    { id: 'custom', label: 'Vlastní' }
+                  ].map((preset, index) => (
+                    <button type="button" data-template={preset.id} class:list={{ 'cfg-toggle-btn': true, 'is-selected': index === 0 }}>
+                      <div class="flex items-center justify-between gap-3">
+                        <span class="font-extrabold text-slate-900 dark:text-white">{preset.label}</span>
+                        <span class="cfg-state-badge">Styl</span>
+                      </div>
+                    </button>
+                  ))}
                 </div>
               </div>
 
               <div>
-                <h3 class="sub-heading">Kontakty pro web</h3>
-                <label class="field-row mb-3">
-                  <span class="material-symbols-outlined text-primary">phone_in_talk</span>
-                  <input class="field-input" type="text" placeholder="Telefony, e-mail, adresa, otevírací doba, sociální sítě" />
-                </label>
-                <div class="flex flex-wrap gap-2 chip-group" data-select="multi">
-                  <button type="button" class="chip-btn">Viber</button>
-                  <button type="button" class="chip-btn">WhatsApp</button>
-                  <button type="button" class="chip-btn">Telegram</button>
-                  <button type="button" class="chip-btn">Messenger</button>
+                <p class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Párování fontů</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {fontPairs.map((pair, index) => (
+                    <button type="button" data-font-pair={pair.id} data-heading-font={pair.heading} data-body-font={pair.body} class:list={{ 'cfg-toggle-btn': true, 'is-selected': index === 0 }}>
+                      <p class="font-extrabold text-slate-900 dark:text-white mb-1">{pair.label}</p>
+                      <p class="text-xs text-slate-500 dark:text-slate-400">{pair.preview}</p>
+                    </button>
+                  ))}
                 </div>
               </div>
 
               <div>
-                <h3 class="sub-heading">Druh webu</h3>
-                <div class="flex flex-wrap gap-2 chip-group" data-select="single" id="webTypeGroup">
-                  <button type="button" class="chip-btn chip-btn-active" aria-pressed="true">Jednoduchá prezentace firmy</button>
-                  <button type="button" class="chip-btn" aria-pressed="false">Web na získávání zákazníků</button>
-                  <button type="button" class="chip-btn" aria-pressed="false">E-shop</button>
-                  <button type="button" class="chip-btn" aria-pressed="false">Členský portál nebo online systém</button>
+                <p class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Barevné studio</p>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                  <label class="cfg-color-input">Primární<input data-color="primary" type="color" value="#135bec" /></label>
+                  <label class="cfg-color-input">Sekundární<input data-color="secondary" type="color" value="#0f172a" /></label>
+                  <label class="cfg-color-input">Akcent<input data-color="accent" type="color" value="#22c55e" /></label>
+                  <label class="cfg-color-input">Pozadí<input data-color="background" type="color" value="#ffffff" /></label>
+                  <label class="cfg-color-input">Text<input data-color="text" type="color" value="#0f172a" /></label>
                 </div>
               </div>
 
-              <div class="wizard-nav wizard-nav-end">
-                <button type="button" class="wizard-btn wizard-next">Další krok</button>
+              <div>
+                <p class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Režim</p>
+                <div class="grid grid-cols-2 gap-3">
+                  <button type="button" data-mode="light" class="cfg-toggle-btn is-selected">Světlý režim</button>
+                  <button type="button" data-mode="dark" class="cfg-toggle-btn">Tmavý režim</button>
+                </div>
+              </div>
+            </div>
+
+            <aside class="xl:sticky xl:top-28">
+              <div id="livePreview" class="cfg-live-preview" data-template="modern" data-mode="light">
+                <div class="cfg-preview-navbar">
+                  <span class="cfg-preview-logo">Nexus</span>
+                  <div class="cfg-preview-nav-items">
+                    <span>Služby</span><span>Portfolio</span><span>Kontakt</span>
+                  </div>
+                </div>
+
+                <div class="cfg-preview-hero">
+                  <div>
+                    <p class="cfg-preview-kicker">Web zaměřený na konverze</p>
+                    <h3 class="cfg-preview-title">Profesionální web, který podporuje růst vašeho podnikání</h3>
+                    <p class="cfg-preview-text">Živý náhled okamžitě reaguje na volbu šablony, fontu i barev.</p>
+                    <button type="button" class="cfg-preview-cta">Spustit konfigurátor</button>
+                  </div>
+                  <div class="cfg-preview-media"></div>
+                </div>
+
+                <div class="cfg-preview-feature-row">
+                  <div class="cfg-preview-feature">Rychlý</div>
+                  <div class="cfg-preview-feature">Viditelnost na Googlu</div>
+                  <div class="cfg-preview-feature">Škálovatelný</div>
+                </div>
+
+                <div class="cfg-preview-grid">
+                  <div class="cfg-preview-card"></div>
+                  <div class="cfg-preview-card"></div>
+                  <div class="cfg-preview-card"></div>
+                </div>
+
+                <div class="cfg-preview-footer">© Vaše značka</div>
+              </div>
+            </aside>
+          </div>
+        </StepPanel>
+
+        <StepPanel step={5} title="Detaily projektu" subtitle="Rozpočet, časový plán a připravenost pro realistické plánování.">
+          <div class="space-y-5">
+            <div>
+              <p class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Rozpočet</p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <button type="button" data-detail="budget" data-value="5k-10k" class="cfg-toggle-btn is-selected">€5k – €10k</button>
+                <button type="button" data-detail="budget" data-value="10k-20k" class="cfg-toggle-btn">€10k – €20k</button>
+                <button type="button" data-detail="budget" data-value="20k+" class="cfg-toggle-btn">€20k+</button>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Časový rámec</p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <button type="button" data-detail="timeline" data-value="2–4 týdny" class="cfg-toggle-btn">2–4 týdny</button>
+                <button type="button" data-detail="timeline" data-value="4–8 týdnů" class="cfg-toggle-btn is-selected">4–8 týdnů</button>
+                <button type="button" data-detail="timeline" data-value="8+ týdnů" class="cfg-toggle-btn">8+ týdnů</button>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Připravenost obsahu</p>
+              <div class="grid grid-cols-2 gap-3">
+                <button type="button" data-detail="contentReady" data-value="Ano" class="cfg-toggle-btn is-selected">Ano, obsah je připravený</button>
+                <button type="button" data-detail="contentReady" data-value="Ne" class="cfg-toggle-btn">Ne, potřebuji pomoc s obsahem</button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input id="referenceWebsite" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="url" placeholder="URL referenčního webu" />
+              <input id="targetMarket" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Cílový trh / region" />
+            </div>
+
+            <textarea id="additionalNotes" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary resize-y" rows="4" placeholder="Doplňující poznámky"></textarea>
+          </div>
+        </StepPanel>
+
+        <StepPanel step={6} title="Finální souhrn" subtitle="Vše na jednom místě: technický přehled, odhad a finální kontaktní formulář.">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-4">
+              <h3 class="font-black mb-3 text-slate-900 dark:text-white">Souhrn konfigurace</h3>
+              <div id="summaryStructured" class="space-y-4 text-sm text-slate-600 dark:text-slate-300"></div>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-4 space-y-3">
+              <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400 inline-flex items-center gap-2">
+                  Odhadovaná cena
+                  <span id="priceHintWrap" data-summary-hint-wrap class="cfg-summary-hint-wrap hidden">
+                    <button type="button" id="priceHintTrigger" data-summary-hint-trigger class="cfg-summary-hint-trigger" aria-label="Nápověda k odhadu ceny">ⓘ</button>
+                    <span id="priceHintTooltip" class="cfg-summary-hint-tooltip"></span>
+                  </span>
+                </p>
+                <p id="summaryPrice" class="text-3xl font-black text-primary">€0 – €0</p>
+              </div>
+              <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400 inline-flex items-center gap-2">
+                  Odhadovaný termín
+                  <span id="timelineHintWrap" data-summary-hint-wrap class="cfg-summary-hint-wrap hidden">
+                    <button type="button" id="timelineHintTrigger" data-summary-hint-trigger class="cfg-summary-hint-trigger" aria-label="Nápověda k odhadu termínu">ⓘ</button>
+                    <span id="timelineHintTooltip" class="cfg-summary-hint-tooltip"></span>
+                  </span>
+                </p>
+                <p id="summaryTimeline" class="text-xl font-extrabold text-slate-900 dark:text-white">4–8 týdnů</p>
+              </div>
+              <div>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Poznámka k hostingu</p>
+                <p id="hostingExplanation" class="text-sm font-semibold text-slate-700 dark:text-slate-300"></p>
               </div>
             </div>
           </div>
-        </section>
 
-        <section class="config-card step-card" data-step="3" data-step-title="Branding">
-          <button type="button" class="step-trigger">
-            <div>
-              <p class="step-index">Krok 3</p>
-              <h2 class="step-title">Branding</h2>
-              <p class="step-subtitle">Barvy a vizuální směr</p>
+          <div class="border-t border-slate-200 dark:border-slate-700 pt-6">
+            <h3 class="text-xl font-black mb-4 text-slate-900 dark:text-white">Kontaktní formulář</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <input required name="name" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Jméno" />
+              <input required name="email" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="email" placeholder="E-mail" />
+              <input name="company" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Společnost" />
+              <input name="message" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Zpráva" />
             </div>
-            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          </div>
+
+          <input type="hidden" id="configJson" name="config" value="" />
+          <input type="hidden" id="hostingType" name="hostingType" value="static" />
+          <input type="hidden" id="estimatedPriceRange" name="estimatedPriceRange" value="" />
+          <input type="hidden" id="estimatedTimelineValue" name="estimatedTimeline" value="" />
+        </StepPanel>
+
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center justify-between gap-3">
+          <button type="button" id="prevBtn" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold px-5 py-2.5 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" disabled>
+            Zpět
           </button>
-          <div class="step-content">
-            <h3 class="sub-heading">Barvy</h3>
-            <div class="flex items-center gap-4 mb-3">
-              <div class="text-center">
-                <input id="brandColorPrimary" type="color" value="#135bec" class="color-picker" aria-label="Primární barva" />
-                <p class="mt-1 text-slate-500 text-xs font-bold">#1</p>
-              </div>
-              <div class="text-center">
-                <input id="brandColorSecondary" type="color" value="#0f172a" class="color-picker" aria-label="Sekundární barva" />
-                <p class="mt-1 text-slate-500 text-xs font-bold">#2</p>
-              </div>
-              <div class="text-center">
-                <input id="brandColorTertiary" type="color" value="#e2e8f0" class="color-picker" aria-label="Doplňková barva" />
-                <p class="mt-1 text-slate-500 text-xs font-bold">#3</p>
-              </div>
-              <div class="text-center">
-                <input id="brandColorBackground" type="color" value="#ffffff" class="color-picker" aria-label="Barva pozadí" />
-                <p class="mt-1 text-slate-500 text-xs font-bold">BG</p>
-              </div>
-            </div>
-            <label class="field-row">
-              <span class="material-symbols-outlined text-primary">palette</span>
-              <input class="field-input" type="text" placeholder="Požadavky na styl/značku/fonty" />
-            </label>
-
-            <div class="mt-6">
-              <h3 class="sub-heading">Téma webu</h3>
-              <div class="flex flex-wrap gap-2 chip-group" data-select="single" id="themeSelectorGroup">
-                <button type="button" class="chip-btn chip-btn-active" aria-pressed="true" data-theme="modern">Modern</button>
-                <button type="button" class="chip-btn" aria-pressed="false" data-theme="minimal">Minimal</button>
-                <button type="button" class="chip-btn" aria-pressed="false" data-theme="bold">Bold</button>
-                <button type="button" class="chip-btn" aria-pressed="false" data-theme="elegant">Elegant</button>
-                <button type="button" class="chip-btn" aria-pressed="false" data-theme="custom">Vlastní téma</button>
-              </div>
-
-              <div class="mt-4">
-                <h3 class="sub-heading">Font</h3>
-                <div class="flex flex-wrap gap-2 chip-group" data-select="single" id="fontSelectorGroup">
-                  <button type="button" class="chip-btn chip-btn-active" aria-pressed="true" data-font="sans">Sans</button>
-                  <button type="button" class="chip-btn" aria-pressed="false" data-font="serif">Serif</button>
-                  <button type="button" class="chip-btn" aria-pressed="false" data-font="mono">Mono</button>
-                  <button type="button" class="chip-btn" aria-pressed="false" data-font="custom">Custom</button>
-                </div>
-                <div class="mt-3 hidden" id="customFontWrap">
-                  <label class="field-row">
-                    <span class="material-symbols-outlined text-primary">format_size</span>
-                    <input id="customFontInput" class="field-input" type="text" placeholder="Např. Inter, Poppins, &quot;Playfair Display&quot;" />
-                  </label>
-                </div>
-              </div>
-
-              <div class="theme-preview mt-4" id="themePreview">
-                <div class="theme-preview-head">
-                  <p class="theme-preview-title" id="themePreviewTitle">Modern</p>
-                  <p class="theme-preview-text" id="themePreviewText">Čistý, moderní layout s výraznou CTA a přehlednými kartami.</p>
-                  <p class="theme-preview-hint">Malý náhled toho, jak může vypadat vaše homepage.</p>
-                  <div class="theme-preview-example-tags">
-                    <span class="theme-preview-example-tag" id="themePreviewExample1">Hero</span>
-                    <span class="theme-preview-example-tag" id="themePreviewExample2">Služby</span>
-                    <span class="theme-preview-example-tag" id="themePreviewExample3">CTA</span>
-                  </div>
-                </div>
-                <div class="theme-preview-canvas" id="themePreviewCanvas" data-theme="modern">
-                  <div class="theme-preview-browser" id="themePreviewBrowser">
-                    <div class="theme-preview-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="theme-preview-url"></div>
-                  </div>
-
-                  <div class="theme-preview-nav" id="themePreviewNav">
-                    <div class="theme-preview-logo" id="themePreviewLogo"></div>
-                    <div class="theme-preview-nav-links">
-                      <span class="theme-preview-pill" id="themePreviewNav1">Služby</span>
-                      <span class="theme-preview-pill" id="themePreviewNav2">Reference</span>
-                      <span class="theme-preview-pill" id="themePreviewNav3">Kontakt</span>
-                    </div>
-                  </div>
-
-                  <div class="theme-preview-hero" id="themePreviewHero">
-                    <div class="theme-preview-hero-copy">
-                      <p class="theme-preview-kicker" id="themePreviewKicker">Digitální studio</p>
-                      <p class="theme-preview-headline" id="themePreviewHeadline">Tvoříme weby, které prodávají.</p>
-                      <p class="theme-preview-paragraph" id="themePreviewParagraph">Rychlý, moderní a přehledný web pro vaši značku.</p>
-                      <div class="theme-preview-cta" id="themePreviewCta">Nezávazná konzultace</div>
-                    </div>
-                    <div class="theme-preview-media" id="themePreviewMedia">
-                      <span class="theme-preview-media-badge" id="themePreviewMediaBadge">Case Study</span>
-                    </div>
-                  </div>
-
-                  <div class="theme-preview-content" id="themePreviewContent">
-                    <div class="theme-preview-main" id="themePreviewMain">
-                      <div class="theme-preview-card" id="themePreviewCard1">
-                        <span class="theme-preview-card-title" id="themePreviewCardTitle1">Design</span>
-                      </div>
-                      <div class="theme-preview-card" id="themePreviewCard2">
-                        <span class="theme-preview-card-title" id="themePreviewCardTitle2">Vývoj</span>
-                      </div>
-                      <div class="theme-preview-card" id="themePreviewCard3">
-                        <span class="theme-preview-card-title" id="themePreviewCardTitle3">SEO</span>
-                      </div>
-                    </div>
-                    <div class="theme-preview-side" id="themePreviewSide">
-                      <span class="theme-preview-side-title" id="themePreviewSideTitle">Kontaktujte nás</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="wizard-nav">
-              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
-              <button type="button" class="wizard-btn wizard-next">Další krok</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="config-card step-card" data-step="2" data-step-title="Struktura webu">
-          <button type="button" class="step-trigger">
-            <div>
-              <p class="step-index">Krok 2</p>
-              <h2 class="step-title">Struktura webu</h2>
-              <p class="step-subtitle">Jazyky a jednotlivé sekce</p>
-            </div>
-            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          <button type="button" id="nextBtn" class="bg-primary text-white font-bold px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-all">
+            Další krok
           </button>
-          <div class="step-content space-y-6">
-            <div>
-              <h3 class="sub-heading">Jazyk webu</h3>
-              <div class="flex flex-wrap gap-2 mb-3 chip-group" data-select="multi">
-                <button type="button" class="chip-btn">Čeština</button>
-                <button type="button" class="chip-btn">Angličtina</button>
-                <button type="button" class="chip-btn">Ukrajinština</button>
-                <button type="button" class="chip-btn">Polština</button>
-                <button type="button" class="chip-btn">Němčina</button>
-              </div>
-              <label class="field-row">
-                <span class="material-symbols-outlined text-primary">add</span>
-                <input class="field-input" type="text" placeholder="Přidejte svůj jazyk a stiskněte Enter" />
-              </label>
-            </div>
-
-            <div>
-              <h3 class="sub-heading">Sekce webu</h3>
-              <div class="flex flex-wrap gap-2 mb-3 chip-group" data-select="multi">
-                <button type="button" class="chip-btn">Hlavní stránka</button>
-                <button type="button" class="chip-btn">O nás</button>
-                <button type="button" class="chip-btn">Naše služby</button>
-                <button type="button" class="chip-btn">Reference</button>
-                <button type="button" class="chip-btn">Recenze</button>
-                <button type="button" class="chip-btn">Ceny</button>
-                <button type="button" class="chip-btn">Blog</button>
-                <button type="button" class="chip-btn">Kontakty</button>
-                <button type="button" class="chip-btn">FAQ</button>
-                <button type="button" class="chip-btn">Objednávkový formulář</button>
-              </div>
-              <label class="field-row">
-                <span class="material-symbols-outlined text-primary">add</span>
-                <input class="field-input" type="text" placeholder="Přidejte svou sekci a stiskněte Enter" />
-              </label>
-            </div>
-
-            <div class="wizard-nav">
-              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
-              <button type="button" class="wizard-btn wizard-next">Další krok</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="config-card step-card" data-step="4" data-step-title="Funkce">
-          <button type="button" class="step-trigger">
-            <div>
-              <p class="step-index">Krok 4</p>
-              <h2 class="step-title">Funkce</h2>
-              <p class="step-subtitle">Technické rozšíření webu</p>
-            </div>
-            <span class="material-symbols-outlined step-chevron">expand_more</span>
+          <button type="submit" id="submitBtn" class="hidden bg-primary text-white font-bold px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-all">
+            Odeslat konfiguraci
           </button>
-          <div class="step-content space-y-6">
-            <div>
-              <h3 class="sub-heading">Vyberte funkce</h3>
-
-              <div class="space-y-4">
-                <div>
-                  <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-slate-500 mb-2">Komunikace a marketing</p>
-                  <div class="flex flex-wrap gap-2 chip-group" data-select="multi">
-                    <button type="button" class="chip-btn">Online chat</button>
-                    <button type="button" class="chip-btn">Zpětné volání</button>
-                    <button type="button" class="chip-btn">Newsletter</button>
-                    <button type="button" class="chip-btn">Napojení na sociální sítě</button>
-                    <button type="button" class="chip-btn">Blog + články</button>
-                    <button type="button" class="chip-btn">Analytika</button>
-                  </div>
-                </div>
-
-                <div>
-                  <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-slate-500 mb-2">Prodej a konverze</p>
-                  <div class="flex flex-wrap gap-2 chip-group" data-select="multi">
-                    <button type="button" class="chip-btn">Online platba</button>
-                    <button type="button" class="chip-btn">Košík/Objednávka</button>
-                    <button type="button" class="chip-btn">Poptávkový formulář</button>
-                    <button type="button" class="chip-btn">Rezervační systém</button>
-                    <button type="button" class="chip-btn">Katalogové filtry</button>
-                  </div>
-                </div>
-
-                <div>
-                  <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-slate-500 mb-2">Obsah a lokalizace</p>
-                  <div class="flex flex-wrap gap-2 chip-group" data-select="multi">
-                    <button type="button" class="chip-btn">Multijazyčný web</button>
-                    <button type="button" class="chip-btn">Google Maps</button>
-                    <button type="button" class="chip-btn">Členská sekce</button>
-                    <button type="button" class="chip-btn">Správa uživatelů</button>
-                  </div>
-                </div>
-
-                <div>
-                  <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-slate-500 mb-2">Integrace a compliance</p>
-                  <div class="flex flex-wrap gap-2 chip-group" data-select="multi" id="featureSelectorGroup">
-                    <button type="button" class="chip-btn">CRM integrace</button>
-                    <button type="button" class="chip-btn">Cookie lišta</button>
-                    <button type="button" class="chip-btn">GDPR souhlas</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="sub-heading">Vlastní funkce</h3>
-              <label class="field-row">
-                <span class="material-symbols-outlined text-primary">add</span>
-                <input id="featureCustomInput" class="field-input" type="text" placeholder="Napište funkci a stiskněte Enter" />
-              </label>
-            </div>
-
-            <div class="wizard-nav">
-              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
-              <button type="button" class="wizard-btn wizard-next">Další krok</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="config-card step-card" data-step="5" data-step-title="Obsah webu">
-          <button type="button" class="step-trigger">
-            <div>
-              <p class="step-index">Krok 5</p>
-              <h2 class="step-title">Obsah webu</h2>
-              <p class="step-subtitle">Služby, texty a podklady</p>
-            </div>
-            <span class="material-symbols-outlined step-chevron">expand_more</span>
-          </button>
-          <div class="step-content">
-            <div class="space-y-3">
-              <label class="field-area">
-                <span class="material-symbols-outlined text-primary">checklist</span>
-                <textarea class="field-input resize-y" rows="3" placeholder="Uveďte všechny služby, které nabízíte."></textarea>
-              </label>
-              <label class="field-area">
-                <span class="material-symbols-outlined text-primary">description</span>
-                <textarea class="field-input resize-y" rows="3" placeholder="Pokud máte texty pro jednotlivé sekce — vložte je sem nebo přiložte soubor níže."></textarea>
-              </label>
-              <label class="field-row">
-                <span class="material-symbols-outlined text-primary">attach_file</span>
-                <input class="w-full bg-transparent outline-none text-slate-700 dark:text-slate-300 file:mr-4 file:px-3 file:py-1.5 file:rounded-lg file:border file:border-slate-300 dark:file:border-slate-600 file:bg-white dark:file:bg-slate-800 file:text-slate-700 dark:file:text-slate-200" type="file" />
-              </label>
-            </div>
-
-            <div class="wizard-nav">
-              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
-              <button type="button" class="wizard-btn wizard-next">Další krok</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="config-card step-card" data-step="6" data-step-title="Dodání a priority">
-          <button type="button" class="step-trigger">
-            <div>
-              <p class="step-index">Krok 6</p>
-              <h2 class="step-title">Dodání a priority</h2>
-              <p class="step-subtitle">Rozpočet, termín a závěrečné poznámky</p>
-            </div>
-            <span class="material-symbols-outlined step-chevron">expand_more</span>
-          </button>
-          <div class="step-content space-y-6">
-            <div>
-              <h3 class="sub-heading">Rozpočet a termíny</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <label class="field-row">
-                  <span class="material-symbols-outlined text-primary">account_balance_wallet</span>
-                  <select class="field-input">
-                    <option selected>Rozpočet</option>
-                    <option>Do 25 000 Kč</option>
-                    <option>25 000–50 000 Kč</option>
-                    <option>50 000–100 000 Kč</option>
-                    <option>100 000+ Kč</option>
-                  </select>
-                </label>
-                <label class="field-row">
-                  <span class="material-symbols-outlined text-primary">event</span>
-                  <select class="field-input">
-                    <option selected>Požadovaný termín</option>
-                    <option>Do 2 týdnů</option>
-                    <option>Do 1 měsíce</option>
-                    <option>2–3 měsíce</option>
-                    <option>Flexibilní</option>
-                  </select>
-                </label>
-                <label class="field-row">
-                  <span class="material-symbols-outlined text-primary">language</span>
-                  <select class="field-input">
-                    <option selected>Doména</option>
-                    <option>Mám vlastní doménu</option>
-                    <option>Potřebuji pomoci vybrat</option>
-                  </select>
-                </label>
-                <label class="field-row">
-                  <span class="material-symbols-outlined text-primary">dns</span>
-                  <select class="field-input">
-                    <option selected>Hosting</option>
-                    <option>Mám hosting</option>
-                    <option>Potřebuji zajistit hosting</option>
-                  </select>
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="sub-heading">Reference a přání</h3>
-              <label class="field-row mb-3">
-                <span class="material-symbols-outlined text-primary">favorite</span>
-                <input class="field-input" type="text" placeholder="Odkaz na oblíbený web" />
-              </label>
-              <label class="field-area">
-                <span class="material-symbols-outlined text-primary">chat_bubble</span>
-                <textarea class="field-input resize-y" rows="4" placeholder="Další přání"></textarea>
-              </label>
-            </div>
-
-            <div class="wizard-nav">
-              <button type="button" class="wizard-btn wizard-prev wizard-btn-muted">Zpět</button>
-              <button type="submit" class="wizard-btn">Odeslat konfiguraci</button>
-            </div>
-          </div>
-        </section>
+        </div>
       </form>
-    </div>
+    </section>
   </main>
-  <Footer />
+
+  <Footer hideTopCta={true} />
 </Layout>
+
+<style>
+  @reference '../styles/global.css';
+
+  .cfg-type-btn,
+  :global(.cfg-toggle-btn),
+  :global(.cfg-feature-card) {
+    @apply w-full text-left rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4 transition-all duration-200;
+  }
+
+  .cfg-type-btn:hover,
+  :global(.cfg-toggle-btn:hover),
+  :global(.cfg-feature-card:hover) {
+    @apply border-primary/50;
+  }
+
+  .cfg-type-btn.is-active,
+  :global(.cfg-toggle-btn.is-selected),
+  :global(.cfg-feature-card.is-selected) {
+    @apply border-primary bg-primary/15;
+  }
+
+  .cfg-type-btn.is-active {
+    @apply ring-2 ring-primary/60 shadow-lg shadow-primary/20;
+  }
+
+  :global(.cfg-toggle-btn.is-locked),
+  :global(.cfg-feature-card.is-locked) {
+    @apply cursor-not-allowed opacity-90;
+  }
+
+  :global(.cfg-state-badge) {
+    @apply inline-flex items-center rounded-full border border-slate-300 dark:border-slate-600 text-[11px] font-bold px-2 py-0.5 text-slate-600 dark:text-slate-300;
+  }
+
+  :global(.cfg-feature-card) {
+    position: relative;
+    min-height: 172px;
+    overflow: visible;
+    z-index: 1;
+    isolation: isolate;
+  }
+
+  :global(.cfg-feature-card:hover),
+  :global(.cfg-feature-card.tooltip-open) {
+    z-index: 40;
+  }
+
+  :global(.cfg-tooltip) {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 0.4rem);
+    min-width: 15rem;
+    max-width: 18rem;
+    @apply hidden z-20 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300 shadow-lg;
+  }
+
+  :global(.cfg-feature-card:hover [data-tooltip]) {
+    @apply block;
+  }
+
+  :global(.cfg-feature-card.tooltip-open [data-tooltip]) {
+    @apply block;
+  }
+
+  .cfg-color-input {
+    @apply text-xs font-bold text-slate-500 dark:text-slate-400;
+  }
+
+  .cfg-color-input input {
+    @apply w-full mt-2 h-10 rounded-lg border border-slate-200 dark:border-slate-700;
+  }
+
+  :global(.cfg-summary-hint-wrap) {
+    @apply relative inline-flex items-center;
+  }
+
+  :global(.cfg-summary-hint-trigger) {
+    @apply inline-flex items-center justify-center size-5 rounded-full border border-slate-300 dark:border-slate-600 text-[11px] font-bold text-slate-500 dark:text-slate-300 bg-white dark:bg-slate-900;
+  }
+
+  :global(.cfg-summary-hint-tooltip) {
+    @apply hidden absolute right-0 top-[calc(100%+0.35rem)] z-30 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300 shadow-lg;
+    min-width: 16rem;
+    max-width: 18rem;
+  }
+
+  :global(.cfg-summary-hint-wrap:hover .cfg-summary-hint-tooltip),
+  :global(.cfg-summary-hint-wrap.is-open .cfg-summary-hint-tooltip) {
+    @apply block;
+  }
+
+  .cfg-live-preview {
+    --primary: #135bec;
+    --secondary: #0f172a;
+    --accent: #22c55e;
+    --background: #ffffff;
+    --text: #0f172a;
+    --font-heading: 'Space Grotesk', Inter, sans-serif;
+    --font-body: Inter, sans-serif;
+
+    @apply rounded-2xl border border-slate-200 dark:border-slate-700 p-4 bg-white;
+    background: var(--background);
+    color: var(--text);
+    transition: all 0.25s ease;
+  }
+
+  .cfg-live-preview[data-mode='dark'] {
+    --background: #0b1220;
+    --text: #e2e8f0;
+    border-color: rgba(51, 65, 85, 0.8);
+  }
+
+  .cfg-preview-navbar,
+  .cfg-preview-hero,
+  .cfg-preview-feature-row,
+  .cfg-preview-grid,
+  .cfg-preview-footer {
+    @apply rounded-xl border border-slate-200/80 p-3 mb-3;
+    border-color: color-mix(in srgb, var(--accent) 30%, #cbd5e1 70%);
+  }
+
+  .cfg-preview-navbar {
+    @apply flex items-center justify-between;
+  }
+
+  .cfg-preview-logo {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    color: var(--secondary);
+  }
+
+  .cfg-preview-nav-items {
+    @apply flex items-center gap-2 text-[11px] font-bold;
+    font-family: var(--font-body);
+  }
+
+  .cfg-preview-nav-items span {
+    @apply px-2 py-0.5 rounded-full;
+    background: color-mix(in srgb, var(--accent) 35%, white 65%);
+    color: color-mix(in srgb, var(--secondary) 85%, white 15%);
+  }
+
+  .cfg-preview-hero {
+    @apply grid grid-cols-[1.15fr_0.85fr] gap-3;
+  }
+
+  .cfg-preview-kicker {
+    @apply text-[10px] font-black uppercase tracking-[0.08em] mb-1;
+    color: var(--primary);
+    font-family: var(--font-body);
+  }
+
+  .cfg-preview-title {
+    @apply text-sm font-black leading-tight mb-1.5;
+    font-family: var(--font-heading);
+    color: var(--text);
+  }
+
+  .cfg-preview-text {
+    @apply text-xs mb-2;
+    font-family: var(--font-body);
+    color: color-mix(in srgb, var(--text) 78%, #64748b 22%);
+  }
+
+  .cfg-preview-cta {
+    @apply text-[11px] font-bold rounded-full px-3 py-1;
+    background: var(--primary);
+    color: #fff;
+    font-family: var(--font-body);
+  }
+
+  .cfg-preview-media {
+    @apply rounded-lg;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+  }
+
+  .cfg-preview-feature-row {
+    @apply grid grid-cols-3 gap-2;
+  }
+
+  .cfg-preview-feature {
+    @apply rounded-lg border px-2 py-1 text-center text-[11px] font-bold;
+    border-color: color-mix(in srgb, var(--accent) 45%, #cbd5e1 55%);
+    background: color-mix(in srgb, var(--accent) 18%, white 82%);
+    font-family: var(--font-body);
+  }
+
+  .cfg-preview-grid {
+    @apply grid grid-cols-3 gap-2;
+  }
+
+  .cfg-preview-card {
+    @apply rounded-lg h-10;
+    background: color-mix(in srgb, var(--accent) 22%, #f8fafc 78%);
+    border: 1px solid color-mix(in srgb, var(--secondary) 18%, #cbd5e1 82%);
+  }
+
+  .cfg-preview-footer {
+    @apply text-center text-[11px] font-bold;
+    font-family: var(--font-body);
+    color: color-mix(in srgb, var(--text) 75%, #64748b 25%);
+  }
+
+  .cfg-live-preview[data-template='minimal'] .cfg-preview-hero {
+    @apply grid-cols-1;
+  }
+
+  .cfg-live-preview[data-template='minimal'] .cfg-preview-navbar {
+    @apply justify-center;
+  }
+
+  .cfg-live-preview[data-template='minimal'] .cfg-preview-nav-items {
+    @apply hidden;
+  }
+
+  .cfg-live-preview[data-template='minimal'] .cfg-preview-feature-row {
+    @apply hidden;
+  }
+
+  .cfg-live-preview[data-template='minimal'] .cfg-preview-grid {
+    @apply grid-cols-1;
+  }
+
+  .cfg-live-preview[data-template='minimal'] .cfg-preview-card {
+    @apply h-8;
+  }
+
+  .cfg-live-preview[data-template='minimal'] .cfg-preview-media {
+    @apply hidden;
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-hero {
+    @apply grid-cols-[0.95fr_1.05fr];
+    border-width: 2px;
+    border-color: var(--primary);
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-hero > div:first-child {
+    order: 2;
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-media {
+    order: 1;
+    min-height: 92px;
+    border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent 45%);
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-title {
+    @apply uppercase;
+    font-size: 0.95rem;
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-cta {
+    border-radius: 0.35rem;
+    padding-inline: 0.75rem;
+    padding-block: 0.3rem;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent 55%);
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-feature-row {
+    @apply grid-cols-2;
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-feature {
+    @apply py-2;
+    font-size: 12px;
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-grid {
+    @apply grid-cols-2;
+  }
+
+  .cfg-live-preview[data-template='bold'] .cfg-preview-card {
+    @apply h-14;
+  }
+
+  .cfg-live-preview[data-template='elegant'] .cfg-preview-hero {
+    @apply grid-cols-1;
+  }
+
+  .cfg-live-preview[data-template='elegant'] .cfg-preview-navbar {
+    @apply py-4;
+    border-color: color-mix(in srgb, var(--accent) 50%, #cbd5e1 50%);
+  }
+
+  .cfg-live-preview[data-template='elegant'] .cfg-preview-nav-items span {
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--accent) 50%, #cbd5e1 50%);
+  }
+
+  .cfg-live-preview[data-template='elegant'] .cfg-preview-title {
+    letter-spacing: 0.02em;
+    font-size: 0.9rem;
+  }
+
+  .cfg-live-preview[data-template='elegant'] .cfg-preview-hero > div:first-child {
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, #cbd5e1 55%);
+    border-radius: 0.6rem;
+    padding: 0.6rem;
+    background: color-mix(in srgb, var(--accent) 10%, #ffffff 90%);
+  }
+
+  .cfg-live-preview[data-template='elegant'] .cfg-preview-media {
+    min-height: 74px;
+  }
+
+  .cfg-live-preview[data-template='custom'] .cfg-preview-hero {
+    border-style: dashed;
+    border-color: var(--accent);
+  }
+
+  .cfg-live-preview[data-template='custom'] .cfg-preview-navbar,
+  .cfg-live-preview[data-template='custom'] .cfg-preview-feature-row,
+  .cfg-live-preview[data-template='custom'] .cfg-preview-grid,
+  .cfg-live-preview[data-template='custom'] .cfg-preview-footer {
+    border-style: dashed;
+  }
+</style>
+
+<script id="cfgData" type="application/json" set:html={JSON.stringify({ presets, pagesCatalog, featuresCatalog, websiteTypes, hostingTriggerFeatures, initialType, initialPages, initialFeatures, initialPreset })}></script>
 
 <script>
   // @ts-nocheck
-  document.addEventListener('DOMContentLoaded', () => {
-    const wizard = document.getElementById('configuratorWizard');
-    if (!(wizard instanceof HTMLFormElement)) return;
+  const cfgDataElement = document.getElementById('cfgData');
+  const cfgData = cfgDataElement?.textContent ? JSON.parse(cfgDataElement.textContent) : {};
 
-    const cards = Array.from(wizard.querySelectorAll('.step-card'));
-    const stepText = document.getElementById('wizardStepText');
-    const stepTitle = document.getElementById('wizardStepTitle');
-    const progressBar = document.getElementById('wizardProgressBar');
-    const themeGroup = document.getElementById('themeSelectorGroup');
-    const fontGroup = document.getElementById('fontSelectorGroup');
-    const featureSelectorGroup = document.getElementById('featureSelectorGroup');
-    const featureCustomInput = document.getElementById('featureCustomInput');
-    const customFontWrap = document.getElementById('customFontWrap');
-    const customFontInput = document.getElementById('customFontInput');
-    const brandColorPrimary = document.getElementById('brandColorPrimary');
-    const brandColorSecondary = document.getElementById('brandColorSecondary');
-    const brandColorTertiary = document.getElementById('brandColorTertiary');
-    const brandColorBackground = document.getElementById('brandColorBackground');
-    const themePreviewTitle = document.getElementById('themePreviewTitle');
-    const themePreviewText = document.getElementById('themePreviewText');
-    const themePreviewCanvas = document.getElementById('themePreviewCanvas');
-    const themePreviewBrowser = document.getElementById('themePreviewBrowser');
-    const themePreviewLogo = document.getElementById('themePreviewLogo');
-    const themePreviewNav1 = document.getElementById('themePreviewNav1');
-    const themePreviewNav2 = document.getElementById('themePreviewNav2');
-    const themePreviewNav3 = document.getElementById('themePreviewNav3');
-    const themePreviewKicker = document.getElementById('themePreviewKicker');
-    const themePreviewHeadline = document.getElementById('themePreviewHeadline');
-    const themePreviewParagraph = document.getElementById('themePreviewParagraph');
-    const themePreviewCta = document.getElementById('themePreviewCta');
-    const themePreviewMedia = document.getElementById('themePreviewMedia');
-    const themePreviewMediaBadge = document.getElementById('themePreviewMediaBadge');
-    const themePreviewCard1 = document.getElementById('themePreviewCard1');
-    const themePreviewCard2 = document.getElementById('themePreviewCard2');
-    const themePreviewCard3 = document.getElementById('themePreviewCard3');
-    const themePreviewCardTitle1 = document.getElementById('themePreviewCardTitle1');
-    const themePreviewCardTitle2 = document.getElementById('themePreviewCardTitle2');
-    const themePreviewCardTitle3 = document.getElementById('themePreviewCardTitle3');
-    const themePreviewSide = document.getElementById('themePreviewSide');
-    const themePreviewSideTitle = document.getElementById('themePreviewSideTitle');
-    const themePreviewExample1 = document.getElementById('themePreviewExample1');
-    const themePreviewExample2 = document.getElementById('themePreviewExample2');
-    const themePreviewExample3 = document.getElementById('themePreviewExample3');
+  const presets = cfgData.presets ?? {};
+  const pagesCatalog = cfgData.pagesCatalog ?? [];
+  const featuresCatalog = cfgData.featuresCatalog ?? [];
+  const websiteTypes = cfgData.websiteTypes ?? [];
+  const hostingTriggerFeatures = cfgData.hostingTriggerFeatures ?? [];
+  const initialType = cfgData.initialType ?? 'company';
+  const initialPages = cfgData.initialPages ?? [];
+  const initialFeatures = cfgData.initialFeatures ?? [];
+  const initialPreset = cfgData.initialPreset ?? presets.company;
 
-    let currentStep = 1;
-    const totalSteps = cards.length;
-    let isTransitioning = false;
+  const pageLabels = Object.fromEntries(pagesCatalog.map((item) => [item.id, item.label]));
+  const featureLabels = Object.fromEntries(featuresCatalog.map((item) => [item.id, item.title]));
+  const websiteTypeLabels = Object.fromEntries(websiteTypes.map((item) => [item.id, item.label]));
 
-    const getCardForStep = (stepNumber) => {
-      return cards.find((card) => Number(card.getAttribute('data-step')) === stepNumber);
-    };
+  const backendFeatureKeys = new Set(['auth', 'admin-panel', 'payments', 'order-system', 'dynamic-cms-db']);
+  const advancedFeatureKeys = new Set(['seo', 'analytics']);
+  const backendPageKeys = new Set(['dashboard', 'shop', 'checkout']);
+  const advancedPageKeys = new Set(['blog']);
+  const nonPreselectedRecommendedFeatureKeys = new Set(['analytics']);
+  const baselineTierByWebsiteType = {
+    landing: 1,
+    company: 2,
+    portfolio: 2,
+    blog: 2,
+    ecommerce: 3,
+    webapp: 3
+  };
 
-    const allChipButtons = Array.from(wizard.querySelectorAll('.chip-btn'));
-    allChipButtons.forEach((btn) => {
-      if (btn instanceof HTMLButtonElement) {
-        btn.setAttribute('aria-pressed', btn.classList.contains('chip-btn-active') ? 'true' : 'false');
+  const backendFeatureReasonMap = {
+    auth: 'User accounts',
+    'admin-panel': 'Admin panel',
+    payments: 'Payments',
+    'order-system': 'Order system',
+    'dynamic-cms-db': 'Dynamic CMS + database'
+  };
+
+  const advancedFeatureReasonMap = {
+    seo: 'Advanced SEO',
+    analytics: 'Analytika (měření + nastavení)'
+  };
+
+  const backendPageReasonMap = {
+    dashboard: 'User dashboard',
+    shop: 'Shop section',
+    checkout: 'Checkout flow'
+  };
+
+  const advancedPageReasonMap = {
+    blog: 'Blog page'
+  };
+
+  const computeTier = (config) => {
+    const selectedFeatures = [...(config.features ?? [])];
+    const selectedPages = [...(config.pages ?? [])];
+    const baselineTier = baselineTierByWebsiteType[config.websiteType] ?? 2;
+
+    const backendReasons = [];
+    const advancedReasons = [];
+
+    selectedFeatures.forEach((featureId) => {
+      if (backendFeatureKeys.has(featureId) && backendFeatureReasonMap[featureId]) {
+        backendReasons.push(backendFeatureReasonMap[featureId]);
+      }
+      if (advancedFeatureKeys.has(featureId) && advancedFeatureReasonMap[featureId]) {
+        advancedReasons.push(advancedFeatureReasonMap[featureId]);
       }
     });
 
-    const themePresets = {
-      modern: {
-        name: 'Modern',
-        text: 'Čistý, moderní layout s výraznou CTA a přehlednými kartami.',
-        nav: ['Služby', 'Reference', 'Kontakt'],
-        kicker: 'Digitální studio',
-        headline: 'Tvoříme weby, které prodávají.',
-        paragraph: 'Rychlý, moderní a přehledný web pro vaši značku.',
-        cta: 'Nezávazná konzultace',
-        media: 'Case Study',
-        cards: ['Design', 'Vývoj', 'SEO'],
-        side: 'Kontaktujte nás',
-        examples: ['Hero', 'Služby', 'CTA'],
-        accent: '#2563eb',
-        soft: '#dbeafe',
-        muted: '#e2e8f0',
-        deep: '#0f172a'
-      },
-      minimal: {
-        name: 'Minimal',
-        text: 'Minimalistický styl s jemnými kontrasty a maximální čitelností.',
-        nav: ['O nás', 'Práce', 'Kontakt'],
-        kicker: 'Minimal koncept',
-        headline: 'Jednoduchost, která působí profesionálně.',
-        paragraph: 'Vzdušný layout bez rušivých prvků, důraz na obsah.',
-        cta: 'Zjistit více',
-        media: 'Preview',
-        cards: ['Web', 'Brand', 'Obsah'],
-        side: 'Rychlá poptávka',
-        examples: ['Typografie', 'Obsah', 'Whitespace'],
-        accent: '#334155',
-        soft: '#f1f5f9',
-        muted: '#e2e8f0',
-        deep: '#0f172a'
-      },
-      bold: {
-        name: 'Bold',
-        text: 'Silný vizuál, výrazné barvy a energická prezentace značky.',
-        nav: ['Nabídka', 'Projekty', 'Start'],
-        kicker: 'Bold koncept',
-        headline: 'Výrazný web, který nezapadne.',
-        paragraph: 'Dynamická kompozice, kontrastní prvky a silná identita.',
-        cta: 'Chci výrazný web',
-        media: 'Hot trend',
-        cards: ['Strategie', 'Kampaň', 'Růst'],
-        side: 'Naplánovat call',
-        examples: ['Kontrast', 'Impact', 'Akce'],
-        accent: '#7c3aed',
-        soft: '#ede9fe',
-        muted: '#ddd6fe',
-        deep: '#581c87'
-      },
-      elegant: {
-        name: 'Elegant',
-        text: 'Luxusní editorial styl s jemnou typografií a vysokou důvěryhodností.',
-        nav: ['Ateliér', 'Portfolio', 'Kontakt'],
-        kicker: 'Signature Edition',
-        headline: 'Nadčasová prezentace pro prémiové značky.',
-        paragraph: 'Klidná kompozice, pečlivé detaily a elegantní vizuální rytmus.',
-        cta: 'Domluvit strategii',
-        media: 'Editorial',
-        cards: ['Kurátorství', 'Detail', 'Status'],
-        side: 'Privátní konzultace',
-        examples: ['Editorial', 'Luxury', 'Trust'],
-        accent: '#0f172a',
-        soft: '#e2e8f0',
-        muted: '#cbd5e1',
-        deep: '#020617'
-      },
-      custom: {
-        name: 'Vlastní téma',
-        text: 'Vytvoříme design na míru přesně podle vaší značky a inspirace.',
-        nav: ['Brand', 'Styl', 'Demo'],
-        kicker: 'Custom koncept',
-        headline: 'Návrh postavený na vašem stylu.',
-        paragraph: 'Kombinujeme vaše barvy, fonty a inspirace do unikátního řešení.',
-        cta: 'Vytvořit moje téma',
-        media: 'Custom moodboard',
-        cards: ['Barvy', 'Fonty', 'UI'],
-        side: 'Sdílet inspiraci',
-        examples: ['Moodboard', 'Brand', 'Experiment'],
-        accent: '#0f766e',
-        soft: '#ccfbf1',
-        muted: '#99f6e4',
-        deep: '#134e4a'
+    selectedPages.forEach((pageId) => {
+      if (backendPageKeys.has(pageId) && backendPageReasonMap[pageId]) {
+        backendReasons.push(backendPageReasonMap[pageId]);
       }
-    };
-
-    const getActiveThemeKey = () => {
-      if (!(themeGroup instanceof HTMLElement)) return 'modern';
-      const selectedTheme = themeGroup.querySelector('.chip-btn-active');
-      return selectedTheme instanceof HTMLButtonElement ? selectedTheme.dataset.theme : 'modern';
-    };
-
-    const getActiveFontKey = () => {
-      if (!(fontGroup instanceof HTMLElement)) return 'sans';
-      const selectedFont = fontGroup.querySelector('.chip-btn-active');
-      return selectedFont instanceof HTMLButtonElement ? selectedFont.dataset.font : 'sans';
-    };
-
-    const updateCustomFontVisibility = (fontKey) => {
-      if (!(customFontWrap instanceof HTMLElement)) return;
-      const isCustom = fontKey === 'custom';
-      customFontWrap.classList.toggle('hidden', !isCustom);
-    };
-
-    const withAlpha = (hexColor, alphaHex = 'cc') => {
-      if (typeof hexColor !== 'string') return hexColor;
-      const normalized = hexColor.trim();
-      if (/^#[0-9a-fA-F]{6}$/.test(normalized)) return `${normalized}${alphaHex}`;
-      return hexColor;
-    };
-
-    const getColorOverrides = () => {
-      const primary = brandColorPrimary instanceof HTMLInputElement ? brandColorPrimary.value : '';
-      const secondary = brandColorSecondary instanceof HTMLInputElement ? brandColorSecondary.value : '';
-      const tertiary = brandColorTertiary instanceof HTMLInputElement ? brandColorTertiary.value : '';
-      const background = brandColorBackground instanceof HTMLInputElement ? brandColorBackground.value : '';
-
-      return {
-        primary,
-        secondary,
-        tertiary,
-        background
-      };
-    };
-
-    const updateThemePreview = (themeKey) => {
-      const theme = themePresets[themeKey] || themePresets.modern;
-      const colorOverrides = getColorOverrides();
-      const accentColor = colorOverrides.primary || theme.accent;
-      const deepColor = colorOverrides.secondary || theme.deep;
-      const softColor = colorOverrides.tertiary || theme.soft;
-      const mutedColor = withAlpha(softColor, 'cc') || theme.muted;
-      const backgroundColor = colorOverrides.background || '#ffffff';
-      const textPrimaryColor = colorOverrides.secondary || theme.deep;
-      const textSecondaryColor = withAlpha(textPrimaryColor, '99');
-
-      if (themePreviewTitle) themePreviewTitle.textContent = theme.name;
-      if (themePreviewText) themePreviewText.textContent = theme.text;
-
-      if (themePreviewCanvas instanceof HTMLElement) {
-        themePreviewCanvas.dataset.theme = themeKey;
-        themePreviewCanvas.style.setProperty('--tp-accent', accentColor);
-        themePreviewCanvas.style.setProperty('--tp-soft', softColor);
-        themePreviewCanvas.style.setProperty('--tp-muted', mutedColor);
-        themePreviewCanvas.style.setProperty('--tp-deep', deepColor);
-        themePreviewCanvas.style.setProperty('--tp-text-primary', textPrimaryColor);
-        themePreviewCanvas.style.setProperty('--tp-text-secondary', textSecondaryColor);
-        themePreviewCanvas.style.background = backgroundColor;
-      }
-
-      if (themePreviewLogo instanceof HTMLElement) themePreviewLogo.style.background = deepColor;
-      if (themePreviewNav1 instanceof HTMLElement) {
-        themePreviewNav1.style.background = mutedColor;
-        themePreviewNav1.style.color = textPrimaryColor;
-        themePreviewNav1.textContent = theme.nav[0];
-      }
-      if (themePreviewNav2 instanceof HTMLElement) {
-        themePreviewNav2.style.background = softColor;
-        themePreviewNav2.style.color = textPrimaryColor;
-        themePreviewNav2.textContent = theme.nav[1];
-      }
-      if (themePreviewNav3 instanceof HTMLElement) {
-        themePreviewNav3.style.background = mutedColor;
-        themePreviewNav3.style.color = textPrimaryColor;
-        themePreviewNav3.textContent = theme.nav[2];
-      }
-      if (themePreviewKicker instanceof HTMLElement) {
-        themePreviewKicker.textContent = theme.kicker;
-        themePreviewKicker.style.color = textSecondaryColor;
-      }
-      if (themePreviewHeadline instanceof HTMLElement) {
-        themePreviewHeadline.textContent = theme.headline;
-        themePreviewHeadline.style.color = textPrimaryColor;
-      }
-      if (themePreviewParagraph instanceof HTMLElement) {
-        themePreviewParagraph.textContent = theme.paragraph;
-        themePreviewParagraph.style.color = textSecondaryColor;
-      }
-      if (themePreviewCta instanceof HTMLElement) themePreviewCta.style.background = accentColor;
-      if (themePreviewCta instanceof HTMLElement) themePreviewCta.textContent = theme.cta;
-      if (themePreviewMedia instanceof HTMLElement) themePreviewMedia.style.background = `linear-gradient(145deg, ${deepColor}, ${accentColor})`;
-      if (themePreviewMediaBadge instanceof HTMLElement) {
-        themePreviewMediaBadge.textContent = theme.media;
-        themePreviewMediaBadge.style.color = textPrimaryColor;
-        themePreviewMediaBadge.style.borderColor = withAlpha(deepColor, '66');
-      }
-      if (themePreviewCard1 instanceof HTMLElement) themePreviewCard1.style.background = softColor;
-      if (themePreviewCard2 instanceof HTMLElement) themePreviewCard2.style.background = deepColor;
-      if (themePreviewCard3 instanceof HTMLElement) themePreviewCard3.style.background = accentColor;
-      if (themePreviewCardTitle1 instanceof HTMLElement) {
-        themePreviewCardTitle1.textContent = theme.cards[0];
-        themePreviewCardTitle1.style.color = textPrimaryColor;
-      }
-      if (themePreviewCardTitle2 instanceof HTMLElement) {
-        themePreviewCardTitle2.textContent = theme.cards[1];
-        themePreviewCardTitle2.style.color = textPrimaryColor;
-      }
-      if (themePreviewCardTitle3 instanceof HTMLElement) {
-        themePreviewCardTitle3.textContent = theme.cards[2];
-        themePreviewCardTitle3.style.color = textPrimaryColor;
-      }
-      if (themePreviewSide instanceof HTMLElement) themePreviewSide.style.background = `linear-gradient(180deg, ${mutedColor}, ${softColor})`;
-      if (themePreviewSideTitle instanceof HTMLElement) {
-        themePreviewSideTitle.textContent = theme.side;
-        themePreviewSideTitle.style.color = textPrimaryColor;
-      }
-      if (themePreviewExample1 instanceof HTMLElement) themePreviewExample1.textContent = theme.examples[0];
-      if (themePreviewExample2 instanceof HTMLElement) themePreviewExample2.textContent = theme.examples[1];
-      if (themePreviewExample3 instanceof HTMLElement) themePreviewExample3.textContent = theme.examples[2];
-
-    };
-
-    const updateFontPreview = (fontKey) => {
-      if (!(themePreviewCanvas instanceof HTMLElement)) return;
-      themePreviewCanvas.dataset.font = fontKey;
-
-      updateCustomFontVisibility(fontKey);
-
-      if (fontKey === 'custom') {
-        const customFontFamily = customFontInput instanceof HTMLInputElement ? customFontInput.value.trim() : '';
-        if (customFontFamily.length > 0) {
-          themePreviewCanvas.style.setProperty('--tp-custom-font', customFontFamily);
-        } else {
-          themePreviewCanvas.style.setProperty('--tp-custom-font', 'sans-serif');
-        }
-      } else {
-        themePreviewCanvas.style.removeProperty('--tp-custom-font');
-      }
-    };
-
-    /** @type {(card: Element | undefined) => void} */
-    const scrollToCard = (card) => {
-      if (!(card instanceof HTMLElement)) return;
-
-      const headerOffset = 110;
-      const rect = card.getBoundingClientRect();
-      const topTarget = rect.top + window.scrollY - headerOffset;
-      const visibleTopLimit = headerOffset + 12;
-      const visibleBottomLimit = window.innerHeight - 24;
-
-      const isTooHigh = rect.top < visibleTopLimit;
-      const isTooLow = rect.top > visibleBottomLimit;
-
-      if (isTooHigh || isTooLow) {
-        window.scrollTo({ top: Math.max(0, topTarget), behavior: 'smooth' });
-      }
-    };
-
-    /** @type {(stepNumber: number, shouldScroll?: boolean, forceScroll?: boolean, direction?: 'auto' | 'next' | 'prev' | 'none') => void} */
-    const activateStep = (stepNumber, shouldScroll = true, forceScroll = false, direction = 'auto') => {
-      if (isTransitioning) return;
-
-      const previousStep = currentStep;
-      const nextStep = Math.min(totalSteps, Math.max(1, stepNumber));
-      currentStep = nextStep;
-
-      const resolvedDirection = direction === 'auto'
-        ? (currentStep >= previousStep ? 'next' : 'prev')
-        : direction;
-
-      const activeCard = getCardForStep(currentStep);
-
-      cards.forEach((card) => {
-        card.classList.remove('active', 'step-rotate-next', 'step-rotate-prev');
-      });
-
-      if (activeCard instanceof HTMLElement) {
-        activeCard.classList.add('active');
-
-        if (previousStep !== currentStep && resolvedDirection !== 'none') {
-          isTransitioning = true;
-          activeCard.classList.add(resolvedDirection === 'next' ? 'step-rotate-next' : 'step-rotate-prev');
-
-          window.setTimeout(() => {
-            activeCard.classList.remove('step-rotate-next', 'step-rotate-prev');
-            isTransitioning = false;
-          }, 1450);
-        }
-      }
-
-      const title = activeCard?.getAttribute('data-step-title') ?? '';
-      if (stepText) stepText.textContent = `Krok ${currentStep}/${totalSteps}`;
-      if (stepTitle) stepTitle.textContent = title;
-      if (progressBar instanceof HTMLElement) {
-        progressBar.style.setProperty('--wizard-progress', `${(currentStep / totalSteps) * 100}%`);
-      }
-
-      if (shouldScroll && activeCard instanceof HTMLElement) {
-        if (forceScroll) {
-          const headerOffset = 110;
-          const rect = activeCard.getBoundingClientRect();
-          const topTarget = rect.top + window.scrollY - headerOffset;
-          window.scrollTo({ top: Math.max(0, topTarget), behavior: 'smooth' });
-        } else {
-          scrollToCard(activeCard);
-        }
-      }
-    };
-
-    wizard.addEventListener('click', (event) => {
-      const target = event.target;
-      if (!(target instanceof HTMLElement)) return;
-
-      const trigger = target.closest('.step-trigger');
-      if (trigger instanceof HTMLElement) {
-        const card = trigger.closest('.step-card');
-        if (card instanceof HTMLElement) {
-          const step = Number(card.getAttribute('data-step'));
-          if (!Number.isNaN(step)) {
-            const direction = step > currentStep ? 'next' : step < currentStep ? 'prev' : 'none';
-            activateStep(step, true, false, direction);
-          }
-        }
-      }
-
-      if (target.closest('.wizard-next')) {
-        activateStep(currentStep + 1, true, true, 'next');
-      }
-
-      if (target.closest('.wizard-prev')) {
-        activateStep(currentStep - 1, true, true, 'prev');
-      }
-
-      const chip = target.closest('.chip-btn');
-      if (chip instanceof HTMLButtonElement) {
-        const group = chip.closest('.chip-group');
-        const selectMode = group instanceof HTMLElement ? group.getAttribute('data-select') : 'multi';
-
-        if (group instanceof HTMLElement && selectMode === 'single') {
-          const groupButtons = Array.from(group.querySelectorAll('.chip-btn'));
-          groupButtons.forEach((btn) => {
-            btn.classList.remove('chip-btn-active');
-            btn.setAttribute('aria-pressed', 'false');
-          });
-          chip.classList.add('chip-btn-active');
-          chip.setAttribute('aria-pressed', 'true');
-        } else {
-          chip.classList.toggle('chip-btn-active');
-          chip.setAttribute('aria-pressed', chip.classList.contains('chip-btn-active') ? 'true' : 'false');
-        }
-
-        if (group instanceof HTMLElement && group.id === 'themeSelectorGroup') {
-          const selectedTheme = group.querySelector('.chip-btn-active');
-          const themeKey = selectedTheme instanceof HTMLButtonElement ? selectedTheme.dataset.theme : 'modern';
-          updateThemePreview(themeKey);
-        }
-
-        if (group instanceof HTMLElement && group.id === 'fontSelectorGroup') {
-          const selectedFont = group.querySelector('.chip-btn-active');
-          const fontKey = selectedFont instanceof HTMLButtonElement ? selectedFont.dataset.font : 'sans';
-          updateFontPreview(fontKey);
-        }
+      if (advancedPageKeys.has(pageId) && advancedPageReasonMap[pageId]) {
+        advancedReasons.push(advancedPageReasonMap[pageId]);
       }
     });
 
-    if (themeGroup instanceof HTMLElement) {
-      updateThemePreview(getActiveThemeKey());
+    const uniqueBackendReasons = Array.from(new Set(backendReasons));
+    const uniqueAdvancedReasons = Array.from(new Set(advancedReasons));
+
+    let computedTier = 1;
+    let triggerReasons = [];
+
+    if (uniqueBackendReasons.length > 0) {
+      computedTier = 3;
+      triggerReasons = uniqueBackendReasons;
+    } else if (uniqueAdvancedReasons.length > 0) {
+      computedTier = 2;
+      triggerReasons = uniqueAdvancedReasons;
     }
 
-    if (fontGroup instanceof HTMLElement) {
-      updateFontPreview(getActiveFontKey());
-    }
+    const finalTier = Math.max(baselineTier, computedTier);
 
-    if (customFontInput instanceof HTMLInputElement) {
-      customFontInput.addEventListener('input', () => {
-        if (getActiveFontKey() === 'custom') {
-          updateFontPreview('custom');
-        }
-      });
-    }
+    return {
+      tier: finalTier,
+      timelineText: finalTier === 3 ? '~30 working days' : finalTier === 2 ? '15 working days' : '5 working days',
+      hostingType: finalTier === 3 ? 'fullstack' : 'static',
+      upgradeReasons: finalTier > baselineTier ? triggerReasons : []
+    };
+  };
 
-    [brandColorPrimary, brandColorSecondary, brandColorTertiary, brandColorBackground].forEach((inputElement) => {
-      if (inputElement instanceof HTMLInputElement) {
-        inputElement.addEventListener('input', () => {
-          updateThemePreview(getActiveThemeKey());
-        });
-      }
+  const state = {
+    step: 1,
+    websiteType: initialType,
+    pages: new Set(initialPages),
+    features: new Set(initialFeatures),
+    pagesRequired: new Set(initialPreset.pages.required),
+    pagesRecommended: new Set(initialPreset.pages.recommended),
+    featuresRequired: new Set(initialPreset.features.required),
+    featuresRecommended: new Set(initialPreset.features.recommended),
+    hosting: initialPreset.hosting,
+    design: {
+      template: 'modern',
+      fontPair: 'inter-space',
+      mode: 'light',
+      colors: {
+        primary: '#135bec',
+        secondary: '#0f172a',
+        accent: '#22c55e',
+        background: '#ffffff',
+        text: '#0f172a'
+      },
+      fontHeading: "'Space Grotesk', Inter, sans-serif",
+      fontBody: 'Inter, sans-serif'
+    },
+    details: {
+      budget: '5k-10k',
+      timeline: '4–8 týdnů',
+      contentReady: 'Ano',
+      referenceWebsite: '',
+      targetMarket: '',
+      additionalNotes: ''
+    }
+  };
+
+  const stepPanels = Array.from(document.querySelectorAll('[data-step-panel]'));
+  const stepCounter = document.getElementById('stepCounter');
+  const stepTitle = document.getElementById('stepTitle');
+  const stepProgress = document.getElementById('stepProgress');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const form = document.getElementById('configuratorForm');
+  const hostingIndicator = document.getElementById('hostingIndicator');
+  const hostingExplanation = document.getElementById('hostingExplanation');
+
+  const summaryStructured = document.getElementById('summaryStructured');
+  const summaryPrice = document.getElementById('summaryPrice');
+  const summaryTimeline = document.getElementById('summaryTimeline');
+  const priceHintWrap = document.getElementById('priceHintWrap');
+  const timelineHintWrap = document.getElementById('timelineHintWrap');
+  const priceHintTooltip = document.getElementById('priceHintTooltip');
+  const timelineHintTooltip = document.getElementById('timelineHintTooltip');
+
+  const configJsonInput = document.getElementById('configJson');
+  const hostingTypeInput = document.getElementById('hostingType');
+  const estimatedPriceRangeInput = document.getElementById('estimatedPriceRange');
+  const estimatedTimelineValueInput = document.getElementById('estimatedTimelineValue');
+
+  const previewRoot = document.getElementById('livePreview');
+
+  const typeButtons = Array.from(document.querySelectorAll('[data-website-type]'));
+  const pageButtons = Array.from(document.querySelectorAll('[data-toggle-item][data-kind="page"]'));
+  const featureButtons = Array.from(document.querySelectorAll('[data-toggle-item][data-kind="feature"]'));
+
+  const templateButtons = Array.from(document.querySelectorAll('[data-template]'));
+  const fontPairButtons = Array.from(document.querySelectorAll('[data-font-pair]'));
+  const modeButtons = Array.from(document.querySelectorAll('[data-mode]'));
+  const colorPickers = Array.from(document.querySelectorAll('[data-color]'));
+
+  const detailButtons = Array.from(document.querySelectorAll('[data-detail]'));
+  const referenceWebsiteInput = document.getElementById('referenceWebsite');
+  const targetMarketInput = document.getElementById('targetMarket');
+  const additionalNotesInput = document.getElementById('additionalNotes');
+
+  const featureTooltips = Array.from(document.querySelectorAll('[data-tooltip-trigger]'));
+
+  const totalSteps = 6;
+
+  const getPreset = (typeId) => presets[typeId] ?? presets.company;
+
+  const applyPreset = (typeId) => {
+    state.websiteType = typeId;
+    const preset = getPreset(typeId);
+
+    const recommendedFeatures = Array.from(new Set([...(preset.features.recommended ?? []), 'seo']));
+    const autoSelectedRecommendedFeatures = recommendedFeatures.filter((featureId) => !nonPreselectedRecommendedFeatureKeys.has(featureId));
+
+    const selectedPages = [...preset.pages.required, ...preset.pages.recommended, ...preset.pages.default];
+    const selectedFeatures = [...preset.features.required, ...autoSelectedRecommendedFeatures, ...preset.features.default];
+
+    state.pages = new Set(selectedPages);
+    state.features = new Set(selectedFeatures);
+    state.pagesRequired = new Set(preset.pages.required);
+    state.pagesRecommended = new Set(preset.pages.recommended);
+    state.featuresRequired = new Set(preset.features.required);
+    state.featuresRecommended = new Set(recommendedFeatures);
+    state.hosting = preset.hosting;
+
+    detectHosting();
+    renderTypeButtons();
+    renderToggleStates();
+    renderSummary();
+  };
+
+  const detectHosting = () => {
+    const tierResult = computeTier({
+      websiteType: state.websiteType,
+      pages: state.pages,
+      features: state.features
     });
 
-    if (featureCustomInput instanceof HTMLInputElement && featureSelectorGroup instanceof HTMLElement) {
-      featureCustomInput.addEventListener('keydown', (event) => {
-        if (event.key !== 'Enter') return;
+    state.hosting = tierResult.hostingType;
 
-        event.preventDefault();
-        const value = featureCustomInput.value.trim();
-        if (!value) return;
+    if (hostingIndicator) {
+      hostingIndicator.textContent = state.hosting === 'fullstack' ? 'Hosting: Full-stack (nutný)' : 'Hosting: Statický';
+    }
+  };
 
-        const existing = Array.from(featureSelectorGroup.querySelectorAll('.chip-btn'))
-          .some((chip) => chip.textContent?.trim().toLowerCase() === value.toLowerCase());
-        if (existing) {
-          featureCustomInput.value = '';
-          return;
-        }
+  const setBadge = (button, status) => {
+    const badge = button.querySelector('[data-state-badge]');
+    if (!badge) return;
 
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'chip-btn chip-btn-active';
-        chip.setAttribute('aria-pressed', 'true');
-        chip.textContent = value;
-        featureSelectorGroup.appendChild(chip);
-        featureCustomInput.value = '';
-      });
+    if (status === 'required') {
+      badge.textContent = 'Povinné 🔒';
+      badge.classList.remove('hidden');
+    } else if (status === 'recommended') {
+      badge.textContent = 'Doporučené ⭐';
+      badge.classList.remove('hidden');
+    } else {
+      badge.textContent = '';
+      badge.classList.add('hidden');
+    }
+  };
+
+  const renderTypeButtons = () => {
+    typeButtons.forEach((btn) => {
+      const active = btn.dataset.id === state.websiteType;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  };
+
+  const renderToggleStates = () => {
+    pageButtons.forEach((btn) => {
+      const id = btn.dataset.id;
+      const selected = state.pages.has(id);
+      const required = state.pagesRequired.has(id);
+      const recommended = state.pagesRecommended.has(id);
+
+      btn.classList.toggle('is-selected', selected);
+      btn.classList.toggle('is-locked', required);
+      btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      setBadge(btn, required ? 'required' : recommended ? 'recommended' : 'default');
+    });
+
+    featureButtons.forEach((btn) => {
+      const id = btn.dataset.id;
+      const selected = state.features.has(id);
+      const required = state.featuresRequired.has(id);
+      const recommended = state.featuresRecommended.has(id);
+
+      btn.classList.toggle('is-selected', selected);
+      btn.classList.toggle('is-locked', required);
+      btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      setBadge(btn, required ? 'required' : recommended ? 'recommended' : 'default');
+    });
+  };
+
+  const renderPreview = () => {
+    if (!(previewRoot instanceof HTMLElement)) return;
+
+    const isDarkMode = state.design.mode === 'dark';
+    const effectiveBackground = isDarkMode
+      ? `color-mix(in srgb, ${state.design.colors.secondary} 78%, #0b1220 22%)`
+      : state.design.colors.background;
+    const effectiveText = isDarkMode ? '#e2e8f0' : state.design.colors.text;
+
+    previewRoot.dataset.template = state.design.template;
+    previewRoot.dataset.mode = state.design.mode;
+
+    previewRoot.style.setProperty('--primary', state.design.colors.primary);
+    previewRoot.style.setProperty('--secondary', state.design.colors.secondary);
+    previewRoot.style.setProperty('--accent', state.design.colors.accent);
+    previewRoot.style.setProperty('--background', effectiveBackground);
+    previewRoot.style.setProperty('--text', effectiveText);
+    previewRoot.style.setProperty('--font-heading', state.design.fontHeading);
+    previewRoot.style.setProperty('--font-body', state.design.fontBody);
+  };
+
+  const estimateProject = () => {
+    const tierResult = computeTier({
+      websiteType: state.websiteType,
+      pages: state.pages,
+      features: state.features
+    });
+
+    const tierBase = {
+      1: [1400, 3200],
+      2: [3200, 7600],
+      3: [7600, 22000]
+    };
+
+    const [baseMin, baseMax] = tierBase[tierResult.tier] ?? tierBase[2];
+    const pageCount = state.pages.size;
+    const featureCount = state.features.size;
+
+    const designBoost = state.design.template === 'custom' ? [700, 1500] : state.design.template === 'bold' || state.design.template === 'elegant' ? [250, 700] : [0, 0];
+
+    const min = baseMin + pageCount * 120 + featureCount * 180 + designBoost[0];
+    const max = baseMax + pageCount * 240 + featureCount * 420 + designBoost[1];
+
+    return {
+      price: `€${min.toLocaleString('cs-CZ')} – €${max.toLocaleString('cs-CZ')}`,
+      timeline: tierResult.timelineText,
+      timelineTier: tierResult.tier,
+      upgradeReasons: tierResult.upgradeReasons
+    };
+  };
+
+  const renderSummary = () => {
+    detectHosting();
+    const estimate = estimateProject();
+    const tierResult = computeTier({
+      websiteType: state.websiteType,
+      pages: state.pages,
+      features: state.features
+    });
+
+    const selectedPageLabels = [...state.pages].map((id) => pageLabels[id]).filter(Boolean);
+    const selectedFeatureLabels = [...state.features].map((id) => featureLabels[id]).filter(Boolean);
+
+    const templateLabels = {
+      modern: 'Moderní',
+      minimal: 'Minimalistický',
+      bold: 'Výrazný',
+      elegant: 'Elegantní',
+      custom: 'Vlastní'
+    };
+
+    const escapeHtml = (value) =>
+      String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+
+    const formatChipList = (items, fallback) => {
+      if (!items.length) {
+        return `<span class="inline-flex items-center rounded-full border border-slate-200 dark:border-slate-700 px-2.5 py-1 text-xs font-semibold text-slate-500 dark:text-slate-400">${fallback}</span>`;
+      }
+
+      return items
+        .map(
+          (item) =>
+            `<span class="inline-flex items-center rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300">${escapeHtml(item)}</span>`
+        )
+        .join('');
+    };
+
+    const tierLabel =
+      tierResult.tier === 3
+        ? 'Tier 3 (Enterprise / Full-stack)'
+        : tierResult.tier === 2
+          ? 'Tier 2 (Business / Advanced Static)'
+          : '';
+
+    const hintReasons = estimate.upgradeReasons.slice(0, 3);
+    const showHints = tierResult.tier > 1 && hintReasons.length > 0;
+    const hintHtml = showHints
+      ? `<p class="font-semibold mb-1">This project includes:</p><ul class="list-disc pl-4 space-y-0.5 mb-2">${hintReasons
+          .map((reason) => `<li>${escapeHtml(reason)}</li>`)
+          .join('')}</ul><p>These selections increase complexity and delivery scope.</p>`
+      : '';
+
+    const detailsRows = [
+      `<div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Rozpočet</span><span class="font-semibold text-slate-800 dark:text-slate-100">${escapeHtml(state.details.budget)}</span></div>`,
+      `<div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Preferovaný termín</span><span class="font-semibold text-slate-800 dark:text-slate-100">${escapeHtml(state.details.timeline)}</span></div>`
+    ];
+
+    if (state.details.referenceWebsite) {
+      detailsRows.push(
+        `<div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Reference</span><span class="font-semibold text-right text-slate-800 dark:text-slate-100 break-all">${escapeHtml(state.details.referenceWebsite)}</span></div>`
+      );
     }
 
-    activateStep(1, false, false, 'none');
+    if (state.details.targetMarket) {
+      detailsRows.push(
+        `<div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Cílový trh</span><span class="font-semibold text-right text-slate-800 dark:text-slate-100">${escapeHtml(state.details.targetMarket)}</span></div>`
+      );
+    }
+
+    if (state.details.additionalNotes) {
+      detailsRows.push(
+        `<div class="pt-2 border-t border-slate-200 dark:border-slate-700"><p class="text-slate-500 dark:text-slate-400 mb-1">Poznámky</p><p class="font-semibold text-slate-800 dark:text-slate-100 whitespace-pre-wrap break-words">${escapeHtml(state.details.additionalNotes)}</p></div>`
+      );
+    }
+
+    if (summaryStructured) {
+      summaryStructured.innerHTML = `
+        <section class="space-y-2">
+          <h4 class="text-xs font-black uppercase tracking-[0.1em] text-slate-500 dark:text-slate-400">A) Přehled</h4>
+          <div class="space-y-1.5">
+            <div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Typ webu</span><span class="font-semibold text-slate-800 dark:text-slate-100">${escapeHtml(websiteTypeLabels[state.websiteType])}</span></div>
+            <div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Hosting</span><span class="font-semibold text-slate-800 dark:text-slate-100">${state.hosting === 'fullstack' ? 'Full-stack' : 'Statický'}</span></div>
+            <div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Termín</span><span class="font-semibold text-slate-800 dark:text-slate-100">${escapeHtml(estimate.timeline)}</span></div>
+            <div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Cena</span><span class="font-semibold text-slate-800 dark:text-slate-100">${escapeHtml(estimate.price)}</span></div>
+            ${tierLabel ? `<div class="text-xs font-semibold text-primary inline-flex items-center gap-2">Upgradovaný tier: ${tierLabel}${showHints ? `<span data-summary-hint-wrap class="cfg-summary-hint-wrap"><button type="button" data-summary-hint-trigger class="cfg-summary-hint-trigger" aria-label="Nápověda k upgradovanému tieru">ⓘ</button><span class="cfg-summary-hint-tooltip">${hintHtml}</span></span>` : ''}</div>` : ''}
+          </div>
+        </section>
+
+        <section class="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+          <h4 class="text-xs font-black uppercase tracking-[0.1em] text-slate-500 dark:text-slate-400">B) Obsah webu</h4>
+          <div class="flex flex-wrap gap-2">${formatChipList(selectedPageLabels, 'Bez výběru')}</div>
+        </section>
+
+        <section class="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+          <h4 class="text-xs font-black uppercase tracking-[0.1em] text-slate-500 dark:text-slate-400">C) Funkce</h4>
+          <div class="flex flex-wrap gap-2">${formatChipList(selectedFeatureLabels, 'Bez výběru')}</div>
+        </section>
+
+        <section class="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+          <h4 class="text-xs font-black uppercase tracking-[0.1em] text-slate-500 dark:text-slate-400">D) Design</h4>
+          <div class="space-y-1.5">
+            <div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Šablona</span><span class="font-semibold text-slate-800 dark:text-slate-100">${escapeHtml(templateLabels[state.design.template] ?? state.design.template)}</span></div>
+            <div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Písmo</span><span class="font-semibold text-right text-slate-800 dark:text-slate-100">${escapeHtml(state.design.fontPair)}</span></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <div class="inline-flex items-center gap-2"><span class="inline-block size-5 rounded-lg border border-slate-200 dark:border-slate-700" style="background:${escapeHtml(state.design.colors.primary)}"></span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">Primární</span></div>
+              <div class="inline-flex items-center gap-2"><span class="inline-block size-5 rounded-lg border border-slate-200 dark:border-slate-700" style="background:${escapeHtml(state.design.colors.secondary)}"></span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">Sekundární</span></div>
+              <div class="inline-flex items-center gap-2"><span class="inline-block size-5 rounded-lg border border-slate-200 dark:border-slate-700" style="background:${escapeHtml(state.design.colors.accent)}"></span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">Akcent</span></div>
+              <div class="inline-flex items-center gap-2"><span class="inline-block size-5 rounded-lg border border-slate-200 dark:border-slate-700" style="background:${escapeHtml(state.design.colors.background)}"></span><span class="text-xs font-semibold text-slate-700 dark:text-slate-300">Pozadí</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+          <h4 class="text-xs font-black uppercase tracking-[0.1em] text-slate-500 dark:text-slate-400">E) Detaily projektu</h4>
+          <div class="space-y-1.5">${detailsRows.join('')}</div>
+        </section>
+      `;
+    }
+    if (summaryPrice) {
+      summaryPrice.textContent = estimate.price;
+    }
+    if (summaryTimeline) {
+      summaryTimeline.textContent = estimate.timeline;
+    }
+
+    if (hostingExplanation) {
+      hostingExplanation.textContent =
+        state.hosting === 'fullstack'
+          ? 'Full-stack: Cena hostingu závisí na backend funkcích a očekávané návštěvnosti.'
+          : 'Statický web: Hosting zdarma na 1 rok je v ceně.';
+    }
+
+    if (priceHintWrap) {
+      priceHintWrap.classList.toggle('hidden', !showHints);
+      priceHintWrap.classList.remove('is-open');
+    }
+    if (timelineHintWrap) {
+      timelineHintWrap.classList.toggle('hidden', !showHints);
+      timelineHintWrap.classList.remove('is-open');
+    }
+    if (priceHintTooltip) {
+      priceHintTooltip.innerHTML = hintHtml;
+    }
+    if (timelineHintTooltip) {
+      timelineHintTooltip.innerHTML = hintHtml;
+    }
+
+    const payload = {
+      websiteType: state.websiteType,
+      pages: [...state.pages],
+      features: [...state.features],
+      hosting: state.hosting,
+      design: state.design,
+      details: state.details,
+      estimate
+    };
+
+    if (configJsonInput instanceof HTMLInputElement) {
+      configJsonInput.value = JSON.stringify(payload);
+    }
+    if (hostingTypeInput instanceof HTMLInputElement) {
+      hostingTypeInput.value = state.hosting;
+    }
+    if (estimatedPriceRangeInput instanceof HTMLInputElement) {
+      estimatedPriceRangeInput.value = estimate.price;
+    }
+    if (estimatedTimelineValueInput instanceof HTMLInputElement) {
+      estimatedTimelineValueInput.value = estimate.timeline;
+    }
+  };
+
+  const renderStep = () => {
+    stepPanels.forEach((panel, index) => {
+      panel.classList.toggle('hidden', index + 1 !== state.step);
+    });
+
+    if (stepCounter) {
+      stepCounter.textContent = `Krok ${state.step} / ${totalSteps}`;
+    }
+
+    const activePanel = stepPanels[state.step - 1];
+    if (stepTitle && activePanel) {
+      stepTitle.textContent = activePanel.dataset.title ?? '';
+    }
+
+    if (stepProgress) {
+      stepProgress.style.width = `${(state.step / totalSteps) * 100}%`;
+    }
+
+    if (prevBtn instanceof HTMLButtonElement) {
+      prevBtn.disabled = state.step === 1;
+    }
+
+    if (nextBtn instanceof HTMLButtonElement && submitBtn instanceof HTMLButtonElement) {
+      const finalStep = state.step === totalSteps;
+      nextBtn.classList.toggle('hidden', finalStep);
+      submitBtn.classList.toggle('hidden', !finalStep);
+    }
+
+    if (state.step === totalSteps) {
+      renderSummary();
+    }
+  };
+
+  typeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const typeId = button.dataset.id;
+      if (!typeId || typeId === state.websiteType) return;
+      applyPreset(typeId);
+    });
   });
+
+  pageButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const id = button.dataset.id;
+      if (!id) return;
+      if (state.pagesRequired.has(id)) return;
+
+      if (state.pages.has(id)) {
+        state.pages.delete(id);
+      } else {
+        state.pages.add(id);
+      }
+
+      detectHosting();
+      renderToggleStates();
+      renderSummary();
+    });
+  });
+
+  featureButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const id = button.dataset.id;
+      if (!id) return;
+      if (state.featuresRequired.has(id)) return;
+
+      if (state.features.has(id)) {
+        state.features.delete(id);
+      } else {
+        state.features.add(id);
+      }
+
+      detectHosting();
+      renderToggleStates();
+      renderSummary();
+    });
+  });
+
+  templateButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const template = button.dataset.template;
+      if (!template) return;
+      state.design.template = template;
+
+      templateButtons.forEach((item) => item.classList.toggle('is-selected', item === button));
+      renderPreview();
+      renderSummary();
+    });
+  });
+
+  fontPairButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const pair = button.dataset.fontPair;
+      if (!pair) return;
+
+      state.design.fontPair = pair;
+      state.design.fontHeading = button.dataset.headingFont ?? "'Space Grotesk', Inter, sans-serif";
+      state.design.fontBody = button.dataset.bodyFont ?? 'Inter, sans-serif';
+
+      fontPairButtons.forEach((item) => item.classList.toggle('is-selected', item === button));
+      renderPreview();
+      renderSummary();
+    });
+  });
+
+  modeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const mode = button.dataset.mode;
+      if (!mode) return;
+      state.design.mode = mode;
+      modeButtons.forEach((item) => item.classList.toggle('is-selected', item === button));
+      renderPreview();
+      renderSummary();
+    });
+  });
+
+  colorPickers.forEach((picker) => {
+    picker.addEventListener('input', () => {
+      const key = picker.dataset.color;
+      if (!key) return;
+      state.design.colors[key] = picker.value;
+      renderPreview();
+      renderSummary();
+    });
+  });
+
+  detailButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const key = button.dataset.detail;
+      const value = button.dataset.value;
+      if (!key || !value) return;
+
+      state.details[key] = value;
+
+      detailButtons
+        .filter((item) => item.dataset.detail === key)
+        .forEach((item) => item.classList.toggle('is-selected', item === button));
+
+      renderSummary();
+    });
+  });
+
+  referenceWebsiteInput?.addEventListener('input', () => {
+    state.details.referenceWebsite = referenceWebsiteInput.value;
+  });
+
+  targetMarketInput?.addEventListener('input', () => {
+    state.details.targetMarket = targetMarketInput.value;
+  });
+
+  additionalNotesInput?.addEventListener('input', () => {
+    state.details.additionalNotes = additionalNotesInput.value;
+  });
+
+  featureTooltips.forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const card = trigger.closest('.cfg-feature-card');
+      if (!card) return;
+      card.classList.toggle('tooltip-open');
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    const hintTrigger = target?.closest('[data-summary-hint-trigger]');
+
+    if (hintTrigger) {
+      event.preventDefault();
+      event.stopPropagation();
+      const wrap = hintTrigger.closest('[data-summary-hint-wrap]');
+      if (!wrap) return;
+
+      const wasOpen = wrap.classList.contains('is-open');
+      document.querySelectorAll('[data-summary-hint-wrap].is-open').forEach((item) => item.classList.remove('is-open'));
+      if (!wasOpen) {
+        wrap.classList.add('is-open');
+      }
+      return;
+    }
+
+    document.querySelectorAll('.cfg-feature-card.tooltip-open').forEach((card) => card.classList.remove('tooltip-open'));
+    document.querySelectorAll('[data-summary-hint-wrap].is-open').forEach((item) => item.classList.remove('is-open'));
+  });
+
+  if (nextBtn instanceof HTMLButtonElement) {
+    nextBtn.addEventListener('click', () => {
+      if (state.step < totalSteps) {
+        state.step += 1;
+        renderStep();
+      }
+    });
+  }
+
+  if (prevBtn instanceof HTMLButtonElement) {
+    prevBtn.addEventListener('click', () => {
+      if (state.step > 1) {
+        state.step -= 1;
+        renderStep();
+      }
+    });
+  }
+
+  form?.addEventListener('submit', () => {
+    renderSummary();
+  });
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const presetParam = searchParams.get('preset');
+  const websiteTypeParam = searchParams.get('websiteType');
+
+  const normalizeKey = (value) =>
+    (value ?? '')
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/_/g, '-');
+
+  const presetToWebsiteTypeMap = {
+    landing: 'landing',
+    design: 'company',
+    'custom-web': 'webapp',
+    seo: 'blog',
+    analytics: 'company',
+    support: 'company',
+    'similar-case': 'portfolio',
+    company: 'company',
+    'company-website': 'company',
+    portfolio: 'portfolio',
+    blog: 'blog',
+    ecommerce: 'ecommerce',
+    'e-commerce': 'ecommerce',
+    webapp: 'webapp'
+  };
+
+  const mappedFromPreset = presetParam ? presetToWebsiteTypeMap[normalizeKey(presetParam)] : undefined;
+  const directType = websiteTypeParam ? presetToWebsiteTypeMap[normalizeKey(websiteTypeParam)] : undefined;
+  const initialWebsiteType = directType || mappedFromPreset || state.websiteType;
+
+  if (initialWebsiteType && presets[initialWebsiteType]) {
+    state.websiteType = initialWebsiteType;
+  }
+
+  applyPreset(state.websiteType);
+  renderPreview();
+  renderStep();
 </script>
-
-<style>
-  .step-card {
-    display: none;
-    padding-top: 0.5rem;
-    transform-origin: top center;
-    transform-style: preserve-3d;
-    will-change: transform, opacity;
-  }
-
-  #configuratorWizard {
-    display: block;
-  }
-
-  .step-card.active {
-    display: block;
-  }
-
-  .step-trigger {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    text-align: left;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #e2e8f0;
-    cursor: pointer;
-  }
-
-  .step-index {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 800;
-    color: #135bec;
-    margin-bottom: 0.25rem;
-  }
-
-  .step-title {
-    font-size: 1.5rem;
-    line-height: 1.9rem;
-    font-weight: 900;
-    color: #0f172a;
-  }
-
-  .step-subtitle {
-    margin-top: 0.15rem;
-    color: #64748b;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-
-  .step-chevron {
-    color: #64748b;
-    transition: transform 0.2s ease;
-  }
-
-  .step-content {
-    display: block;
-    padding-top: 1rem;
-  }
-
-  .step-card.step-rotate-next {
-    animation: stepRotateNext 1.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .step-card.step-rotate-prev {
-    animation: stepRotatePrev 1.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  @keyframes stepRotateNext {
-    from {
-      opacity: 0.25;
-      transform: perspective(1400px) rotateY(130deg) scale(0.96);
-    }
-    to {
-      opacity: 1;
-      transform: perspective(1400px) rotateY(0deg) scale(1);
-    }
-  }
-
-  @keyframes stepRotatePrev {
-    from {
-      opacity: 0.25;
-      transform: perspective(1400px) rotateY(-130deg) scale(0.96);
-    }
-    to {
-      opacity: 1;
-      transform: perspective(1400px) rotateY(0deg) scale(1);
-    }
-  }
-
-  .step-card.active .step-chevron {
-    transform: rotate(180deg);
-  }
-
-  .sub-heading {
-    font-size: 1.05rem;
-    line-height: 1.4rem;
-    font-weight: 800;
-    color: #1e293b;
-    margin-bottom: 0.75rem;
-  }
-
-  .wizard-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
-  }
-
-  .wizard-nav-end {
-    justify-content: flex-end;
-  }
-
-  .wizard-btn {
-    background: #135bec;
-    color: #ffffff;
-    border: 1px solid #135bec;
-    border-radius: 0.75rem;
-    font-weight: 800;
-    padding: 0.65rem 1.1rem;
-    transition: all 0.2s ease;
-  }
-
-  .wizard-btn:hover {
-    filter: brightness(0.95);
-    box-shadow: 0 12px 24px rgba(19, 91, 236, 0.25);
-  }
-
-  .wizard-btn-muted {
-    background: #ffffff;
-    color: #334155;
-    border-color: #cbd5e1;
-  }
-
-  .wizard-btn-muted:hover {
-    box-shadow: none;
-    border-color: #94a3b8;
-  }
-
-  .config-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 1rem;
-    padding: 1rem;
-    box-shadow: 0 20px 40px rgba(148, 163, 184, 0.18);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .config-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 24px 50px rgba(148, 163, 184, 0.24);
-  }
-
-  .wizard-progress-card {
-    position: sticky;
-    top: 6.25rem;
-    width: 100%;
-    z-index: 20;
-    backdrop-filter: blur(8px);
-  }
-
-  .wizard-progress-track {
-    height: 0.5rem;
-    width: 100%;
-    border-radius: 9999px;
-    background: #e2e8f0;
-    overflow: hidden;
-  }
-
-  .wizard-progress-fill {
-    --wizard-progress: 0%;
-    height: 100%;
-    width: var(--wizard-progress);
-    background: #135bec;
-    transition: width 0.3s ease;
-  }
-
-  .wizard-progress-card:hover {
-    transform: none;
-  }
-
-  .field-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid #e2e8f0;
-    background: #f1f5f9;
-    min-height: 60px;
-    padding: 0 1rem;
-  }
-
-  .field-area {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid #e2e8f0;
-    background: #f1f5f9;
-    min-height: 60px;
-    padding: 0.75rem 1rem;
-  }
-
-  .field-input {
-    width: 100%;
-    background: transparent;
-    outline: none;
-    border: none;
-    color: #334155;
-  }
-
-  .field-input::placeholder {
-    color: #64748b;
-  }
-
-  .chip-btn {
-    border-radius: 9999px;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 700;
-    background: #ffffff;
-    color: #0f172a;
-    border: 1px solid #e2e8f0;
-    transition: border-color 0.2s ease, color 0.2s ease;
-  }
-
-  .chip-btn:hover {
-    border-color: #135bec;
-    color: #135bec;
-  }
-
-  .chip-btn-active {
-    background: #2563eb;
-    color: #ffffff;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35), 0 0 14px rgba(37, 99, 235, 0.26);
-  }
-
-  .chip-btn-active:hover {
-    background: #1d4ed8;
-    color: #ffffff;
-    border-color: #1d4ed8;
-  }
-
-  #themeSelectorGroup {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.55rem;
-  }
-
-  #themeSelectorGroup .chip-btn {
-    position: relative;
-    min-height: 4.2rem;
-    border-radius: 0.8rem;
-    border-width: 2px;
-    padding: 0.65rem 0.7rem;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-    text-align: left;
-    isolation: isolate;
-    overflow: hidden;
-    font-size: 0.78rem;
-    letter-spacing: 0.01em;
-  }
-
-  #themeSelectorGroup .chip-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
-
-  #themeSelectorGroup .chip-btn::after {
-    content: attr(data-theme);
-    position: absolute;
-    top: 0.35rem;
-    right: 0.45rem;
-    border-radius: 9999px;
-    padding: 0.08rem 0.38rem;
-    font-size: 0.56rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    background: rgba(255, 255, 255, 0.7);
-    color: #0f172a;
-  }
-
-  #themeSelectorGroup .chip-btn:hover::before {
-    transform: scale(1.02);
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='modern'] {
-    color: #0f172a;
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='modern']::before {
-    background:
-      linear-gradient(140deg, #dbeafe, #bfdbfe),
-      repeating-linear-gradient(90deg, rgba(37, 99, 235, 0.08) 0 8px, transparent 8px 16px);
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='minimal'] {
-    color: #0f172a;
-    font-weight: 700;
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='minimal']::before {
-    background:
-      linear-gradient(180deg, #ffffff, #f8fafc),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.25), rgba(148, 163, 184, 0.25));
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='bold'] {
-    color: #ffffff;
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='bold']::before {
-    background:
-      linear-gradient(140deg, #7c3aed, #db2777),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent);
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='elegant'] {
-    color: #f8fafc;
-    font-family: 'Times New Roman', serif;
-    letter-spacing: 0.04em;
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='elegant']::before {
-    background:
-      radial-gradient(circle at 20% 20%, rgba(203, 213, 225, 0.3), transparent 45%),
-      linear-gradient(160deg, #0f172a, #020617);
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='custom'] {
-    color: #0f172a;
-    border-style: dashed;
-  }
-
-  #themeSelectorGroup .chip-btn[data-theme='custom']::before {
-    background:
-      linear-gradient(140deg, #ccfbf1, #99f6e4),
-      repeating-linear-gradient(-45deg, rgba(13, 148, 136, 0.18) 0 10px, transparent 10px 20px);
-  }
-
-  #themeSelectorGroup .chip-btn.chip-btn-active {
-    transform: translateY(-1px);
-    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.5), 0 10px 22px rgba(37, 99, 235, 0.28);
-  }
-
-  .color-picker {
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid #cbd5e1;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    appearance: none;
-    -webkit-appearance: none;
-    overflow: hidden;
-  }
-
-  .color-picker::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-
-  .color-picker::-webkit-color-swatch {
-    border: none;
-    border-radius: 0.45rem;
-  }
-
-  .color-picker::-moz-color-swatch {
-    border: none;
-    border-radius: 0.45rem;
-  }
-
-  .theme-preview {
-    border: 1px solid #dbeafe;
-    border-radius: 0.85rem;
-    padding: 0.85rem;
-    background: #f8fbff;
-  }
-
-  .theme-preview-head {
-    margin-bottom: 0.65rem;
-  }
-
-  .theme-preview-title {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: #0f172a;
-  }
-
-  .theme-preview-text {
-    margin-top: 0.2rem;
-    font-size: 0.85rem;
-    color: #64748b;
-    line-height: 1.35;
-  }
-
-  .theme-preview-hint {
-    margin-top: 0.2rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #94a3b8;
-  }
-
-  .theme-preview-example-tags {
-    margin-top: 0.45rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .theme-preview-example-tag {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 1.3rem;
-    padding: 0.15rem 0.5rem;
-    border-radius: 9999px;
-    border: 1px solid #bfdbfe;
-    background: #eff6ff;
-    color: #1d4ed8;
-    font-size: 0.63rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .theme-preview-canvas {
-    --tp-accent: #2563eb;
-    --tp-soft: #dbeafe;
-    --tp-muted: #e2e8f0;
-    --tp-deep: #0f172a;
-    --tp-text-primary: #0f172a;
-    --tp-text-secondary: #475569;
-    border: 1px solid #dbeafe;
-    border-radius: 0.7rem;
-    overflow: hidden;
-    background: #ffffff;
-    min-height: 345px;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35), 0 14px 24px rgba(15, 23, 42, 0.08);
-  }
-
-  .theme-preview-canvas[data-font='sans'] {
-    font-family: sans-serif;
-  }
-
-  .theme-preview-canvas[data-font='serif'] {
-    font-family: serif;
-  }
-
-  .theme-preview-canvas[data-font='mono'] {
-    font-family: monospace;
-  }
-
-  .theme-preview-canvas[data-font='custom'] {
-    font-family: var(--tp-custom-font, sans-serif);
-  }
-
-  .theme-preview-canvas,
-  .theme-preview-canvas * {
-    font-family: inherit;
-  }
-
-  .theme-preview-browser {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    height: 1.45rem;
-    padding: 0 0.55rem;
-    border-bottom: 1px solid #dbeafe;
-    background: #dbeafe;
-  }
-
-  .theme-preview-dots {
-    display: inline-flex;
-    gap: 0.2rem;
-  }
-
-  .theme-preview-dots span {
-    width: 0.32rem;
-    height: 0.32rem;
-    border-radius: 9999px;
-    background: #94a3b8;
-    opacity: 0.9;
-  }
-
-  .theme-preview-url {
-    flex: 1;
-    height: 0.38rem;
-    border-radius: 9999px;
-    background: #cbd5e1;
-  }
-
-  .theme-preview-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.6rem;
-    padding: 0.65rem 0.75rem 0.5rem;
-  }
-
-  .theme-preview-logo {
-    width: 3.1rem;
-    height: 0.62rem;
-    border-radius: 9999px;
-  }
-
-  .theme-preview-nav-links {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .theme-preview-pill {
-    min-width: 2.6rem;
-    height: 1rem;
-    padding: 0 0.4rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    font-size: 0.5rem;
-    font-weight: 700;
-    color: var(--tp-text-primary);
-    white-space: nowrap;
-  }
-
-  .theme-preview-hero {
-    padding: 0 0.75rem;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 0.6rem;
-    align-items: stretch;
-  }
-
-  .theme-preview-hero-copy {
-    background: #f8fafc;
-    border-radius: 0.6rem;
-    padding: 0.6rem;
-  }
-
-  .theme-preview-kicker {
-    font-size: 0.52rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: var(--tp-text-secondary);
-  }
-
-  .theme-preview-headline {
-    margin-top: 0.35rem;
-    font-size: 0.8rem;
-    line-height: 1.05rem;
-    font-weight: 800;
-    color: var(--tp-text-primary);
-  }
-
-  .theme-preview-paragraph {
-    margin-top: 0.25rem;
-    font-size: 0.62rem;
-    line-height: 0.9rem;
-    color: var(--tp-text-secondary);
-  }
-
-  .theme-preview-cta {
-    margin-top: 0.4rem;
-    width: max-content;
-    min-width: 44%;
-    height: 1rem;
-    padding: 0 0.4rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    font-size: 0.52rem;
-    font-weight: 800;
-    color: #ffffff;
-    box-shadow: 0 8px 14px rgba(37, 99, 235, 0.25);
-  }
-
-  .theme-preview-media {
-    position: relative;
-    border-radius: 0.6rem;
-    border: 1px solid #dbeafe;
-    min-height: 4.1rem;
-  }
-
-  .theme-preview-media-badge {
-    position: absolute;
-    right: 0.35rem;
-    bottom: 0.35rem;
-    font-size: 0.5rem;
-    font-weight: 800;
-    color: var(--tp-text-primary);
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(148, 163, 184, 0.5);
-    border-radius: 9999px;
-    padding: 0.1rem 0.35rem;
-  }
-
-  .theme-preview-content {
-    display: grid;
-    grid-template-columns: 1.4fr 0.8fr;
-    gap: 0.6rem;
-    padding: 0.65rem 0.75rem 0.75rem;
-  }
-
-  .theme-preview-main {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.45rem;
-  }
-
-  .theme-preview-card {
-    display: flex;
-    align-items: flex-end;
-    padding: 0.35rem;
-    border-radius: 0.5rem;
-    min-height: 2.35rem;
-  }
-
-  .theme-preview-card-title {
-    font-size: 0.5rem;
-    font-weight: 700;
-    color: var(--tp-text-primary);
-  }
-
-  .theme-preview-side {
-    display: flex;
-    align-items: flex-end;
-    padding: 0.35rem;
-    border-radius: 0.5rem;
-    min-height: 2.1rem;
-    border: 1px solid #dbeafe;
-  }
-
-  .theme-preview-side-title {
-    font-size: 0.5rem;
-    font-weight: 700;
-    color: var(--tp-text-primary);
-  }
-
-  .theme-preview-canvas[data-theme='modern'] .theme-preview-browser {
-    display: flex;
-  }
-
-  .theme-preview-canvas[data-theme='modern'] .theme-preview-nav {
-    justify-content: space-between;
-  }
-
-  .theme-preview-canvas[data-theme='modern'] .theme-preview-hero {
-    grid-template-columns: 1.3fr 1fr;
-    gap: 0.55rem;
-  }
-
-  .theme-preview-canvas[data-theme='modern'] .theme-preview-content {
-    grid-template-columns: 1.45fr 0.85fr;
-  }
-
-  .theme-preview-canvas[data-theme='modern'] .theme-preview-main {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .theme-preview-canvas[data-theme='modern'] .theme-preview-card {
-    min-height: 2.25rem;
-    border-radius: 0.5rem;
-  }
-
-  .theme-preview-canvas[data-theme='modern'] .theme-preview-side {
-    display: flex;
-    min-height: 2.25rem;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-nav {
-    justify-content: flex-start;
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-example-tag {
-    background: #ffffff;
-    border-color: #cbd5e1;
-    color: #334155;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-nav-links {
-    gap: 0.2rem;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-pill {
-    background: transparent !important;
-    border: 1px solid #cbd5e1;
-    border-radius: 0.28rem;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-cta {
-    border-radius: 0.28rem;
-    box-shadow: none;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-main {
-    grid-template-columns: 1fr;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-card {
-    min-height: 1.7rem;
-    border-radius: 0.28rem;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-card:nth-child(3) {
-    display: none;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-content {
-    padding-top: 0.45rem;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-media {
-    display: none;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-content {
-    grid-template-columns: 1fr;
-  }
-
-  .theme-preview-canvas[data-theme='minimal'] .theme-preview-side {
-    display: none;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] {
-    background: #faf5ff;
-    box-shadow: inset 0 0 0 2px rgba(124, 58, 237, 0.35), 0 14px 24px rgba(88, 28, 135, 0.25);
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-browser {
-    display: none;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-nav {
-    border-bottom: none;
-    background: linear-gradient(90deg, rgba(91, 33, 182, 0.22), rgba(190, 24, 93, 0.2));
-    border-radius: 0.45rem;
-    margin: 0.55rem 0.7rem 0.35rem;
-    padding: 0.4rem 0.5rem;
-    gap: 0.35rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-nav-links {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.18rem;
-    width: 100%;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-pill {
-    min-width: 0;
-    width: 100%;
-    height: 0.9rem;
-    border-radius: 0.25rem;
-    justify-content: flex-start;
-    padding: 0 0.25rem;
-    font-size: 0.44rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-hero {
-    grid-template-columns: 1.3fr 0.9fr;
-    gap: 0.3rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-hero-copy {
-    background: linear-gradient(155deg, #3b0764, #7e22ce);
-    order: 2;
-    border-radius: 0.9rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-media {
-    order: 1;
-    min-height: 4.6rem;
-    border-radius: 0.95rem;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-kicker,
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-headline,
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-paragraph,
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-card-title,
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-side-title {
-    color: #ffffff;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-pill {
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-headline {
-    text-transform: uppercase;
-    font-size: 0.86rem;
-    line-height: 1rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-cta {
-    border-radius: 0.3rem;
-    min-width: 62%;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-example-tag {
-    background: rgba(124, 58, 237, 0.18);
-    border-color: rgba(124, 58, 237, 0.52);
-    color: #6d28d9;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-main {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.35rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-content {
-    grid-template-columns: 1fr;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-card:first-child {
-    grid-column: span 2;
-    min-height: 1.35rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-card:nth-child(2) {
-    transform: none;
-    min-height: 1.9rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-card:nth-child(3) {
-    transform: none;
-    min-height: 1.9rem;
-  }
-
-  .theme-preview-canvas[data-theme='bold'] .theme-preview-side {
-    display: none;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-nav {
-    border-bottom: 1px solid #d5dbe5;
-    padding-bottom: 0.55rem;
-    margin: 0 0.9rem 0.65rem;
-    padding-left: 0;
-    padding-right: 0;
-    justify-content: center;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-logo {
-    display: none;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-nav-links {
-    gap: 0.5rem;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-pill {
-    border: 1px solid #cfd7e4;
-    border-radius: 0.22rem;
-    min-width: 3.3rem;
-    height: 1.05rem;
-    background: #f8fafc !important;
-    color: #334155;
-    letter-spacing: 0.06em;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero-copy {
-    background: linear-gradient(180deg, #ffffff, #f8fafc);
-    border: 1px solid #e4e9f1;
-    border-radius: 0.32rem;
-    padding: 0.75rem 0.8rem;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-kicker {
-    color: #64748b;
-    letter-spacing: 0.1em;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-headline {
-    font-family: inherit;
-    font-size: 0.9rem;
-    line-height: 1.14rem;
-    letter-spacing: 0.015em;
-    text-align: center;
-    color: #0f172a;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-kicker,
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-paragraph {
-    text-align: center;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-paragraph {
-    color: #475569;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-cta {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-media {
-    min-height: 2.4rem;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-content {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    border-top: 1px solid #e2e8f0;
-    margin-top: 0.45rem;
-    padding-top: 0.75rem;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-main {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-cta {
-    border-radius: 0.16rem;
-    border: 1px solid rgba(15, 23, 42, 0.15);
-    box-shadow: none;
-    min-width: 54%;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-card {
-    min-height: 2.15rem;
-    border: 1px solid #dbe3ef;
-    border-radius: 0.2rem;
-    background: #ffffff !important;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-card-title {
-    font-family: inherit;
-    font-size: 0.54rem;
-    letter-spacing: 0.04em;
-    color: #334155;
-    text-transform: uppercase;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-side {
-    display: none;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-media {
-    border-radius: 0.25rem;
-    border: 1px solid #dbe3ef;
-    background: linear-gradient(145deg, #f1f5f9, #ffffff) !important;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-media-badge {
-    border-radius: 0.15rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .theme-preview-canvas[data-theme='elegant'] .theme-preview-example-tag {
-    background: #ffffff;
-    border-color: #d5dbe5;
-    color: #334155;
-    font-family: inherit;
-    border-radius: 0.2rem;
-  }
-
-  .theme-preview-canvas[data-theme='custom'] {
-    background: linear-gradient(160deg, #f0fdfa, #ecfeff);
-  }
-
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-example-tag {
-    background: rgba(204, 251, 241, 0.85);
-    border-color: #2dd4bf;
-    color: #0f766e;
-  }
-
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-hero-copy {
-    border: 1px dashed #0d9488;
-    background: rgba(255, 255, 255, 0.75);
-  }
-
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-hero {
-    grid-template-columns: 1fr;
-    gap: 0.4rem;
-  }
-
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-media {
-    min-height: 3.2rem;
-  }
-
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.35rem;
-  }
-
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-main {
-    grid-template-columns: 1fr;
-    gap: 0.3rem;
-  }
-
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-side {
-    min-height: auto;
-  }
-
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-card,
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-side,
-  .theme-preview-canvas[data-theme='custom'] .theme-preview-media {
-    border: 1px dashed #2dd4bf;
-  }
-
-  @media (min-width: 768px) {
-    .config-card {
-      padding: 1.25rem;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-        .wizard-progress-track {
-          background: #334155;
-        }
-
-        .wizard-progress-fill {
-          background: #2563eb;
-        }
-
-    .step-trigger {
-      border-bottom-color: #334155;
-    }
-
-    .step-title {
-      color: #f8fafc;
-    }
-
-    .step-subtitle,
-    .step-chevron {
-      color: #94a3b8;
-    }
-
-    .sub-heading {
-      color: #e2e8f0;
-    }
-
-    .wizard-btn-muted {
-      background: #0f172a;
-      color: #e2e8f0;
-      border-color: #334155;
-    }
-
-    .wizard-btn-muted:hover {
-      border-color: #60a5fa;
-    }
-
-    .config-card {
-      background: #1e293b;
-      border-color: #334155;
-      box-shadow: none;
-    }
-
-    .config-card:hover {
-      box-shadow: none;
-    }
-
-    .field-row,
-    .field-area {
-      border-color: #334155;
-      background: #0f172a;
-    }
-
-    .field-input {
-      color: #cbd5e1;
-    }
-
-    .field-input::placeholder {
-      color: #64748b;
-    }
-
-    .chip-btn {
-      background: #0f172a;
-      color: #e2e8f0;
-      border-color: #334155;
-    }
-
-    .chip-btn:hover {
-      color: #60a5fa;
-      border-color: #60a5fa;
-    }
-
-    .chip-btn-active {
-      background: #2563eb;
-      color: #ffffff;
-      border-color: #2563eb;
-      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35), 0 0 14px rgba(59, 130, 246, 0.28);
-    }
-
-    .chip-btn-active:hover {
-      background: #3b82f6;
-      color: #ffffff;
-      border-color: #3b82f6;
-    }
-
-    #themeSelectorGroup .chip-btn {
-      border-color: #475569;
-      color: #e2e8f0;
-    }
-
-    #themeSelectorGroup .chip-btn::after {
-      background: rgba(15, 23, 42, 0.78);
-      color: #cbd5e1;
-      border: 1px solid rgba(71, 85, 105, 0.8);
-    }
-
-    #themeSelectorGroup .chip-btn[data-theme='minimal'] {
-      color: #0f172a;
-    }
-
-    #themeSelectorGroup .chip-btn[data-theme='modern']::before {
-      background: linear-gradient(140deg, #1d4ed8, #0ea5e9);
-    }
-
-    #themeSelectorGroup .chip-btn[data-theme='minimal']::before {
-      background: linear-gradient(180deg, #f8fafc, #e2e8f0);
-    }
-
-    #themeSelectorGroup .chip-btn[data-theme='bold']::before {
-      background: linear-gradient(140deg, #581c87, #be185d);
-    }
-
-    #themeSelectorGroup .chip-btn[data-theme='elegant']::before {
-      background: linear-gradient(160deg, #020617, #0f172a);
-    }
-
-    #themeSelectorGroup .chip-btn[data-theme='custom']::before {
-      background: linear-gradient(140deg, #0f766e, #115e59);
-    }
-
-    .color-picker {
-      border-color: #475569;
-    }
-
-    .theme-preview {
-      border-color: #334155;
-      background: #172033;
-    }
-
-    .theme-preview-title {
-      color: #f8fafc;
-    }
-
-    .theme-preview-text {
-      color: #94a3b8;
-    }
-
-    .theme-preview-hint {
-      color: #64748b;
-    }
-
-    .theme-preview-example-tag {
-      background: rgba(30, 64, 175, 0.2);
-      border-color: rgba(59, 130, 246, 0.35);
-      color: #93c5fd;
-    }
-
-    .theme-preview-canvas {
-      border-color: #334155;
-      background: #0f172a;
-    }
-
-    .theme-preview-browser,
-    .theme-preview-canvas[data-theme='elegant'] .theme-preview-nav {
-      border-color: #334155;
-    }
-
-    .theme-preview-url {
-      background: #475569;
-    }
-
-    .theme-preview-pill,
-    .theme-preview-media-badge {
-      color: #cbd5e1;
-      border-color: #475569;
-      background: rgba(15, 23, 42, 0.75);
-    }
-
-    .theme-preview-dots span {
-      background: #64748b;
-    }
-
-    .theme-preview-hero-copy {
-      background: #111827;
-    }
-
-    .theme-preview-kicker {
-      color: #94a3b8;
-    }
-
-    .theme-preview-headline {
-      color: #f8fafc;
-    }
-
-    .theme-preview-paragraph,
-    .theme-preview-card-title,
-    .theme-preview-side-title {
-      color: #cbd5e1;
-    }
-
-    .theme-preview-media,
-    .theme-preview-side,
-    .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero-copy {
-      border-color: #334155;
-    }
-
-    .theme-preview-canvas[data-theme='bold'] {
-      background: #2e1065;
-    }
-
-    .theme-preview-canvas[data-theme='custom'] {
-      background: linear-gradient(160deg, #052e2b, #0f172a);
-    }
-
-    .theme-preview-canvas[data-theme='minimal'] .theme-preview-example-tag {
-      background: rgba(15, 23, 42, 0.7);
-      border-color: #475569;
-      color: #cbd5e1;
-    }
-
-    .theme-preview-canvas[data-theme='bold'] .theme-preview-example-tag {
-      background: rgba(109, 40, 217, 0.32);
-      border-color: rgba(167, 139, 250, 0.5);
-      color: #ddd6fe;
-    }
-
-    .theme-preview-canvas[data-theme='elegant'] .theme-preview-example-tag {
-      background: rgba(15, 23, 42, 0.72);
-      border-color: #64748b;
-      color: #f1f5f9;
-    }
-
-    .theme-preview-canvas[data-theme='elegant'] .theme-preview-pill {
-      background: rgba(15, 23, 42, 0.64) !important;
-      border-color: #475569;
-      color: #e2e8f0;
-    }
-
-    .theme-preview-canvas[data-theme='elegant'] .theme-preview-hero-copy {
-      background: linear-gradient(180deg, #111827, #0f172a);
-      border-color: #334155;
-    }
-
-    .theme-preview-canvas[data-theme='elegant'] .theme-preview-card {
-      border-color: #334155;
-      background: #0f172a !important;
-    }
-
-    .theme-preview-canvas[data-theme='elegant'] .theme-preview-card-title {
-      color: #cbd5e1;
-    }
-
-    .theme-preview-canvas[data-theme='elegant'] .theme-preview-media {
-      border-color: #334155;
-      background: linear-gradient(145deg, #111827, #0b1220) !important;
-    }
-
-    .theme-preview-canvas[data-theme='custom'] .theme-preview-example-tag {
-      background: rgba(15, 118, 110, 0.3);
-      border-color: rgba(45, 212, 191, 0.55);
-      color: #99f6e4;
-    }
-  }
-</style>

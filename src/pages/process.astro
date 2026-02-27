@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CardGrid from '../components/CardGrid.astro';
+
+const processCards = [
+  {
+    icon: 'fact_check',
+    title: '1. Discovery',
+    text: 'Sběr podkladů, cíle projektu, business priority a hlavní konverzní scénáře.'
+  },
+  {
+    icon: 'view_quilt',
+    title: '2. Scope & Structure',
+    text: 'Návrh stránek, funkčních bloků, obsahu a technického rozsahu.'
+  },
+  {
+    icon: 'design_services',
+    title: '3. Design Direction',
+    text: 'Vizuální styl, komponentový systém a směr pro konzistentní značku.'
+  },
+  {
+    icon: 'terminal',
+    title: '4. Development',
+    text: 'Implementace, responzivita, výkon a SEO základy v produkční kvalitě.'
+  },
+  {
+    icon: 'task_alt',
+    title: '5. QA & Launch',
+    text: 'Kontrola funkčnosti, nasazení a předání přístupů i dokumentace.'
+  },
+  {
+    icon: 'trending_up',
+    title: '6. Optimization',
+    text: 'Měření výsledků, iterace a další rozvoj podle dat.'
+  }
+];
+---
+
+<Layout title="Process | NexusDigital">
+  <Header />
+  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <section class="max-w-7xl mx-auto px-6">
+      <SectionHeader
+        kicker="Process"
+        title="Jak probíhá spolupráce"
+        description="Transparentní postup od prvního zadání po spuštění a další optimalizaci."
+      />
+
+      <CardGrid items={processCards} columns={3} />
+
+      <div class="mt-10 bg-gradient-to-r from-primary to-blue-500 text-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div>
+          <h3 class="text-2xl font-black mb-2">Chcete stejný proces pro váš projekt?</h3>
+          <p class="text-white/90 text-sm md:text-base">Vyplňte konfigurátor a pošleme konkrétní návrh postupu.</p>
+        </div>
+        <a href="/configurator" class="inline-flex items-center justify-center bg-white text-primary font-extrabold px-6 py-3 rounded-xl hover:bg-slate-100 transition-colors">
+          Start Configurator
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

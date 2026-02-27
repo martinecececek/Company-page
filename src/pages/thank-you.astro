@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Thank You | NexusDigital">
+  <Header />
+  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <section class="max-w-3xl mx-auto px-6">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 md:p-10 text-center">
+        <span class="inline-flex items-center justify-center size-14 rounded-full bg-primary/10 text-primary mb-5">
+          <span class="material-symbols-outlined">check_circle</span>
+        </span>
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Thank you for your configuration</h1>
+        <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-6">
+          We received your details and will review your project scope. Expect a follow-up with next steps shortly.
+        </p>
+
+        <div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl p-5 text-left mb-8">
+          <h2 class="text-xl font-black mb-3">Next steps</h2>
+          <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+            <li>1. We review your selected scope and options.</li>
+            <li>2. We prepare a tailored proposal with timeline.</li>
+            <li>3. We confirm kickoff and production plan with you.</li>
+          </ul>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-3">
+          <a href="/" class="inline-flex items-center justify-center bg-primary text-white font-bold px-7 py-3 rounded-xl hover:bg-primary/90 transition-all">
+            Back to Home
+          </a>
+          <a href="/configurator" class="inline-flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold px-7 py-3 rounded-xl hover:border-primary transition-all">
+            Start another configuration
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

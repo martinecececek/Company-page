@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+---
+
+<Layout title="Terms | NexusDigital">
+  <Header />
+  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <section class="max-w-4xl mx-auto px-6">
+      <SectionHeader
+        kicker="Legal"
+        title="Terms & Conditions"
+        description="This page is a placeholder. Replace with your final terms for project delivery and cooperation."
+      />
+
+      <div class="space-y-6 text-slate-700 dark:text-slate-300 leading-relaxed bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8">
+        <section>
+          <h2 class="text-xl font-black mb-2 text-slate-900 dark:text-white">1. Scope of Services</h2>
+          <p>TODO: Define service scope, deliverables and communication boundaries.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-black mb-2 text-slate-900 dark:text-white">2. Pricing & Payments</h2>
+          <p>TODO: Add payment terms, invoicing schedule and accepted payment methods.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-black mb-2 text-slate-900 dark:text-white">3. Timelines & Revisions</h2>
+          <p>TODO: Add expected delivery timelines and revision policy.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-black mb-2 text-slate-900 dark:text-white">4. Liability & Termination</h2>
+          <p>TODO: Add limitation of liability and contract termination terms.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
