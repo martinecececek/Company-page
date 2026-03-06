@@ -1,0 +1,103 @@
+---
+interface Props {
+  variant?: 'hero' | 'expertise' | 'why';
+}
+
+const { variant = 'hero' } = Astro.props;
+const sourceByVariant: Record<'hero' | 'expertise' | 'why', string> = {
+  hero: '/ribbon-hero.svg',
+  expertise: '/ribbon-expertise.svg',
+  why: '/ribbon-why.svg'
+};
+---
+
+<div class:list={['section-ribbon-bg', `section-ribbon-bg--${variant}`]} aria-hidden="true">
+  <img src={sourceByVariant[variant]} alt="" loading="lazy" decoding="async" fetchpriority="low" />
+</div>
+
+<style>
+  .section-ribbon-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .section-ribbon-bg img {
+    position: absolute;
+    max-width: none;
+    filter: blur(1.5px);
+    user-select: none;
+  }
+
+  .section-ribbon-bg--hero img {
+    width: 128%;
+    left: -8%;
+    top: 16%;
+    opacity: 0.13;
+    transform: rotate(-9deg);
+  }
+
+  .section-ribbon-bg--expertise img {
+    width: 124%;
+    left: -12%;
+    top: 12%;
+    opacity: 0.1;
+    transform: rotate(7deg);
+  }
+
+  .section-ribbon-bg--why img {
+    width: 126%;
+    left: -10%;
+    top: 20%;
+    opacity: 0.11;
+    transform: rotate(-7deg);
+  }
+
+  @media (max-width: 1024px) {
+    .section-ribbon-bg--hero img {
+      width: 162%;
+      left: -34%;
+      top: 24%;
+      opacity: 0.1;
+    }
+
+    .section-ribbon-bg--expertise img {
+      width: 166%;
+      left: -38%;
+      top: 18%;
+      opacity: 0.09;
+    }
+
+    .section-ribbon-bg--why img {
+      width: 168%;
+      left: -40%;
+      top: 26%;
+      opacity: 0.09;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .section-ribbon-bg--hero img {
+      width: 198%;
+      left: -62%;
+      top: 30%;
+      opacity: 0.08;
+    }
+
+    .section-ribbon-bg--expertise img {
+      width: 204%;
+      left: -68%;
+      top: 22%;
+      opacity: 0.075;
+    }
+
+    .section-ribbon-bg--why img {
+      width: 206%;
+      left: -70%;
+      top: 34%;
+      opacity: 0.075;
+    }
+  }
+</style>

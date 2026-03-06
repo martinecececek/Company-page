@@ -4,8 +4,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
+import SectionRibbonBackground from '../components/SectionRibbonBackground.astro';
 
-const faqItems = [
+const pricingFaq = [
   {
     question: 'Kolik stojí nový web?',
     answer: 'Cena se liší podle typu webu, počtu stránek a funkcí. Přesný odhad dostanete v konfigurátoru po vyplnění požadavků.'
@@ -21,7 +22,10 @@ const faqItems = [
   {
     question: 'Jak rychle může být web hotový?',
     answer: 'Jednodušší weby bývají hotové během několika týdnů, rozsáhlejší projekty trvají déle. V konfigurátoru zobrazujeme orientační timeline.'
-  },
+  }
+];
+
+const processFaq = [
   {
     question: 'Dostanu po spuštění přístupy a vlastnictví webu?',
     answer: 'Ano, po předání získáte přístupy k doméně, hostingu i administraci podle rozsahu projektu. Vlastnictví řešení a podmínky předání jsou vždy součástí dohody.'
@@ -30,6 +34,17 @@ const faqItems = [
     question: 'Kolik kol úprav je v projektu?',
     answer: 'Standardně plánujeme několik revizních kol podle fáze projektu (struktura, design, finální kontrola). Přesný rozsah úprav nastavujeme při specifikaci zadání.'
   },
+  {
+    question: 'Je možné rozdělit projekt do etap?',
+    answer: 'Ano, často navrhujeme MVP fázi a následné rozšiřování podle výsledků a priorit.'
+  },
+  {
+    question: 'Jak probíhá komunikace během realizace?',
+    answer: 'Pracujeme v jasných milnících a pravidelných updatech. Po celou dobu máte přehled o stavu projektu, dalších krocích i termínech.'
+  }
+];
+
+const supportFaq = [
   {
     question: 'Umíte převzít existující web a vylepšit ho?',
     answer: 'Ano. Můžeme navázat na stávající obsah, design i technické řešení a navrhnout postupnou modernizaci.'
@@ -45,31 +60,72 @@ const faqItems = [
   {
     question: 'Můžete pomoct s texty a obsahem?',
     answer: 'Ano, můžeme připravit obsahovou osnovu, upravit texty pro lepší srozumitelnost a konverzi, případně dodat kompletní copywriting.'
+  }
+];
+
+const faqGroups = [
+  {
+    id: 'price-hosting',
+    title: 'Cena, termín a hosting',
+    description: 'Nejčastější otázky k rozpočtu, časové náročnosti a provozu projektu.',
+    items: pricingFaq
   },
   {
-    question: 'Je možné rozdělit projekt do etap?',
-    answer: 'Ano, často navrhujeme MVP fázi a následné rozšiřování podle výsledků a priorit.'
+    id: 'cooperation',
+    title: 'Spolupráce a průběh',
+    description: 'Jak fungují revize, komunikace a předání hotového řešení.',
+    items: processFaq
   },
   {
-    question: 'Jak probíhá komunikace během realizace?',
-    answer: 'Pracujeme v jasných milnících a pravidelných updatech. Po celou dobu máte přehled o stavu projektu, dalších krocích i termínech.'
+    id: 'growth-support',
+    title: 'Rozvoj a dlouhodobá podpora',
+    description: 'SEO, obsah i následná správa po spuštění webu.',
+    items: supportFaq
   }
 ];
 ---
 
 <Layout title="FAQ | NexusDigital">
   <Header />
-  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
-    <section class="max-w-5xl mx-auto px-6">
-      <SectionHeader
-        kicker="FAQ"
-        title="Časté dotazy"
-        description="Stručné odpovědi na nejčastější otázky před zahájením spolupráce."
-      />
+  <main class="relative overflow-hidden pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <SectionRibbonBackground variant="hero" />
 
-      <FAQAccordion items={faqItems} />
+    <section class="relative z-10 max-w-5xl mx-auto px-6">
+      <div class="rounded-2xl border border-slate-200/75 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 p-6 md:p-8 backdrop-blur-[1px]">
+        <SectionHeader
+          kicker="FAQ"
+          title="Časté dotazy"
+          description="Přehledně podle témat: cena, spolupráce, průběh i podpora po spuštění webu."
+        />
+        <nav class="mt-8" aria-label="FAQ kategorie">
+          <div class="flex flex-wrap gap-2 md:gap-3">
+            {faqGroups.map((group) => (
+              <a
+                href={`#${group.id}`}
+                class="inline-flex items-center rounded-full border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/75 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:border-primary/40 hover:text-primary transition-colors"
+              >
+                {group.title}
+              </a>
+            ))}
+          </div>
+        </nav>
+      </div>
 
-      <div class="mt-10 bg-gradient-to-r from-primary to-blue-500 text-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+      <div class="mt-12 space-y-12 md:space-y-14">
+        {faqGroups.map((group) => (
+          <section id={group.id} class="scroll-mt-32 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/65 backdrop-blur-[1px] p-6 md:p-8">
+            <div class="mb-6">
+              <h2 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white">{group.title}</h2>
+            </div>
+            <div class="mb-6">
+              <p class="mt-1 text-sm md:text-base text-slate-600 dark:text-slate-300">{group.description}</p>
+            </div>
+            <FAQAccordion items={group.items} />
+          </section>
+        ))}
+      </div>
+
+      <div class="mt-16 bg-gradient-to-r from-primary/85 to-blue-500/80 text-white rounded-2xl p-6 md:p-8 border border-white/20 backdrop-blur-[1px] flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
         <div>
           <h3 class="text-2xl font-black mb-2">Máte konkrétní zadání?</h3>
           <p class="text-white/90 text-sm md:text-base">V konfigurátoru vyberete rozsah a hned uvidíte odhad ceny i timeline.</p>

@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SectionRibbonBackground from '../components/SectionRibbonBackground.astro';
 
 const coreServices = [
   {
@@ -79,27 +81,50 @@ const offerHighlights = [
     text: 'Nezůstáváte na to sami. Pokračujeme správou, rozvojem a optimalizací.'
   }
 ];
+
+const serviceSummary = [
+  {
+    label: 'Služeb',
+    value: '6 core oblastí'
+  },
+  {
+    label: 'Proces',
+    value: 'Od strategie po support'
+  },
+  {
+    label: 'Cíl',
+    value: 'Měřitelný růst webu'
+  }
+];
 ---
 
 <Layout title="Služby | NexusDigital">
   <Header />
 
-  <main class="relative overflow-hidden pt-28 pb-20 min-h-screen bg-background-light dark:bg-background-dark px-4 md:px-6">
-    <div class="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
-    <div class="absolute top-40 -right-20 w-80 h-80 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+  <main class="relative overflow-hidden pt-28 pb-20 min-h-screen bg-background-light dark:bg-background-dark">
+    <SectionRibbonBackground variant="expertise" />
 
-    <section class="max-w-7xl mx-auto relative z-10">
-      <div class="max-w-4xl mb-10 md:mb-14">
-        <p class="text-primary text-xs font-black tracking-[0.14em] uppercase mb-3">Kompletní služby</p>
-        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight mb-5">
-          Služby, které potřebujete pro moderní a funkční web.
-        </h1>
-        <p class="text-slate-600 dark:text-slate-400 text-lg max-w-3xl">
-          Jasně, stručně a bez zbytečné omáčky — od strategie přes realizaci až po podporu po spuštění.
-        </p>
+    <section class="relative z-10 max-w-5xl mx-auto px-6">
+      <div class="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/65 backdrop-blur-[1px] p-6 md:p-8">
+        <div class="max-w-3xl">
+          <SectionHeader
+            kicker="Kompletní služby"
+            title="Služby, které potřebujete pro moderní a funkční web"
+            description="Od strategie přes realizaci až po dlouhodobou podporu. Jasný plán, měřitelný výsledek, bez zbytečné omáčky."
+          />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 -mt-4">
+          {serviceSummary.map((item) => (
+            <div class="rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/70 p-4">
+              <p class="text-xs font-black uppercase tracking-wide text-slate-500 dark:text-slate-400">{item.label}</p>
+              <p class="mt-1 text-xl font-black text-slate-900 dark:text-white">{item.value}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div class="mb-10 md:mb-12 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 md:p-6">
+      <div class="mt-10 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/65 backdrop-blur-[1px] p-6 md:p-8">
         <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-5">Co od nás dostanete</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {offerHighlights.map((item) => (
@@ -114,26 +139,27 @@ const offerHighlights = [
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
-        {coreServices.map((service) => (
-          <article class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
-            <div class="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-              <span class="material-symbols-outlined">{service.icon}</span>
-            </div>
-            <h2 class="text-lg font-extrabold text-slate-900 dark:text-white mb-2">{service.title}</h2>
-            <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{service.text}</p>
-            <a href={`/configurator?preset=${service.preset}`} class="inline-flex items-center gap-1 mt-4 text-primary font-bold text-sm hover:gap-2 transition-all">
-              Start configurator
-              <span class="material-symbols-outlined text-base">arrow_forward</span>
-            </a>
-          </article>
-        ))}
+      <div class="mt-10 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/65 backdrop-blur-[1px] p-6 md:p-8">
+        <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-5">Core služby</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          {coreServices.map((service) => (
+            <article class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6">
+              <div class="size-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined">{service.icon}</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-slate-900 dark:text-white mb-2">{service.title}</h3>
+              <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">{service.text}</p>
+              <a href={`/configurator?preset=${service.preset}`} class="inline-flex items-center gap-1 mt-4 text-primary font-bold text-sm hover:gap-2 transition-all">
+                Start configurator
+                <span class="material-symbols-outlined text-base">arrow_forward</span>
+              </a>
+            </article>
+          ))}
+        </div>
       </div>
-    </section>
 
-    <section class="max-w-7xl mx-auto relative z-10 mt-16 md:mt-20">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 md:p-7">
+      <div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white/75 dark:bg-slate-900/65 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-6 md:p-7 backdrop-blur-[1px]">
           <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4">Jak probíhá spolupráce</h3>
           <ol class="space-y-3">
             {process.map((step, index) => (
@@ -145,7 +171,7 @@ const offerHighlights = [
           </ol>
         </div>
 
-        <div class="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 md:p-7">
+        <div class="bg-white/75 dark:bg-slate-900/65 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-6 md:p-7 backdrop-blur-[1px]">
           <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4">Standard kvality každého projektu</h3>
           <ul class="space-y-2.5">
             {standards.map((item) => (
@@ -158,7 +184,7 @@ const offerHighlights = [
         </div>
       </div>
 
-      <div class="mt-8 md:mt-10 bg-gradient-to-r from-primary to-blue-500 text-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+      <div class="mt-10 bg-gradient-to-r from-primary/85 to-blue-500/80 text-white rounded-2xl p-6 md:p-8 border border-white/20 backdrop-blur-[1px] flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
         <div>
           <h3 class="text-2xl font-black mb-2">Chcete nacenění a přesný plán pro váš web?</h3>
           <p class="text-white/90 text-sm md:text-base">Vyplňte konfigurátor a připravíme konkrétní návrh včetně rozsahu služeb.</p>

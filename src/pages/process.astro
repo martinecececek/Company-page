@@ -4,62 +4,104 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import CardGrid from '../components/CardGrid.astro';
+import SectionRibbonBackground from '../components/SectionRibbonBackground.astro';
 
-const processCards = [
+const processSteps = [
   {
-    icon: 'fact_check',
-    title: '1. Discovery',
-    text: 'Sběr podkladů, cíle projektu, business priority a hlavní konverzní scénáře.'
+    icon: 'chat_bubble',
+    title: '1. Dotaz / Brief',
+    text: 'Discovery phase. We dive deep into your goals, audience, and project vision to build a solid strategic foundation.'
   },
   {
-    icon: 'view_quilt',
-    title: '2. Scope & Structure',
-    text: 'Návrh stránek, funkčních bloků, obsahu a technického rozsahu.'
+    icon: 'biotech',
+    title: '2. Analýza & Zadání',
+    text: 'Technical blueprint. We outline the architecture, features, and specifications required for a high-performance solution.'
   },
   {
-    icon: 'design_services',
-    title: '3. Design Direction',
-    text: 'Vizuální styl, komponentový systém a směr pro konzistentní značku.'
+    icon: 'palette',
+    title: '3. Design Phase',
+    text: 'Visual storytelling. Crafting stunning UI/UX designs that balance aesthetics with conversion-focused functionality.'
   },
   {
     icon: 'terminal',
-    title: '4. Development',
-    text: 'Implementace, responzivita, výkon a SEO základy v produkční kvalitě.'
+    title: '4. Vývoj (Dev)',
+    text: 'Code execution. Our developers build robust, scalable systems using cutting-edge tech stacks and agile methodologies.'
   },
   {
-    icon: 'task_alt',
-    title: '5. QA & Launch',
-    text: 'Kontrola funkčnosti, nasazení a předání přístupů i dokumentace.'
+    icon: 'rocket_launch',
+    title: '5. Spuštění',
+    text: 'Blast off! Final testing, deployment, and team training to ensure you are fully equipped for your new digital era.'
   },
   {
-    icon: 'trending_up',
-    title: '6. Optimization',
-    text: 'Měření výsledků, iterace a další rozvoj podle dat.'
+    icon: 'support_agent',
+    title: '6. Podpora',
+    text: 'Constant growth. Long-term technical support and iterative improvements to keep you ahead of the competition.'
+  }
+];
+
+const processGroups = [
+  {
+    id: 'strategy',
+    title: 'Dotaz a zadání',
+    description: 'Brief a analýza tvoří základní rámec projektu, cílů a technického směru.',
+    items: processSteps.slice(0, 2)
+  },
+  {
+    id: 'execution',
+    title: 'Design a vývoj',
+    description: 'Vizuální koncept převádíme do funkční, rychlé a škálovatelné realizace.',
+    items: processSteps.slice(2, 4)
+  },
+  {
+    id: 'launch-growth',
+    title: 'Spuštění a podpora',
+    description: 'Po launchi navazuje stabilní podpora, iterace a další růst projektu.',
+    items: processSteps.slice(4)
   }
 ];
 ---
 
 <Layout title="Process | NexusDigital">
   <Header />
-  <main class="pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
-    <section class="max-w-7xl mx-auto px-6">
-      <SectionHeader
-        kicker="Process"
-        title="Jak probíhá spolupráce"
-        description="Transparentní postup od prvního zadání po spuštění a další optimalizaci."
-      />
+  <main class="relative overflow-hidden pt-28 pb-20 bg-background-light dark:bg-background-dark min-h-screen">
+    <SectionRibbonBackground variant="expertise" />
 
-      <CardGrid items={processCards} columns={3} />
+    <section class="relative z-10 max-w-5xl mx-auto px-6">
+      <div class="rounded-2xl border border-slate-200/75 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/60 p-6 md:p-8 backdrop-blur-[1px]">
+        <SectionHeader
+          kicker="Process"
+          title="Jak probíhá spolupráce"
+          description="Transparentní postup od prvního zadání po spuštění a další optimalizaci."
+        />
 
-      <div class="mt-10 bg-gradient-to-r from-primary to-blue-500 text-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-        <div>
-          <h3 class="text-2xl font-black mb-2">Chcete stejný proces pro váš projekt?</h3>
-          <p class="text-white/90 text-sm md:text-base">Vyplňte konfigurátor a pošleme konkrétní návrh postupu.</p>
-        </div>
-        <a href="/configurator" class="inline-flex items-center justify-center bg-white text-primary font-extrabold px-6 py-3 rounded-xl hover:bg-slate-100 transition-colors">
-          Start Configurator
-        </a>
+        <nav class="mt-8" aria-label="Fáze procesu">
+          <div class="flex flex-wrap gap-2 md:gap-3">
+            {processGroups.map((group) => (
+              <a
+                href={`#${group.id}`}
+                class="inline-flex items-center rounded-full border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-900/75 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:border-primary/40 hover:text-primary transition-colors"
+              >
+                {group.title}
+              </a>
+            ))}
+          </div>
+        </nav>
       </div>
+
+      <div class="mt-12 space-y-12 md:space-y-14">
+        {processGroups.map((group) => (
+          <section id={group.id} class="scroll-mt-32 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/65 backdrop-blur-[1px] p-6 md:p-8">
+            <div class="mb-6">
+              <h2 class="text-xl md:text-2xl font-black text-slate-900 dark:text-white">{group.title}</h2>
+            </div>
+            <div class="mb-6">
+              <p class="text-sm md:text-base text-slate-600 dark:text-slate-300">{group.description}</p>
+            </div>
+            <CardGrid items={group.items} columns={2} />
+          </section>
+        ))}
+      </div>
+
     </section>
   </main>
   <Footer />

@@ -1,0 +1,16 @@
+<svg width="1800" height="900" viewBox="0 0 1800 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="expA" x1="180" y1="110" x2="1600" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7C4DFF"/>
+      <stop offset="0.48" stop-color="#FF0B8A"/>
+      <stop offset="1" stop-color="#C95CFF"/>
+    </linearGradient>
+    <linearGradient id="expB" x1="360" y1="180" x2="1480" y2="720" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9B73FF" stop-opacity="0.94"/>
+      <stop offset="0.56" stop-color="#FF5AB2" stop-opacity="1"/>
+      <stop offset="1" stop-color="#AE82FF" stop-opacity="0.92"/>
+    </linearGradient>
+  </defs>
+  <path d="M -220 330 C 140 40, 420 660, 820 300 C 1120 25, 1340 590, 1710 250 C 1830 150, 1930 190, 2040 260" stroke="url(#expA)" stroke-width="214" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.68"/>
+  <path d="M -160 352 C 140 90, 420 625, 820 300 C 1110 70, 1340 555, 1690 268" stroke="url(#expB)" stroke-width="132" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.94"/>
+</svg>

@@ -1,0 +1,48 @@
+---
+---
+
+<div class="ribbon-background" aria-hidden="true">
+  <img src="/ribbon-shape.svg" alt="" loading="lazy" decoding="async" fetchpriority="low" />
+</div>
+
+<style>
+  .ribbon-background {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .ribbon-background img {
+    position: absolute;
+    left: 0;
+    top: 30vh;
+    width: 110vw;
+    max-width: none;
+    transform: translateX(-4vw) rotate(-14deg);
+    opacity: 0.15;
+    filter: blur(2px);
+    user-select: none;
+  }
+
+  @media (max-width: 1024px) {
+    .ribbon-background img {
+      left: 0;
+      top: 42vh;
+      width: 138vw;
+      transform: translateX(-16vw) rotate(-15deg);
+      opacity: 0.12;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ribbon-background img {
+      left: 0;
+      top: 52vh;
+      width: 170vw;
+      transform: translateX(-36vw) rotate(-16deg);
+      opacity: 0.1;
+    }
+  }
+</style>
