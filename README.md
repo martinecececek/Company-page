@@ -115,4 +115,3 @@ npm run preview
 
 - Shared layout metadata is managed in `src/layouts/Layout.astro`.
 - Page-level `title` and `description` props can be passed from page files (for example `src/pages/index.astro`).
-
