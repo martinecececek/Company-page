@@ -1,4 +1,19 @@
 ---
+const normalizePath = (path: string) => {
+  if (!path || path === '/') return '/';
+  return path.endsWith('/') ? path.slice(0, -1) : path;
+};
+
+const currentPath = normalizePath(Astro.url.pathname);
+
+const navLinks = [
+  { href: '/', label: 'Domů' },
+  { href: '/services', label: 'Služby' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/process', label: 'Postup' },
+  { href: '/faq', label: 'Otázky' },
+  { href: '/contact', label: 'Kontakt' }
+];
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-slate-200/80 dark:border-slate-800 text-slate-900 dark:text-slate-100">
@@ -13,18 +28,63 @@
     </a>
 
     <div class="hidden md:flex items-center gap-8">
-      <a class="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors" href="/">Home</a>
-      <a class="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors" href="/services">Services</a>
-      <a class="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors" href="/portfolio">Portfolio</a>
-      <a class="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors" href="/process">Process</a>
-      <a class="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors" href="/faq">FAQ</a>
-      <a class="text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-primary transition-colors" href="/contact">Contact</a>
+      {navLinks.map((link) => {
+        const isActive = normalizePath(link.href) === currentPath;
+
+        return (
+          <a
+            href={link.href}
+            class:list={{
+              'text-sm font-semibold transition-colors': true,
+              'text-primary': isActive,
+              'text-slate-700 dark:text-slate-200 hover:text-primary': !isActive
+            }}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        );
+      })}
     </div>
 
-    <div class="flex items-center gap-4">
-      <a href="/configurator" class="bg-primary text-white text-sm font-bold px-6 py-2.5 rounded-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 inline-flex items-center">
-        Start Configurator
+    <div class="flex items-center gap-3">
+      <a href="/contact" class="bg-primary text-white text-sm font-bold px-6 py-2.5 rounded-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 inline-flex items-center">
+        Nezávazná konzultace
       </a>
+
+      <details class="relative md:hidden">
+        <summary class="list-none inline-flex items-center justify-center size-10 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 cursor-pointer hover:border-primary hover:text-primary transition-colors">
+          <span class="sr-only">Otevřít navigaci</span>
+          <span class="material-symbols-outlined">menu</span>
+        </summary>
+        <div class="absolute right-0 mt-3 w-56 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-xl p-2">
+          <nav class="flex flex-col" aria-label="Mobilní navigace">
+            {navLinks.map((link) => {
+              const isActive = normalizePath(link.href) === currentPath;
+
+              return (
+                <a
+                  href={link.href}
+                  class:list={{
+                    'px-3 py-2 rounded-lg text-sm font-semibold transition-colors': true,
+                    'bg-primary/10 text-primary': isActive,
+                    'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800': !isActive
+                  }}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+          </nav>
+        </div>
+      </details>
     </div>
   </nav>
 </header>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

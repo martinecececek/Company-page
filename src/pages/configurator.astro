@@ -79,6 +79,20 @@ const fontPairs = [
   }
 ];
 
+const contentSections = pagesCatalog.map((page) => ({
+  id: page.id,
+  label: page.id === 'home' ? 'Domů / Hero' : page.id === 'contact' ? 'Kontakt / CTA' : page.label
+}));
+
+const assetSlots = [
+  { id: 'hero', label: 'Hero obrázek', hint: 'Doporučeno: 1920×1080', relatedPages: ['home'] },
+  { id: 'about', label: 'O nás obrázek', hint: 'Doporučeno: 1600×900', relatedPages: ['about'] },
+  { id: 'services', label: 'Služby / ikony', hint: 'Doporučeno: 1200×1200', relatedPages: ['services', 'shop'] },
+  { id: 'team', label: 'Týmové fotografie', hint: 'Doporučeno: 1200×1600', relatedPages: ['about'] },
+  { id: 'logos', label: 'Loga značky', hint: 'SVG/PNG v transparentním pozadí', relatedPages: [] },
+  { id: 'gallery', label: 'Galerie / reference', hint: 'Více snímků projektu', relatedPages: ['portfolio', 'shop'] }
+];
+
 const presets = {
   company: {
     hosting: 'static',
@@ -184,13 +198,21 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
         <p class="text-slate-600 dark:text-slate-400 text-lg">Chytré presety, interaktivní ovládání, živý náhled designu a finální souhrn v jednom toku.</p>
       </div>
 
-      <form id="configuratorForm" action="/thank-you" method="get" class="space-y-4">
+      <form id="configuratorForm" action="/api/configurator-submit" method="post" class="space-y-4">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 md:p-6">
           <div class="flex items-center justify-between gap-4 flex-wrap mb-3">
-            <p id="stepCounter" class="text-sm font-bold uppercase tracking-wider text-primary">Krok 1 / 6</p>
+            <p id="stepCounter" class="text-sm font-bold uppercase tracking-wider text-primary" aria-live="polite">Krok 1 / 6</p>
             <p id="stepTitle" class="text-sm font-semibold text-slate-500 dark:text-slate-400">Typ webu</p>
           </div>
-          <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+          <div
+            id="stepProgressBar"
+            class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden"
+            role="progressbar"
+            aria-valuemin="1"
+            aria-valuemax="6"
+            aria-valuenow="1"
+            aria-valuetext="Krok 1 z 6"
+          >
             <div id="stepProgress" class="h-full bg-primary transition-all duration-300" style="width: 16.66%"></div>
           </div>
         </div>
@@ -354,6 +376,78 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
               </div>
             </div>
 
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4 md:p-5 space-y-5">
+              <div>
+                <p class="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Podklady pro obsah (volitelné)</p>
+                <p class="text-sm text-slate-600 dark:text-slate-300">Stávající konfigurace i obsah zůstávají zachovány. Tyto podklady slouží jen jako doplnění nebo přepis konkrétních sekcí.</p>
+              </div>
+
+              <div data-content-text-group>
+                <p class="text-sm font-bold text-slate-800 dark:text-slate-100 mb-3">Obrázky podle sekcí</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {assetSlots.map((slot) => (
+                    <div class="cfg-upload-card" data-asset-slot-card={slot.id} data-related-pages={slot.relatedPages.join(',')}>
+                      <label for={`asset-upload-${slot.id}`} class="text-sm font-bold text-slate-700 dark:text-slate-200">{slot.label}</label>
+                      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-2">{slot.hint}</p>
+                      <input
+                        id={`asset-upload-${slot.id}`}
+                        data-image-upload={slot.id}
+                        name={`assetUpload-${slot.id}`}
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        class="w-full text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 file:mr-3 file:rounded-lg file:border-0 file:bg-primary/15 file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-primary"
+                      />
+                      <p id={`asset-upload-list-${slot.id}`} data-image-upload-list={slot.id} class="mt-2 text-xs text-slate-500 dark:text-slate-400">Žádné soubory.</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <p id="contentAssistHint" class="hidden text-xs text-slate-500 dark:text-slate-400">Pomůžeme vám s obsahem.</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4" data-content-text-group>
+                <div class="space-y-2 md:col-span-2">
+                  <label for="copyFilesInput" class="text-sm font-bold text-slate-700 dark:text-slate-300">Copywriting soubory</label>
+                  <input
+                    id="copyFilesInput"
+                    data-copy-files
+                    name="copyFiles"
+                    type="file"
+                    multiple
+                    accept=".txt,.md,.doc,.docx,.pdf"
+                    class="w-full text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 file:mr-3 file:rounded-lg file:border-0 file:bg-primary/15 file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-primary"
+                  />
+                  <p id="copyFilesList" class="text-xs text-slate-500 dark:text-slate-400">Žádné soubory.</p>
+                </div>
+
+                <div class="space-y-2 md:col-span-2">
+                  <label for="contentBrief" class="text-sm font-bold text-slate-700 dark:text-slate-300">Shrnutí obsahu</label>
+                  <textarea id="contentBrief" data-content-brief class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 outline-none focus:border-primary resize-y" rows="3" placeholder="Např. klíčové sdělení, tone of voice, hlavní argumenty značky"></textarea>
+                </div>
+              </div>
+
+              <div data-content-text-group>
+                <p class="text-sm font-bold text-slate-800 dark:text-slate-100 mb-3">Texty podle sekcí</p>
+                <p id="contentSectionsEmpty" class="hidden text-xs text-slate-500 dark:text-slate-400 mb-3">Vyberte stránky v kroku „Obsah webu“, aby se zobrazila odpovídající pole pro texty.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {contentSections.map((section) => (
+                    <div class="cfg-upload-card" data-content-section-card={section.id}>
+                      <div class="flex items-center justify-between gap-3 mb-2">
+                        <p class="text-sm font-bold text-slate-700 dark:text-slate-200">{section.label}</p>
+                        <select data-content-mode={section.id} class="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300 focus:border-primary outline-none">
+                          <option value="keep">Ponechat stávající</option>
+                          <option value="replace">Nahradit text</option>
+                          <option value="note">Jen poznámka</option>
+                        </select>
+                      </div>
+                      <textarea data-content-text={section.id} class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 outline-none focus:border-primary resize-y" rows="3" placeholder={`Text nebo instrukce pro sekci „${section.label}“`}></textarea>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input id="referenceWebsite" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="url" placeholder="URL referenčního webu" />
               <input id="targetMarket" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Cílový trh / region" />
@@ -401,10 +495,22 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
           <div class="border-t border-slate-200 dark:border-slate-700 pt-6">
             <h3 class="text-xl font-black mb-4 text-slate-900 dark:text-white">Kontaktní formulář</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <input required name="name" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Jméno" />
-              <input required name="email" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="email" placeholder="E-mail" />
-              <input name="company" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Společnost" />
-              <input name="message" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Zpráva" />
+              <div class="space-y-2">
+                <label for="cfg-contact-name" class="text-sm font-bold text-slate-700 dark:text-slate-300">Jméno</label>
+                <input id="cfg-contact-name" required name="name" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Jméno" />
+              </div>
+              <div class="space-y-2">
+                <label for="cfg-contact-email" class="text-sm font-bold text-slate-700 dark:text-slate-300">E-mail</label>
+                <input id="cfg-contact-email" required name="email" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="email" placeholder="E-mail" />
+              </div>
+              <div class="space-y-2">
+                <label for="cfg-contact-company" class="text-sm font-bold text-slate-700 dark:text-slate-300">Společnost</label>
+                <input id="cfg-contact-company" name="company" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary" type="text" placeholder="Společnost" />
+              </div>
+              <div class="space-y-2 md:col-span-2">
+                <label for="cfg-contact-message" class="text-sm font-bold text-slate-700 dark:text-slate-300">Zpráva</label>
+                <textarea id="cfg-contact-message" name="message" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 outline-none focus:border-primary resize-y" rows="4" placeholder="Zpráva"></textarea>
+              </div>
             </div>
           </div>
 
@@ -412,6 +518,7 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
           <input type="hidden" id="hostingType" name="hostingType" value="static" />
           <input type="hidden" id="estimatedPriceRange" name="estimatedPriceRange" value="" />
           <input type="hidden" id="estimatedTimelineValue" name="estimatedTimeline" value="" />
+          <input type="hidden" id="contentInputJson" name="contentInputJson" value="" />
         </StepPanel>
 
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center justify-between gap-3">
@@ -496,8 +603,16 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
     @apply block;
   }
 
+  :global([data-tooltip-trigger]:focus-visible + [data-tooltip]) {
+    @apply block;
+  }
+
   .cfg-color-input {
     @apply text-xs font-bold text-slate-500 dark:text-slate-400;
+  }
+
+  .cfg-upload-card {
+    @apply rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-3;
   }
 
   .cfg-color-input input {
@@ -751,7 +866,7 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
   }
 </style>
 
-<script id="cfgData" type="application/json" set:html={JSON.stringify({ presets, pagesCatalog, featuresCatalog, websiteTypes, hostingTriggerFeatures, initialType, initialPages, initialFeatures, initialPreset })}></script>
+<script id="cfgData" type="application/json" set:html={JSON.stringify({ presets, pagesCatalog, featuresCatalog, websiteTypes, hostingTriggerFeatures, initialType, initialPages, initialFeatures, initialPreset, contentSections, assetSlots })}></script>
 
 <script>
   // @ts-nocheck
@@ -767,10 +882,14 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
   const initialPages = cfgData.initialPages ?? [];
   const initialFeatures = cfgData.initialFeatures ?? [];
   const initialPreset = cfgData.initialPreset ?? presets.company;
+  const contentSections = cfgData.contentSections ?? [];
+  const assetSlots = cfgData.assetSlots ?? [];
 
   const pageLabels = Object.fromEntries(pagesCatalog.map((item) => [item.id, item.label]));
   const featureLabels = Object.fromEntries(featuresCatalog.map((item) => [item.id, item.title]));
   const websiteTypeLabels = Object.fromEntries(websiteTypes.map((item) => [item.id, item.label]));
+  const contentSectionLabels = Object.fromEntries(contentSections.map((item) => [item.id, item.label]));
+  const assetSlotLabels = Object.fromEntries(assetSlots.map((item) => [item.id, item.label]));
 
   const backendFeatureKeys = new Set(['auth', 'admin-panel', 'payments', 'order-system', 'dynamic-cms-db']);
   const advancedFeatureKeys = new Set(['seo', 'analytics']);
@@ -890,12 +1009,20 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
       referenceWebsite: '',
       targetMarket: '',
       additionalNotes: ''
+    },
+    contentInputs: {
+      imageUploads: Object.fromEntries(assetSlots.map((slot) => [slot.id, []])),
+      copyFiles: [],
+      sectionModes: Object.fromEntries(contentSections.map((section) => [section.id, 'keep'])),
+      sectionText: Object.fromEntries(contentSections.map((section) => [section.id, ''])),
+      brief: ''
     }
   };
 
   const stepPanels = Array.from(document.querySelectorAll('[data-step-panel]'));
   const stepCounter = document.getElementById('stepCounter');
   const stepTitle = document.getElementById('stepTitle');
+  const stepProgressBar = document.getElementById('stepProgressBar');
   const stepProgress = document.getElementById('stepProgress');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
@@ -916,6 +1043,7 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
   const hostingTypeInput = document.getElementById('hostingType');
   const estimatedPriceRangeInput = document.getElementById('estimatedPriceRange');
   const estimatedTimelineValueInput = document.getElementById('estimatedTimelineValue');
+  const contentInputJson = document.getElementById('contentInputJson');
 
   const previewRoot = document.getElementById('livePreview');
 
@@ -932,12 +1060,84 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
   const referenceWebsiteInput = document.getElementById('referenceWebsite');
   const targetMarketInput = document.getElementById('targetMarket');
   const additionalNotesInput = document.getElementById('additionalNotes');
+  const imageUploadInputs = Array.from(document.querySelectorAll('[data-image-upload]'));
+  const copyFilesInput = document.getElementById('copyFilesInput');
+  const copyFilesList = document.getElementById('copyFilesList');
+  const contentModeSelects = Array.from(document.querySelectorAll('[data-content-mode]'));
+  const contentTextInputs = Array.from(document.querySelectorAll('[data-content-text]'));
+  const contentBriefInput = document.getElementById('contentBrief');
+  const contentSectionCards = Array.from(document.querySelectorAll('[data-content-section-card]'));
+  const assetSlotCards = Array.from(document.querySelectorAll('[data-asset-slot-card]'));
+  const contentTextGroups = Array.from(document.querySelectorAll('[data-content-text-group]'));
+  const contentSectionsEmpty = document.getElementById('contentSectionsEmpty');
+  const contentAssistHint = document.getElementById('contentAssistHint');
 
   const featureTooltips = Array.from(document.querySelectorAll('[data-tooltip-trigger]'));
 
   const totalSteps = 6;
 
   const getPreset = (typeId) => presets[typeId] ?? presets.company;
+
+  const contentModeLabels = {
+    keep: 'Ponechat stávající',
+    replace: 'Nahradit text',
+    note: 'Jen poznámka'
+  };
+
+  const formatFileListText = (files) => (files.length ? files.join(', ') : 'Žádné soubory.');
+
+  const renderContentInputLists = () => {
+    imageUploadInputs.forEach((input) => {
+      const slotId = input.dataset.imageUpload;
+      if (!slotId) return;
+      const listElement = document.querySelector(`[data-image-upload-list="${slotId}"]`);
+      if (!(listElement instanceof HTMLElement)) return;
+      const files = state.contentInputs.imageUploads[slotId] ?? [];
+      listElement.textContent = formatFileListText(files);
+    });
+
+    if (copyFilesList instanceof HTMLElement) {
+      copyFilesList.textContent = formatFileListText(state.contentInputs.copyFiles ?? []);
+    }
+  };
+
+  const syncContentInputsVisibility = () => {
+    const hideContentInputs = state.details.contentReady === 'Ne';
+    let visibleSectionCards = 0;
+
+    contentTextGroups.forEach((group) => {
+      group.classList.toggle('hidden', hideContentInputs);
+    });
+
+    if (contentAssistHint instanceof HTMLElement) {
+      contentAssistHint.classList.toggle('hidden', !hideContentInputs);
+    }
+
+    contentSectionCards.forEach((card) => {
+      const sectionId = card.dataset.contentSectionCard;
+      if (!sectionId) return;
+
+      const isVisible = !hideContentInputs && state.pages.has(sectionId);
+      card.classList.toggle('hidden', !isVisible);
+      if (isVisible) {
+        visibleSectionCards += 1;
+      }
+    });
+
+    assetSlotCards.forEach((card) => {
+      const relatedPages = (card.dataset.relatedPages ?? '')
+        .split(',')
+        .map((value) => value.trim())
+        .filter(Boolean);
+
+      const isVisible = !hideContentInputs && (relatedPages.length === 0 || relatedPages.some((pageId) => state.pages.has(pageId)));
+      card.classList.toggle('hidden', !isVisible);
+    });
+
+    if (contentSectionsEmpty instanceof HTMLElement) {
+      contentSectionsEmpty.classList.toggle('hidden', hideContentInputs || visibleSectionCards > 0);
+    }
+  };
 
   const applyPreset = (typeId) => {
     state.websiteType = typeId;
@@ -960,6 +1160,7 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
     detectHosting();
     renderTypeButtons();
     renderToggleStates();
+    syncContentInputsVisibility();
     renderSummary();
   };
 
@@ -1157,6 +1358,29 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
       );
     }
 
+    const imageUploadEntries = Object.entries(state.contentInputs.imageUploads ?? {}).filter(([, files]) => files.length > 0);
+    const imageFilesTotal = imageUploadEntries.reduce((count, [, files]) => count + files.length, 0);
+    const copyFiles = state.contentInputs.copyFiles ?? [];
+    const hideContentInputs = state.details.contentReady === 'Ne';
+
+    const touchedSectionRows = contentSections
+      .filter((section) => state.pages.has(section.id))
+      .map((section) => {
+        const mode = state.contentInputs.sectionModes[section.id] ?? 'keep';
+        const text = (state.contentInputs.sectionText[section.id] ?? '').trim();
+        if (mode === 'keep' && !text) return '';
+
+        return `<div class="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 space-y-1"><div class="flex items-start justify-between gap-3"><span class="text-slate-600 dark:text-slate-300 font-semibold">${escapeHtml(contentSectionLabels[section.id] ?? section.id)}</span><span class="text-xs font-semibold text-primary">${escapeHtml(contentModeLabels[mode] ?? mode)}</span></div>${text ? `<p class="text-xs text-slate-600 dark:text-slate-300 whitespace-pre-wrap break-words">${escapeHtml(text)}</p>` : ''}</div>`;
+      })
+      .filter(Boolean);
+
+    const imageUploadRows = imageUploadEntries
+      .map(
+        ([slotId, files]) =>
+          `<div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">${escapeHtml(assetSlotLabels[slotId] ?? slotId)}</span><span class="font-semibold text-slate-800 dark:text-slate-100">${files.length} souborů</span></div>`
+      )
+      .join('');
+
     if (summaryStructured) {
       summaryStructured.innerHTML = `
         <section class="space-y-2">
@@ -1198,6 +1422,13 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
           <h4 class="text-xs font-black uppercase tracking-[0.1em] text-slate-500 dark:text-slate-400">E) Detaily projektu</h4>
           <div class="space-y-1.5">${detailsRows.join('')}</div>
         </section>
+
+        <section class="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-700">
+          <h4 class="text-xs font-black uppercase tracking-[0.1em] text-slate-500 dark:text-slate-400">F) Podklady obsahu</h4>
+          ${hideContentInputs
+            ? `<p class="text-xs text-slate-500 dark:text-slate-400">Pomůžeme vám s obsahem.</p>`
+            : `<div class="space-y-2"><div class="flex items-start justify-between gap-3"><span class="text-slate-500 dark:text-slate-400">Nahrané obrázky</span><span class="font-semibold text-slate-800 dark:text-slate-100">${imageFilesTotal} souborů</span></div>${imageUploadRows ? `<div class="space-y-1">${imageUploadRows}</div>` : `<p class="text-xs text-slate-500 dark:text-slate-400">Žádné obrázky nebyly přidány.</p>`}<div class="pt-2 border-t border-slate-200 dark:border-slate-700"><div class="flex items-start justify-between gap-3 mb-2"><span class="text-slate-500 dark:text-slate-400">Copywriting soubory</span><span class="font-semibold text-slate-800 dark:text-slate-100">${copyFiles.length}</span></div><div class="flex flex-wrap gap-2">${formatChipList(copyFiles.slice(0, 8), 'Žádné soubory')}</div>${copyFiles.length > 8 ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">+${copyFiles.length - 8} dalších souborů</p>` : ''}</div><div class="pt-2 border-t border-slate-200 dark:border-slate-700"><div class="flex items-start justify-between gap-3 mb-2"><span class="text-slate-500 dark:text-slate-400">Upravené sekce textu</span><span class="font-semibold text-slate-800 dark:text-slate-100">${touchedSectionRows.length}</span></div>${touchedSectionRows.length ? `<div class="space-y-2">${touchedSectionRows.join('')}</div>` : `<p class="text-xs text-slate-500 dark:text-slate-400">Všechny sekce jsou nastavené na „Ponechat stávající“.</p>`}</div>${!state.contentInputs.brief ? '' : `<div class="pt-2 border-t border-slate-200 dark:border-slate-700"><p class="text-slate-500 dark:text-slate-400 mb-1">Shrnutí obsahu</p><p class="font-semibold text-slate-800 dark:text-slate-100 whitespace-pre-wrap break-words">${escapeHtml(state.contentInputs.brief)}</p></div>`}</div>`}
+        </section>
       `;
     }
     if (summaryPrice) {
@@ -1236,6 +1467,7 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
       hosting: state.hosting,
       design: state.design,
       details: state.details,
+      contentInputs: state.contentInputs,
       estimate
     };
 
@@ -1250,6 +1482,9 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
     }
     if (estimatedTimelineValueInput instanceof HTMLInputElement) {
       estimatedTimelineValueInput.value = estimate.timeline;
+    }
+    if (contentInputJson instanceof HTMLInputElement) {
+      contentInputJson.value = JSON.stringify(state.contentInputs);
     }
   };
 
@@ -1269,6 +1504,11 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
 
     if (stepProgress) {
       stepProgress.style.width = `${(state.step / totalSteps) * 100}%`;
+    }
+
+    if (stepProgressBar) {
+      stepProgressBar.setAttribute('aria-valuenow', String(state.step));
+      stepProgressBar.setAttribute('aria-valuetext', `Krok ${state.step} z ${totalSteps}`);
     }
 
     if (prevBtn instanceof HTMLButtonElement) {
@@ -1308,6 +1548,7 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
 
       detectHosting();
       renderToggleStates();
+      syncContentInputsVisibility();
       renderSummary();
     });
   });
@@ -1390,6 +1631,10 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
         .filter((item) => item.dataset.detail === key)
         .forEach((item) => item.classList.toggle('is-selected', item === button));
 
+      if (key === 'contentReady') {
+        syncContentInputsVisibility();
+      }
+
       renderSummary();
     });
   });
@@ -1406,13 +1651,100 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
     state.details.additionalNotes = additionalNotesInput.value;
   });
 
+  imageUploadInputs.forEach((input) => {
+    input.addEventListener('change', () => {
+      const slotId = input.dataset.imageUpload;
+      if (!slotId) return;
+
+      const fileNames = Array.from(input.files ?? []).map((file) => file.name);
+      state.contentInputs.imageUploads[slotId] = fileNames;
+      renderContentInputLists();
+      renderSummary();
+    });
+  });
+
+  copyFilesInput?.addEventListener('change', () => {
+    const fileNames = Array.from(copyFilesInput.files ?? []).map((file) => file.name);
+    state.contentInputs.copyFiles = fileNames;
+    renderContentInputLists();
+    renderSummary();
+  });
+
+  contentModeSelects.forEach((select) => {
+    select.addEventListener('change', () => {
+      const sectionId = select.dataset.contentMode;
+      if (!sectionId) return;
+      state.contentInputs.sectionModes[sectionId] = select.value;
+      renderSummary();
+    });
+  });
+
+  contentTextInputs.forEach((textarea) => {
+    textarea.addEventListener('input', () => {
+      const sectionId = textarea.dataset.contentText;
+      if (!sectionId) return;
+      state.contentInputs.sectionText[sectionId] = textarea.value;
+      renderSummary();
+    });
+  });
+
+  contentBriefInput?.addEventListener('input', () => {
+    state.contentInputs.brief = contentBriefInput.value;
+    renderSummary();
+  });
+
+  const setTooltipOpenState = (card, isOpen) => {
+    if (!(card instanceof HTMLElement)) return;
+    card.classList.toggle('tooltip-open', isOpen);
+    const trigger = card.querySelector('[data-tooltip-trigger]');
+    if (trigger instanceof HTMLElement) {
+      trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+  };
+
+  const closeAllFeatureTooltips = () => {
+    document.querySelectorAll('.cfg-feature-card.tooltip-open').forEach((card) => {
+      setTooltipOpenState(card, false);
+    });
+  };
+
   featureTooltips.forEach((trigger) => {
     trigger.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
+
       const card = trigger.closest('.cfg-feature-card');
-      if (!card) return;
-      card.classList.toggle('tooltip-open');
+      if (!(card instanceof HTMLElement)) return;
+
+      const nextOpen = !card.classList.contains('tooltip-open');
+      closeAllFeatureTooltips();
+      setTooltipOpenState(card, nextOpen);
+    });
+
+    trigger.addEventListener('focus', () => {
+      const card = trigger.closest('.cfg-feature-card');
+      if (!(card instanceof HTMLElement)) return;
+      closeAllFeatureTooltips();
+      setTooltipOpenState(card, true);
+    });
+
+    trigger.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      const card = trigger.closest('.cfg-feature-card');
+      setTooltipOpenState(card, false);
+      trigger.blur();
+    });
+
+    trigger.addEventListener('blur', () => {
+      const card = trigger.closest('.cfg-feature-card');
+      if (!(card instanceof HTMLElement)) return;
+
+      window.setTimeout(() => {
+        const active = document.activeElement;
+        if (!card.contains(active)) {
+          setTooltipOpenState(card, false);
+        }
+      }, 0);
     });
   });
 
@@ -1434,7 +1766,7 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
       return;
     }
 
-    document.querySelectorAll('.cfg-feature-card.tooltip-open').forEach((card) => card.classList.remove('tooltip-open'));
+    closeAllFeatureTooltips();
     document.querySelectorAll('[data-summary-hint-wrap].is-open').forEach((item) => item.classList.remove('is-open'));
   });
 
@@ -1496,6 +1828,7 @@ const initialFeatures = [...initialPreset.features.required, ...initialRecommend
     state.websiteType = initialWebsiteType;
   }
 
+  renderContentInputLists();
   applyPreset(state.websiteType);
   renderPreview();
   renderStep();

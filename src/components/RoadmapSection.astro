@@ -2,18 +2,18 @@
 const roadmapHighlights = [
   {
     icon: 'track_changes',
-    title: 'Clear Milestones',
-    text: '6 transparent steps from first brief to long-term support.'
+    title: 'Jasné milníky',
+    text: '6 přehledných kroků od prvního zadání po dlouhodobou podporu.'
   },
   {
     icon: 'sync',
-    title: 'Fast Feedback',
-    text: 'Regular checkpoints keep momentum and remove uncertainty.'
+    title: 'Rychlá zpětná vazba',
+    text: 'Pravidelné kontroly drží tempo a odstraňují nejistotu.'
   },
   {
     icon: 'verified',
-    title: 'Confident Launch',
-    text: 'Quality checks, handover and measurable post-launch growth.'
+    title: 'Jisté spuštění',
+    text: 'Kontrola kvality, předání a měřitelný růst po spuštění.'
   }
 ];
 
@@ -21,50 +21,50 @@ const roadmapSteps = [
   {
     number: '01',
     icon: 'chat_bubble',
-    title: '1. Dotaz / Brief',
-    description: 'Discovery phase. We dive deep into your goals, audience, and project vision to build a solid strategic foundation.',
-    outcome: 'Outcome: clear goals, priorities and decision criteria.',
-    timing: 'Week 1'
+    title: '1. Dotaz / Zadání',
+    description: 'Úvodní fáze. Probereme cíle, cílovou skupinu a směr projektu.',
+    outcome: 'Výstup: jasné cíle, priority a další postup.',
+    timing: '1. týden'
   },
   {
     number: '02',
     icon: 'biotech',
     title: '2. Analýza & Zadání',
-    description: 'Technical blueprint. We outline the architecture, features, and specifications required for a high-performance solution.',
-    outcome: 'Outcome: approved scope, architecture and rollout plan.',
-    timing: 'Week 1-2'
+    description: 'Plán projektu. Domluvíme funkce, rozsah a jasné kroky.',
+    outcome: 'Výstup: schválený rozsah a plán realizace.',
+    timing: '1.–2. týden'
   },
   {
     number: '03',
     icon: 'palette',
-    title: '3. Design Phase',
-    description: 'Visual storytelling. Crafting stunning UI/UX designs that balance aesthetics with conversion-focused functionality.',
-    outcome: 'Outcome: validated visual direction and user flow.',
-    timing: 'Week 2'
+    title: '3. Design',
+    description: 'Návrh vzhledu. Připravíme stránky tak, aby byly přehledné a srozumitelné.',
+    outcome: 'Výstup: potvrzený vizuální směr a uživatelská cesta.',
+    timing: '2. týden'
   },
   {
     number: '04',
     icon: 'terminal',
-    title: '4. Vývoj (Dev)',
-    description: 'Code execution. Our developers build robust, scalable systems using cutting-edge tech stacks and agile methodologies.',
-    outcome: 'Outcome: production-ready build optimized for speed and SEO.',
-    timing: 'Week 3-4'
+    title: '4. Vývoj',
+    description: 'Realizace. Připravíme stabilní řešení, které je rychlé a připravené na růst.',
+    outcome: 'Výstup: hotová verze připravená ke spuštění.',
+    timing: '3.–4. týden'
   },
   {
     number: '05',
     icon: 'rocket_launch',
     title: '5. Spuštění',
-    description: 'Blast off! Final testing, deployment, and team training to ensure you are fully equipped for your new digital era.',
-    outcome: 'Outcome: stable launch with handover and team onboarding.',
-    timing: 'Week 4+'
+    description: 'Finalizace. Proběhne testování, nasazení a předání týmu.',
+    outcome: 'Výstup: stabilní spuštění a kompletní předání.',
+    timing: 'od 4. týdne'
   },
   {
     number: '06',
     icon: 'support_agent',
     title: '6. Podpora',
-    description: 'Constant growth. Long-term technical support and iterative improvements to keep you ahead of the competition.',
-    outcome: 'Outcome: measurable improvements and ongoing support loop.',
-    timing: 'Ongoing'
+    description: 'Dlouhodobý rozvoj. Průběžná technická podpora a další zlepšování.',
+    outcome: 'Výstup: měřitelné zlepšení a pravidelná podpora.',
+    timing: 'průběžně'
   }
 ];
 ---
@@ -73,13 +73,13 @@ const roadmapSteps = [
   <div class="max-w-7xl mx-auto px-6">
     <div class="mb-18 text-center section-heading">
       <span class="bg-primary/20 text-primary border border-primary/30 px-6 py-2 rounded-full text-sm font-black uppercase tracking-widest mb-6 inline-block">
-        The Journey
+        Jak spolupracujeme
       </span>
       <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-8 italic uppercase">
-        Roadmap to Success
+        Cesta k výsledku
       </h2>
       <p class="text-slate-300 text-xl max-w-2xl mx-auto font-medium">
-        A transparent, results-driven process designed to take your digital presence from concept to industry leader.
+        Přehledný proces zaměřený na výsledek — od nápadu až po funkční a výkonný web.
       </p>
     </div>
 
@@ -112,7 +112,7 @@ const roadmapSteps = [
                     <div class="process-card-neo roadmap-card p-8 md:p-10 rounded-2xl inline-block w-full text-left lg:text-right">
                       <div class="flex flex-col items-center lg:items-end">
                         <div class="step-meta-row justify-center lg:justify-end">
-                          <span class="step-meta-pill">Milestone {step.number}</span>
+                          <span class="step-meta-pill">Milník {step.number}</span>
                           <span class="step-meta-pill step-meta-pill--ghost">{step.timing}</span>
                         </div>
                         <span class="material-symbols-outlined text-primary text-5xl mb-5">{step.icon}</span>
@@ -145,7 +145,7 @@ const roadmapSteps = [
                     <div class="process-card-neo roadmap-card p-8 md:p-10 rounded-2xl inline-block w-full text-left">
                       <div class="flex flex-col items-center lg:items-start">
                         <div class="step-meta-row justify-center lg:justify-start">
-                          <span class="step-meta-pill">Milestone {step.number}</span>
+                          <span class="step-meta-pill">Milník {step.number}</span>
                           <span class="step-meta-pill step-meta-pill--ghost">{step.timing}</span>
                         </div>
                         <span class="material-symbols-outlined text-primary text-5xl mb-5">{step.icon}</span>

@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { id, title, icon, description } = Astro.props;
+const tooltipId = `feature-tooltip-${id}`;
 ---
 
 <button
@@ -32,9 +33,16 @@ const { id, title, icon, description } = Astro.props;
       <span
         data-tooltip-trigger
         class="inline-flex items-center justify-center size-4 rounded-full border border-slate-300 dark:border-slate-600 text-[10px] font-bold"
-        >i</span
+        aria-label={`Nápověda k funkci: ${title}`}
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls={tooltipId}
+        role="button"
+        tabindex="0"
       >
-      <span data-tooltip class="cfg-tooltip">{description}</span>
+        i
+      </span>
+      <span id={tooltipId} role="tooltip" data-tooltip class="cfg-tooltip">{description}</span>
     </div>
   </div>
 </button>

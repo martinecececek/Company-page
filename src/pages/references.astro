@@ -11,7 +11,7 @@ const references = [
     result: 'Recruitment-focused homepage for youth and adults',
     description: 'Web presentation for rugby club categories, recruitment, and contact flow.',
     image: rlcDragonsPageView.src,
-    url: 'http://www.rlcdragonskrupka.cz/'
+    url: ''
   },
   {
     title: 'TechFlow e-commerce redesign',
@@ -59,34 +59,60 @@ const references = [
 
       <div class="space-y-8">
         {references.map((item, index) => (
-          <a
-            href={item.url}
-            target={item.url.startsWith('http') ? '_blank' : '_self'}
-            rel={item.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-            class="block rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md p-4 md:p-6"
-          >
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-              <div class={index % 2 === 0 ? 'order-2 lg:order-1' : 'order-2 lg:order-2'}>
-                <span class="inline-flex items-center bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-4">
-                  {item.category}
-                </span>
-                <h2 class="text-2xl md:text-4xl font-black tracking-tight mb-4">{item.title}</h2>
-                <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{item.description}</p>
-                <p class="text-primary font-bold">{item.result}</p>
-              </div>
+          item.url ? (
+            <a
+              href={item.url}
+              target={item.url.startsWith('http') ? '_blank' : '_self'}
+              rel={item.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+              class="block rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md p-4 md:p-6"
+            >
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                <div class={index % 2 === 0 ? 'order-2 lg:order-1' : 'order-2 lg:order-2'}>
+                  <span class="inline-flex items-center bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-4">
+                    {item.category}
+                  </span>
+                  <h2 class="text-2xl md:text-4xl font-black tracking-tight mb-4">{item.title}</h2>
+                  <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{item.description}</p>
+                  <p class="text-primary font-bold">{item.result}</p>
+                </div>
 
-              <div class={index % 2 === 0 ? 'order-1 lg:order-2' : 'order-1 lg:order-1'}>
-                <div class="rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 bg-white">
-                  <img
-                    src={item.image}
-                    alt={`${item.title} page view`}
-                    loading="lazy"
-                    class="w-full h-[220px] md:h-[320px] object-cover object-top"
-                  />
+                <div class={index % 2 === 0 ? 'order-1 lg:order-2' : 'order-1 lg:order-1'}>
+                  <div class="rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 bg-white">
+                    <img
+                      src={item.image}
+                      alt={`${item.title} page view`}
+                      loading="lazy"
+                      class="w-full h-[220px] md:h-[320px] object-cover object-top"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
+            </a>
+          ) : (
+            <article class="block rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md p-4 md:p-6">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+                <div class={index % 2 === 0 ? 'order-2 lg:order-1' : 'order-2 lg:order-2'}>
+                  <span class="inline-flex items-center bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-4">
+                    {item.category}
+                  </span>
+                  <h2 class="text-2xl md:text-4xl font-black tracking-tight mb-4">{item.title}</h2>
+                  <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{item.description}</p>
+                  <p class="text-primary font-bold">{item.result}</p>
+                </div>
+
+                <div class={index % 2 === 0 ? 'order-1 lg:order-2' : 'order-1 lg:order-1'}>
+                  <div class="rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700 bg-white">
+                    <img
+                      src={item.image}
+                      alt={`${item.title} page view`}
+                      loading="lazy"
+                      class="w-full h-[220px] md:h-[320px] object-cover object-top"
+                    />
+                  </div>
+                </div>
+              </div>
+            </article>
+          )
         ))}
       </div>
 

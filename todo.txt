@@ -8,3 +8,29 @@ use 8pt metod (spaces needs to be divided by 4 || 8)
 be careful of AA standards 
 ---
 vymyslet jak bude fungovat hosting abych ho mohl nabízet pořád a stálo mě to co nejmíň
+---
+original image https://lh3.googleusercontent.com/aida-public/AB6AXuCYSLsaHd3svCQ3Sz0lqjt1ar4r8hs72BxPiKinJsLkVAXZMO1aYcbTb0EteKcOC4_yFUARuJvq-JCW1RXeIE9piORcZopz3PACWC03BAUB4Zyl7B7OcY3pHWpuWXKCz5Tuij9kPXvQdW5kg9IQt1_gFj_xuzuuf9PLHYOWANUoAtnH8Li6JhXlPvq5Y9pijVrLIDFWY9gOmQWaH0g8KLiI5qRyKESZnWaQXpBZ20_HyZ1TD7Acv6T6G-asgAWL0_HXmDkmTghhS0jm (hero)
+---
+original hero
+
+    <div class="flex -space-x-3">
+         <img
+            class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 object-cover"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuApY9F3mLhgNstXiMYyj76gBljeeZEjSbOnSMV0iKHxtTfYzCa-7GgzDW3adx9zHZy1qt57iZPVelKGWhbNYsIbL58IGi-llnBVNQM83VzD4T2sy222_GxQc1lo62-6dK5F2rkzbJzMsNkYtIDkELGWLwMtI6enPrllIarlStez7PDUaBAs2vb8U9WMgepOyw-PINmp6n1mfcwSjUkrChUdEeRyYsMj5TEcJUA9lV4No-h1dQb09E2S1Fg_XZdc0wrcU3UFwgio7sD5"
+            alt="Klient"
+          />
+          <img
+            class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 object-cover"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZpWO4EWiNSiMswwQGDyIGUX6vQaSJB30sfLe8KCoAXcA6hUvXaV7G1KEp_QirCReKCUlxDAHDYl6atZSRUp_MIOlef58RnTUZ92YWDIdhm2U4tKDscZ3146-uSBqWR8WCDJoMShZshULmSmoVnNUJz9ffl-tkwXbaHPVALafk3aSP4OMrseJe62fpQOG0J7pXcYx8_McY9F7JNzK91fA02wIVd1HRRQYFKHIykyYC7SjPMOf6RR_JQSKEriBozGlcI9-th9238y0q"
+            alt="Klient"
+          />
+          <img
+            class="w-10 h-10 rounded-full border-2 border-white dark:border-slate-900 object-cover"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf_ufc976qN4NeMDR05WZo4Z0YUjtHjDE3YLyGHhK30FonKnQtdhOmp-4nUNw1_9Wl6UnrrqRTx7DUOz3tijGykz2TEMQ3zvJR6ZzYdGwOYGKcWZsjGhz6j2oc-blYgR2anpOn8juLWwGJ8LX2tlztoPsO5VIHGFRAKYHFxBtmDg0XP0R04Bm_qxSGauux5SigC3q1_DWY1sJvYg3nGupoplMBGEecu3LRjZQVkdl1_cznBazU2zZBFT-6sXH_TlSUSx6u1gnfZHm6"
+            alt="Klient"
+          />
+        </div>
+        <div class="text-sm font-medium text-slate-500">
+          <span class="font-bold text-slate-900 dark:text-white">500+</span> firem nám důvěřuje
+        </div>
+    </div>

@@ -3,9 +3,13 @@ import '../styles/global.css';
 
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const { title = 'Digital Agency | Transforming Ideas into Reality' } = Astro.props;
+const {
+  title = 'Digitální agentura | Měníme nápady na funkční weby',
+  description = 'Nabízíme weby na míru pro reálný růst. Rychlé weby a online řešení. Více poptávek a lepší výkon vaší společnosti.'
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -16,6 +20,7 @@ const { title = 'Digital Agency | Transforming Ideas into Reality' } = Astro.pro
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
     <title>{title}</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
@@ -27,7 +32,10 @@ const { title = 'Digital Agency | Transforming Ideas into Reality' } = Astro.pro
     />
   </head>
   <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/30">
-    <slot />
+    <a href="#main-content" class="skip-link">Přeskočit na hlavní obsah</a>
+    <div id="main-content" tabindex="-1">
+      <slot />
+    </div>
   </body>
 </html>
 
@@ -37,5 +45,24 @@ const { title = 'Digital Agency | Transforming Ideas into Reality' } = Astro.pro
     margin: 0;
     width: 100%;
     min-height: 100%;
+  }
+
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    background: #2563eb;
+    color: white;
+    padding: 0.625rem 0.875rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(-200%);
+    transition: transform 0.2s ease;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
   }
 </style>

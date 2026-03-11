@@ -9,26 +9,26 @@ import rlcDragonsPageView from '../assets/image/rlcdragons-page-view.png';
 const cases = [
   {
     title: 'RLC Dragons Krupka',
-    category: 'Sport Club Website',
-    description: 'Recruitment-focused homepage for youth and adults with clear content hierarchy and contact flow.',
-    result: 'More inbound inquiries in the first weeks',
-    focus: ['Content hierarchy', 'Lead-first CTA', 'Mobile clarity'],
+    category: 'Web sportovního klubu',
+    description: 'Náborově orientovaná homepage pro mládež i dospělé s jasnou strukturou obsahu a kontaktním flow.',
+    result: 'Více příchozích poptávek během prvních týdnů',
+    focus: ['Hierarchie obsahu', 'CTA zaměřené na poptávku', 'Přehlednost na mobilu'],
     image: rlcDragonsPageView.src
   },
   {
     title: 'Work-in-Time.cz',
-    category: 'Lead Generation Website',
-    description: 'Modern hiring platform presentation with clear services for candidates and employers.',
-    result: 'Higher lead quality and cleaner onboarding journey',
-    focus: ['Segmented messaging', 'Faster onboarding path', 'Service clarity'],
+    category: 'Web na získávání poptávek',
+    description: 'Moderní prezentace náborové platformy s jasně oddělenou nabídkou pro kandidáty i zaměstnavatele.',
+    result: 'Vyšší kvalita poptávek a plynulejší onboarding',
+    focus: ['Segmentovaná komunikace', 'Rychlejší onboarding', 'Jasná nabídka služeb'],
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA4loldbXfTaS7UTPXCZSsQ-N07_ORkUF4zSIxbJO6VkSBReJ1sKj9bB9ZyUYc4prijPFWknX07JF6T-VtTTCZq4nyrDZnnscBIq5WFGhbwSwaHxdxWzrOFF1Wxm9YgORHThkGlfiAA7Y-DSyDxJCEwMbHlKqLU3b56Lw70defuz7PNv-GtC0ra594LpLDZW1RJ_hMCus3hJ_cnAfcatucoPMYOMMzqccAuM2sdcKTEf-bLeBaVZ9DXRTJ-0VyF1ggIFPQCxRZzoaHl'
   },
   {
     title: 'Studio Brand Launch',
-    category: 'Corporate Website',
-    description: 'Brand-first website architecture focused on trust building and conversion performance.',
-    result: 'Faster sales-call booking from web traffic',
-    focus: ['Brand trust cues', 'Conversion UX', 'Performance baseline'],
+    category: 'Firemní web',
+    description: 'Webová architektura postavená na značce se zaměřením na důvěru a konverzní výkon.',
+    result: 'Rychlejší rezervace obchodních callů z webu',
+    focus: ['Důvěryhodnost značky', 'Konverzní UX', 'Výkonnostní základ'],
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYSLsaHd3svCQ3Sz0lqjt1ar4r8hs72BxPiKinJsLkVAXZMO1aYcbTb0EteKcOC4_yFUARuJvq-JCW1RXeIE9piORcZopz3PACWC03BAUB4Zyl7B7OcY3pHWpuWXKCz5Tuij9kPXvQdW5kg9IQt1_gFj_xuzuuf9PLHYOWANUoAtnH8Li6JhXlPvq5Y9pijVrLIDFWY9gOmQWaH0g8KLiI5qRyKESZnWaQXpBZ20_HyZ1TD7Acv6T6G-asgAWL0_HXmDkmTghhS0jm'
   }
 ];
@@ -52,15 +52,15 @@ const cases = [
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 -mt-4">
           <div class="rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/70 p-4">
             <p class="text-xs font-black uppercase tracking-wide text-slate-500 dark:text-slate-400">Realizace</p>
-            <p class="mt-1 text-xl font-black text-slate-900 dark:text-white">3 Case Studies</p>
+            <p class="mt-1 text-xl font-black text-slate-900 dark:text-white">3 případové studie</p>
           </div>
           <div class="rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/70 p-4">
             <p class="text-xs font-black uppercase tracking-wide text-slate-500 dark:text-slate-400">Zaměření</p>
-            <p class="mt-1 text-xl font-black text-slate-900 dark:text-white">Leads & Conversion</p>
+            <p class="mt-1 text-xl font-black text-slate-900 dark:text-white">Poptávky a konverze</p>
           </div>
           <div class="rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/70 p-4">
-            <p class="text-xs font-black uppercase tracking-wide text-slate-500 dark:text-slate-400">Workflow</p>
-            <p class="mt-1 text-xl font-black text-slate-900 dark:text-white">Strategy → Launch</p>
+            <p class="text-xs font-black uppercase tracking-wide text-slate-500 dark:text-slate-400">Postup</p>
+            <p class="mt-1 text-xl font-black text-slate-900 dark:text-white">Strategie → spuštění</p>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@ const cases = [
                     {item.category}
                   </span>
                   <span class="inline-flex items-center rounded-full border border-slate-200 dark:border-slate-700 px-3 py-1 text-xs font-bold text-slate-500 dark:text-slate-400">
-                    Case {index + 1}
+                    Případ {index + 1}
                   </span>
                 </div>
 
@@ -83,12 +83,12 @@ const cases = [
                 <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-5">{item.description}</p>
 
                 <div class="rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 mb-5">
-                  <p class="text-xs font-black uppercase tracking-wide text-primary mb-1">Result</p>
+                  <p class="text-xs font-black uppercase tracking-wide text-primary mb-1">Výsledek</p>
                   <p class="text-slate-900 dark:text-white font-bold">{item.result}</p>
                 </div>
 
                 <div class="mb-6">
-                  <p class="text-xs font-black uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">What we focused on</p>
+                  <p class="text-xs font-black uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">Na co jsme se zaměřili</p>
                   <div class="flex flex-wrap gap-2">
                     {item.focus.map((focusItem) => (
                       <span class="inline-flex items-center rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-bold text-slate-600 dark:text-slate-300">
@@ -99,7 +99,7 @@ const cases = [
                 </div>
 
                 <a href="/configurator?preset=similar-case" class="inline-flex items-center justify-center bg-primary text-white font-bold px-5 py-2.5 rounded-xl hover:bg-primary/90 transition-all">
-                  Build something similar
+                  Chci podobné řešení
                 </a>
               </div>
 
@@ -118,15 +118,6 @@ const cases = [
         ))}
       </div>
 
-      <div class="mt-12 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/65 backdrop-blur-[1px] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-        <div>
-          <h3 class="text-2xl font-black mb-2 text-slate-900 dark:text-white">Chcete podobný výsledek pro váš projekt?</h3>
-          <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">V konfigurátoru nastavíte cíle, rozsah i priority a získáte konkrétní návrh postupu.</p>
-        </div>
-        <a href="/configurator" class="inline-flex items-center justify-center bg-primary text-white font-extrabold px-6 py-3 rounded-xl hover:bg-primary/90 transition-colors">
-          Start Configurator
-        </a>
-      </div>
     </section>
   </main>
   <Footer />

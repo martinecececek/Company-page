@@ -14,11 +14,11 @@ const technologies = [
 <section class="py-12 bg-white dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
   <div class="max-w-7xl mx-auto px-6">
     <p class="text-center text-sm font-bold uppercase tracking-[0.2em] text-slate-400 mb-8">
-      What technology we use
+      Technologie, které používáme
     </p>
   </div>
 
-  <div class="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden">
+  <div class="w-full overflow-hidden">
     <div class="tech-track flex w-max items-center gap-12 md:gap-24 whitespace-nowrap opacity-60 grayscale px-6">
       {technologies.map((tech) => (
         <span class="inline-flex items-center gap-3 text-2xl font-black text-slate-500">
@@ -49,6 +49,13 @@ const technologies = [
 
   .tech-track:hover {
     animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tech-track {
+      animation: none;
+      transform: translateX(0);
+    }
   }
 
   @keyframes techSpin {
