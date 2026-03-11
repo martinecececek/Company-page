@@ -1,46 +1,118 @@
-# Astro Starter Kit: Basics
+# My Astro Page
 
-```sh
-npm create astro@latest -- --template basics
+Production-style Astro website for a digital agency with a multi-page marketing site, pricing section, and web configurator form flow.
+
+## Tech Stack
+
+- Astro 5
+- Tailwind CSS 4
+- Vite (via Astro)
+- TypeScript (strict Astro config)
+- Node.js adapter (`@astrojs/node`) in `standalone` server mode
+
+## Requirements
+
+- Node.js 20+ recommended
+- npm 10+ recommended
+
+## Local Development
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Dev server: `http://localhost:4321`
 
-## 🚀 Project Structure
+## Scripts
 
-Inside of your Astro project, you'll see the following folders and files:
+- `npm run dev`: Start local dev server
+- `npm run build`: Build production output
+- `npm run preview`: Preview production build locally
+- `npm run astro`: Run Astro CLI commands
+
+## Project Structure
 
 ```text
-/
+.
+├── astro.config.mjs
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── layouts/
+│   ├── pages/
+│   │   ├── api/
+│   │   │   └── configurator-submit.ts
+│   │   ├── index.astro
+│   │   ├── services.astro
+│   │   ├── portfolio.astro
+│   │   ├── contact.astro
+│   │   └── ...
+│   └── styles/
+├── data-temp/
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Pages
 
-## 🧞 Commands
+Main public pages are in `src/pages/` and include:
 
-All commands are run from the root of the project, from a terminal:
+- Home (`index.astro`)
+- Services (`services.astro`)
+- Portfolio (`portfolio.astro`)
+- Process (`process.astro`)
+- FAQ (`faq.astro`)
+- Contact (`contact.astro`)
+- Legal pages (`privacy.astro`, `terms.astro`, `legal.astro`)
+- Configurator flow (`configurator.astro`, `thank-you.astro`)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## API and Form Storage
 
-## 👀 Want to learn more?
+Endpoint: `POST /api/configurator-submit`
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Implementation file:
+
+- `src/pages/api/configurator-submit.ts`
+
+What it does:
+
+- Receives submitted configurator form data
+- Parses JSON fields when present (`config`, `contentInputJson`)
+- Generates a submission record with `id` + `submittedAt`
+- Saves the payload as JSON into `data-temp/`
+- Redirects to `/thank-you` (or `/thank-you?status=error` on failure)
+
+Important:
+
+- `data-temp/` is local file storage. For production, consider replacing with database or external storage.
+
+## Build and Deploy
+
+This project is configured for server output:
+
+- `output: "server"`
+- Node adapter with `mode: "standalone"`
+
+Build:
+
+```bash
+npm run build
+```
+
+Preview built app locally:
+
+```bash
+npm run preview
+```
+
+## Styling
+
+- Global styles: `src/styles/global.css`
+- Tailwind is loaded with `@import "tailwindcss"` and configured through the Vite plugin in `astro.config.mjs`.
+
+## SEO Notes
+
+- Shared layout metadata is managed in `src/layouts/Layout.astro`.
+- Page-level `title` and `description` props can be passed from page files (for example `src/pages/index.astro`).
+
