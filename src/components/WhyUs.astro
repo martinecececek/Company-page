@@ -7,7 +7,7 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
   <div class="relative z-10 max-w-7xl mx-auto px-6">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
-      <div class="order-2 lg:order-1 relative">
+      <div data-reveal="left" class="order-2 lg:order-1 relative">
         <div class="relative rounded-3xl overflow-hidden shadow-2xl">
           <img
             alt="Porada týmu"
@@ -22,13 +22,13 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
       </div>
 
       <div class="order-1 lg:order-2">
-        <p class="text-primary font-bold tracking-widest uppercase text-sm mb-4">Proč právě my</p>
-        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-8">
+        <p data-reveal class="text-primary font-bold tracking-widest uppercase text-sm mb-4">Proč právě my</p>
+        <h2 data-reveal data-reveal-delay="100" class="text-4xl md:text-5xl font-black tracking-tight mb-8">
           Rychlost, kvalita a jasný postup od začátku do konce.
         </h2>
 
         <div class="space-y-8">
-          <div class="flex gap-6">
+          <div data-reveal class="flex gap-6">
             <div class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
               <span class="material-symbols-outlined">bolt</span>
             </div>
@@ -40,7 +40,7 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
             </div>
           </div>
 
-          <div class="flex gap-6">
+          <div data-reveal data-reveal-delay="120" class="flex gap-6">
             <div class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
               <span class="material-symbols-outlined">shield</span>
             </div>
@@ -52,7 +52,7 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
             </div>
           </div>
 
-          <div class="flex gap-6">
+          <div data-reveal data-reveal-delay="240" class="flex gap-6">
             <div class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
               <span class="material-symbols-outlined">groups</span>
             </div>

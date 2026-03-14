@@ -218,3 +218,118 @@ body {
       background-color: var(--color-primary) !important;
    }
 }
+
+/* =====================================================
+   GLOBAL SCROLL-REVEAL ANIMATION SYSTEM
+   ===================================================== */
+
+/* Base state: elements start hidden */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal="left"] {
+  opacity: 0;
+  transform: translateX(-36px);
+}
+
+[data-reveal="right"] {
+  opacity: 0;
+  transform: translateX(36px);
+}
+
+[data-reveal="scale"] {
+  opacity: 0;
+  transform: scale(0.92) translateY(18px);
+}
+
+/* Revealed state */
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger support via inline --reveal-delay custom property */
+[data-reveal] {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* =====================================================
+   HERO ENTRANCE ANIMATIONS
+   ===================================================== */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes heroSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hero-animate {
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-animate-1 { animation: heroFadeUp 0.8s 0.1s both cubic-bezier(0.22, 1, 0.36, 1); }
+.hero-animate-2 { animation: heroFadeUp 0.8s 0.28s both cubic-bezier(0.22, 1, 0.36, 1); }
+.hero-animate-3 { animation: heroFadeUp 0.8s 0.44s both cubic-bezier(0.22, 1, 0.36, 1); }
+.hero-animate-4 { animation: heroFadeUp 0.8s 0.58s both cubic-bezier(0.22, 1, 0.36, 1); }
+.hero-animate-img { animation: heroSlideRight 1s 0.3s both cubic-bezier(0.22, 1, 0.36, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-animate,
+  .hero-animate-1,
+  .hero-animate-2,
+  .hero-animate-3,
+  .hero-animate-4,
+  .hero-animate-img {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =====================================================
+   COUNTER ANIMATION (for numbers like 99.9%)
+   ===================================================== */
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.9); }
+  to   { opacity: 1; transform: none; }
+}
+
+.stat-counter {
+  animation: countUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
