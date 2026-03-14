@@ -7,7 +7,7 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
   <div class="relative z-10 max-w-7xl mx-auto px-6">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
-      <div class="order-2 lg:order-1 relative">
+      <div class="order-2 lg:order-1 relative" data-reveal="left">
         <div class="relative rounded-3xl overflow-hidden shadow-2xl">
           <img
             alt="Porada týmu"
@@ -16,19 +16,21 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
           />
         </div>
         <div class="absolute -bottom-10 -right-10 bg-primary text-white p-10 rounded-3xl hidden md:block">
-          <div class="text-4xl font-black mb-1">99.9%</div>
+          <div class="text-4xl font-black mb-1">
+            <span class="counter-value" data-counter-target="99.9" data-counter-suffix="%">99.9%</span>
+          </div>
           <div class="text-sm font-bold opacity-80 uppercase tracking-widest">Dostupnost systému</div>
         </div>
       </div>
 
       <div class="order-1 lg:order-2">
-        <p class="text-primary font-bold tracking-widest uppercase text-sm mb-4">Proč právě my</p>
-        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-8">
+        <p class="text-primary font-bold tracking-widest uppercase text-sm mb-4" data-reveal="up">Proč právě my</p>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-8" data-reveal="up" data-delay="100">
           Rychlost, kvalita a jasný postup od začátku do konce.
         </h2>
 
         <div class="space-y-8">
-          <div class="flex gap-6">
+          <div class="flex gap-6" data-reveal="up" data-delay="200">
             <div class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
               <span class="material-symbols-outlined">bolt</span>
             </div>
@@ -40,7 +42,7 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
             </div>
           </div>
 
-          <div class="flex gap-6">
+          <div class="flex gap-6" data-reveal="up" data-delay="300">
             <div class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
               <span class="material-symbols-outlined">shield</span>
             </div>
@@ -52,7 +54,7 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
             </div>
           </div>
 
-          <div class="flex gap-6">
+          <div class="flex gap-6" data-reveal="up" data-delay="400">
             <div class="size-12 rounded-full bg-primary/10 flex-shrink-0 flex items-center justify-center text-primary">
               <span class="material-symbols-outlined">groups</span>
             </div>
@@ -69,3 +71,38 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
     </div>
   </div>
 </section>
+
+<script>
+  // Animate the 99.9% counter when the element enters the viewport
+  (function () {
+    const counterEl = document.querySelector<HTMLElement>('.counter-value[data-counter-target]');
+    if (!counterEl) return;
+
+    const target = parseFloat(counterEl.dataset.counterTarget ?? '0');
+    const suffix = counterEl.dataset.counterSuffix ?? '';
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+
+        const duration = 1400;
+        const start = performance.now();
+
+        function tick(now: number) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          // ease-out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = eased * target;
+          counterEl!.textContent = current.toFixed(1) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.5 });
+
+    observer.observe(counterEl);
+  })();
+</script>

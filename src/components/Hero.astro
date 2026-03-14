@@ -4,29 +4,41 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
 
 <section class="relative min-h-[calc(92vh-40px)] lg:min-h-[calc(100vh-40px)] flex items-center overflow-hidden">
   <SectionRibbonBackground variant="hero" />
+
+  <!-- Floating accent blobs for visual depth -->
+  <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div class="hero-float-a absolute top-1/4 right-1/4 w-48 h-48 rounded-full bg-primary/10 blur-3xl"></div>
+    <div class="hero-float-b absolute bottom-1/3 left-1/5 w-32 h-32 rounded-full bg-primary/8 blur-2xl"></div>
+  </div>
+
   <div class="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-20">
     <div class="z-10">
-      
 
-      <h1 class="text-5xl md:text-7xl font-black leading-[1.1] mb-6 tracking-tight">
+      <p class="text-primary font-bold tracking-widest uppercase text-sm mb-5"
+         data-reveal="up" data-delay="100">
+        Digitální agentura pro reálný růst
+      </p>
+
+      <h1 class="text-5xl md:text-7xl font-black leading-[1.1] mb-6 tracking-tight"
+          data-reveal="up" data-delay="200">
         Nabízíme
-        <span class="text-primary">weby na míru</span>
+        <span class="text-primary animated-underline highlight-sweep">weby na míru</span>
         pro reálný růst
       </h1>
 
-      <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed max-w-xl">
+      <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed max-w-xl"
+         data-reveal="up" data-delay="350">
         Rychlé weby a online řešení. Více poptávek a lepší výkon vaší společnosti
       </p>
       <p class="sr-only">tvorba webových stránek, webové stránky, web stránka</p>
 
-      <div class="flex flex-col sm:flex-row gap-4">
+      <div class="flex flex-col sm:flex-row gap-4" data-reveal="up" data-delay="450">
         <a href="/configurator" class="inline-flex items-center justify-center bg-primary text-white text-lg font-bold px-8 py-4 rounded-xl hover:shadow-xl hover:shadow-primary/30 transition-all">
           Spustit konfigurátor
         </a>
-       
       </div>
 
-      <div class="mt-12 flex items-center gap-6">
+      <div class="mt-12 flex items-center gap-6" data-reveal="fade" data-delay="600">
         <div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 border border-primary/20 text-primary">
           <span class="material-symbols-outlined text-[20px]" aria-hidden="true">schedule</span>
         </div>
@@ -36,7 +48,7 @@ import SectionRibbonBackground from './SectionRibbonBackground.astro';
       </div>
     </div>
 
-    <div class="relative group">
+    <div class="relative group" data-reveal="right" data-delay="300">
       <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-95 opacity-50 group-hover:opacity-70 transition-opacity"></div>
       <div class="relative bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700">
         <img
