@@ -39,6 +39,40 @@ const {
   </body>
 </html>
 
+<script>
+  // Global scroll-reveal system
+  (function () {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const delay = el.dataset.revealDelay ?? '0';
+            el.style.setProperty('--reveal-delay', delay + 'ms');
+            // Small rAF to ensure the delay CSS custom prop is applied first
+            requestAnimationFrame(() => el.classList.add('is-revealed'));
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    const init = () => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
 <style>
   html,
   body {
